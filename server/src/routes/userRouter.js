@@ -4,8 +4,8 @@ const router = Router();
 
 router.post("/register", userController.register);
 router.get("/login", userController.login);
-
 router.get("/all", userController.getAll);
 router.get("/:id", userController.getUser);
+router.post("/favorites", userController.addAuctionToFavorites);
 
 export default router;
