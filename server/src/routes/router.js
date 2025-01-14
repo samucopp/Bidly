@@ -1,12 +1,14 @@
 import { Router } from "express";
-
-import auctionController from "./auctionRoutes.js";
-import bidController from "./bidRoutes.js";
+import userRouter from "./userRouter.js";
+import categoryRouter from "./categoryRouter.js";
+import auctionRouter from "./auctionRouter.js";
+import bidRouter from "./bidRouter.js";
 
 const router = Router();
 
-router.use('/auction', auctionController);
-router.use('/bid', bidController);
-
+router.use("/auction", auctionRouter);
+router.use("/bid", bidRouter);
+router.use("/user", userRouter);
+router.use("/category", categoryRouter);
 
 export default router;
