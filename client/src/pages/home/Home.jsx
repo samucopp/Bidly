@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 const Home = () => {
     return (
         <div>
-            <h1>Página principal provisional</h1>
+            <h1>Futuro contenido de home</h1>
             <Outlet/>
         </div>
     );

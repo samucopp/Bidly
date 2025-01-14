@@ -20,7 +20,7 @@ const Navbar = () => {
 
                     {/* Main Navigation */}
                     <div className="navbar-links">
-                        <Link to="/acerca-de" className="menu-item" onClick={toggleMenu}>A CERCA DE</Link>
+                        <Link to="/acerca-de" className="menu-item" onClick={toggleMenu}>ACERCA DE</Link>
                         <Link to="/catalogo" className="menu-item" onClick={toggleMenu}>CATÁLOGO</Link>
                         <Link to="/contacto" className="menu-item" onClick={toggleMenu}>CONTACTO</Link>
                     </div>
@@ -60,7 +60,7 @@ const Navbar = () => {
 
             {/* Mobile Menu */}
             <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-                <Link to="/acerca-de" className="menu-item" onClick={toggleMenu}>A CERCA DE</Link>
+                <Link to="/acerca-de" className="menu-item" onClick={toggleMenu}>ACERCA DE</Link>
                 <Link to="/catalogo" className="menu-item" onClick={toggleMenu}>CATÁLOGO</Link>
                 <Link to="/contacto" className="menu-item" onClick={toggleMenu}>CONTACTO</Link>
             </div>

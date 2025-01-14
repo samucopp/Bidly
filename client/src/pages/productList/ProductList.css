@@ -1,8 +1,7 @@
 /* Estilos para el contenedor principal */
 /* Estilos para el contenedor principal */
-
 h1 {
-    
+    display: flex;
     text-align:center;
 }
 
@@ -20,7 +19,7 @@ h1 {
     justify-content: flex-start;
     gap: 16px;
     margin-left: 0; /* Elimina el margen extra si no es necesario */
-    width: 80%; /* Ajusta el ancho del bloque para hacerlo más compacto */
+    width: 58%; /* Ajusta el ancho del bloque para hacerlo más compacto */
 }
 
 /* Estilos para las tarjetas */
