@@ -20,6 +20,12 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        favoriteAuctions: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Auction",
+            }
+        ]
     },
     {
         timestamps: true,
