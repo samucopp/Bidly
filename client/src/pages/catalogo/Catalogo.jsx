@@ -22,4 +22,5 @@ const Catalogo = () => {
     );
 };
 
+
 export default Catalogo;
