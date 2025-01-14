@@ -76,8 +76,9 @@ async function getByOwnerId(req, res) {
 
 async function create(req, res) {
     try {
-        const { auctionId, ownerId, winnerId, finalPrice, finishDate } =
-            req.body;
+        // const { auctionId, ownerId, winnerId, finalPrice, finishDate } =
+        //     req.body;
+        const { auctionId, ownerId, winnerId, finalPrice } = req.body;
         const owner = await User.findById(ownerId);
         const winner = await User.findById(winnerId);
         if (!owner) {
@@ -90,13 +91,19 @@ async function create(req, res) {
                 message: "El ganador no esta registrado",
             });
         }
+        const prevHistory = await AuctionHistory.find({ auctionId: auctionId });
 
+        if (prevHistory.length > 0) {
+            return res.status(400).json({
+                message: "Ya existe un historial para esta subasta",
+            });
+        }
         const auctionHistories = await AuctionHistory.create({
             auctionId,
             ownerId,
             winnerId,
             finalPrice,
-            finishDate,
+            // finishDate,
         });
 
         return res.status(200).json(auctionHistories);
@@ -110,7 +117,7 @@ async function create(req, res) {
 async function update(req, res) {
     try {
         const { auctionId } = req.params;
-        const { ownerId, winnerId, finalPrice, finishDate } = req.body;
+        const { ownerId, winnerId, finalPrice } = req.body;
 
         const owner = await User.findById(ownerId);
         const winner = await User.findById(winnerId);
@@ -126,8 +133,8 @@ async function update(req, res) {
         }
 
         const updatedAuctionHistory = await AuctionHistory.findOneAndUpdate(
-            { auctionId },
-            { ownerId, winnerId, finalPrice, finishDate },
+            { auctionId: auctionId },
+            { ownerId, winnerId, finalPrice },
             { new: true, runValidators: true }
         );
 
