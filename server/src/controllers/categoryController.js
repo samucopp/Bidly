@@ -63,7 +63,9 @@ async function deleteCategory(req, res) {
                 message: "Categoría no encontrada",
             });
         }
-        return res.status(204).json(category);
+        return res.status(204).json({
+            message: "Categoría eliminada del servidor correctamente",
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({

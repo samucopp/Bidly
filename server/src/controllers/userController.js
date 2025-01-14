@@ -1,6 +1,18 @@
 import User from "../models/userModel.js";
 import Auction from "../models/auctionModel.js";
 
+async function getAll(req, res) {
+    try {
+        const users = await User.find();
+        return res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Error interno del servidor",
+        });
+    }
+}
+
 async function register(req, res) {
     try {
         const { name, email, password, passwordRepeat, address } = req.body;
@@ -63,6 +75,11 @@ async function getUser(req, res) {
     try {
         const { id } = req.params;
         const user = await User.findById(id);
+        if (!user) {
+            return res.status(400).json({
+                message: "Usuario no encontrado",
+            });
+        }
         return res.status(200).json(user);
     } catch (error) {
         console.error(error);
@@ -103,6 +120,7 @@ async function addAuctionToFavorites(req, res) {
 }
 
 export default {
+    getAll,
     register,
     login,
     getUser,
