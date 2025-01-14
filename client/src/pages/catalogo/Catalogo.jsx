@@ -1,12 +1,12 @@
 import React from "react";
+import Home from "../home/Home";
+import datosPuja from "../../assets/components/DatosPuja";
 
 
-const datosPuja ={
-    Nombre: "Ejemplo",
-    Imagen: "https://Ejemplo.com", // Imagen de ejemplo
-    PrecioEstimado: 3000, // Precio estimado en euros
-    PreciodeSalida: 500 // Precio de salida en euros
-}
+const Tarjeta = ({datosPuja}) => {
+};
+
+
 const Catalogo = () => {
     return (
         <>
@@ -25,10 +25,6 @@ const Catalogo = () => {
 
 };
 
-const Tarjeta = ({datosPuja}) => {
 
-
-
-};
 
 export default Catalogo;
