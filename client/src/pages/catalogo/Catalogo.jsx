@@ -1,18 +1,30 @@
 import React from "react";
-import Home from "../home/Home";
-import Tarjeta from "../../components/Tarjeta";
 import datosPuja from "../../components/DatosPuja";
+import Tarjeta from "../../components/Tarjeta";
+import "./catalogo.css";  
 
+const Catalogo = () => {    
+    const tarjetas = Array.from({ length: 12 }, (_, index) => ({
+        ...datosPuja,
+        Nombre: `${datosPuja.Nombre} ${index + 1}`,
+    }));
 
-const Catalogo = () => {
     return (
-        <div>
+        <div className="catalogo-container">
             <h1>Catálogo de Lotes</h1>
-            <p>Aquí tienes una selección de nuestros lotes en puja:</p>
-            <Tarjeta datosPuja={datosPuja} />
+            <p>Aquí tienes una selección de nuestros lotes en puja.</p>
+            <div className="tarjetas-container">  
+                {tarjetas.map((tarjeta, index) => (
+                    <Tarjeta key={index} datosPuja={tarjeta} />
+                ))}
+            </div>
         </div>
     );
 };
 
+<<<<<<< HEAD
 
 export default Catalogo;
+=======
+export default Catalogo;
+>>>>>>> front/catalogo

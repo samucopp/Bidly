@@ -1,7 +1,7 @@
 const datosPuja ={
     Nombre: "Ejemplo",
     Imagen: "/image/ImagenEjemploTarjeta.jpg", 
-    PrecioEstimado: 3000, 
-    PreciodeSalida: 500 
+    PujaActual: 3000, 
+    PujadeSalida: 500 
 }
 export default datosPuja;

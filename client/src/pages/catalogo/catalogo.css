@@ -1,0 +1,13 @@
+/* Estilos para el contenedor principal */
+.catalogo-container {
+    padding: 20px;
+}
+
+/* Estilos para el contenedor de las tarjetas */
+.tarjetas-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-left: 50px; /* Espacio a la izquierda */
+}
