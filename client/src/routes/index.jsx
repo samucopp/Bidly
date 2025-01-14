@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Catalogo from '../pages/catalogo/Catalogo.jsx';
-import Home from "../pages/home/Home.jsx";
+import Catalogo from '../pages/catalogo/Catalogo';
+import Home from "../pages/home/Home";
 
 
 const Router = () => {

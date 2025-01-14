@@ -1,0 +1,142 @@
+.navbar {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .navbar-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  
+  .navbar-logo a {
+    font-family: serif;
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .navbar-links {
+    display: none;
+  }
+  
+  .navbar-links a {
+    color: #4a4a4a;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-links a:hover {
+    color: #000;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .search-container {
+    position: relative;
+  }
+  
+  .search-container input {
+    width: 200px;
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+  
+  .search-button {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+  }
+  
+  .auth-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .auth-links a {
+    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+  
+  .language-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .language-selector span {
+    color: #ddd;
+  }
+  
+  .mobile-menu-button {
+    display: block;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .hamburger-line {
+    width: 24px;
+    height: 2px;
+    background-color: #333;
+    margin: 4px 0;
+  }
+  
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background-color: white;
+    padding: 1rem;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mobile-menu.active {
+    display: flex;
+  }
+  
+  .mobile-menu a {
+    color: #4a4a4a;
+    text-decoration: none;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  /* Media Queries */
+  @media (min-width: 768px) {
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+  
+    .mobile-menu-button {
+      display: none;
+    }
+  }
