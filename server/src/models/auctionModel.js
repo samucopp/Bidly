@@ -49,8 +49,8 @@ const auctionSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['active', 'closed'],
-        default: 'active',
+        enum: ['inactive', 'active', 'closed'],
+        default: 'inactive',
     },
     winnerId: {
         type: mongoose.Schema.Types.ObjectId,

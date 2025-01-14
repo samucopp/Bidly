@@ -11,6 +11,15 @@ const createAuction = async (req, res) => {
     }
 };
 
+const getAuctions = async (req, res) => {
+    try {
+        const auctions = await Auction.find().populate('category', 'title').populate('sellerId', 'name');
+        res.status(200).json({ success: true, auctions });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error al obtener las subastas", error });
+    }
+};
+
 const getActiveAuctions = async (req, res) => {
     try {
         const auctions = await Auction.find({
@@ -85,6 +94,7 @@ const deleteAuction = async (req, res) => {
 
 export default {
     createAuction,
+    getAuctions,
     getActiveAuctions,
     getAuctionById,
     updateAuction,
