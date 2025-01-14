@@ -22,9 +22,5 @@ const Catalogo = () => {
     );
 };
 
-<<<<<<< HEAD
 
 export default Catalogo;
-=======
-export default Catalogo;
->>>>>>> front/catalogo
