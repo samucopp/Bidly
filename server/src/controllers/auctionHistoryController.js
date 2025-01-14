@@ -1,5 +1,6 @@
 import AuctionHistory from "../models/auctionHistoryModel.js";
 import User from "../models/userModel.js";
+import Auction from "../models/auctionModel.js";
 async function getAll(req, res) {
     try {
         const auctionHistories = await AuctionHistory.find();
@@ -14,6 +15,12 @@ async function getAll(req, res) {
 async function getByAuctionId(req, res) {
     try {
         const { auctionId } = req.params;
+        const auction = await Auction.findById(auctionId);
+        if (!auction) {
+            return res.status(400).json({
+                message: "Subasta no encontrada",
+            });
+        }
         const auctionHistory = await AuctionHistory.find({
             auctionId: auctionId,
         });
@@ -76,19 +83,24 @@ async function getByOwnerId(req, res) {
 
 async function create(req, res) {
     try {
-        // const { auctionId, ownerId, winnerId, finalPrice, finishDate } =
-        //     req.body;
         const { auctionId, ownerId, winnerId, finalPrice } = req.body;
+
+        const auction = await Auction.findById(auctionId);
+        if (!auction) {
+            return res.status(400).json({
+                message: "Subasta no encontrada",
+            });
+        }
         const owner = await User.findById(ownerId);
         const winner = await User.findById(winnerId);
         if (!owner) {
             return res.status(400).json({
-                message: "El propietario no esta registrado",
+                message: "Propietario no encontrado",
             });
         }
         if (!winner) {
             return res.status(400).json({
-                message: "El ganador no esta registrado",
+                message: "Ganador no encontrado",
             });
         }
         const prevHistory = await AuctionHistory.find({ auctionId: auctionId });
@@ -118,17 +130,22 @@ async function update(req, res) {
     try {
         const { auctionId } = req.params;
         const { ownerId, winnerId, finalPrice } = req.body;
-
+        const auction = await Auction.findById(auctionId);
+        if (!auction) {
+            return res.status(400).json({
+                message: "Subasta no encontrada",
+            });
+        }
         const owner = await User.findById(ownerId);
         const winner = await User.findById(winnerId);
         if (!owner) {
             return res.status(400).json({
-                message: "El propietario no esta registrado",
+                message: "Propietario no encontrado",
             });
         }
         if (!winner) {
             return res.status(400).json({
-                message: "El ganador no esta registrado",
+                message: "Ganador no encontrado",
             });
         }
 
@@ -154,6 +171,12 @@ async function update(req, res) {
 async function remove(req, res) {
     try {
         const { auctionId } = req.params;
+        const auction = await Auction.findById(auctionId);
+        if (!auction) {
+            return res.status(400).json({
+                message: "Subasta no encontrada",
+            });
+        }
         const auctionHistory = await AuctionHistory.findOneAndDelete({
             auctionId: auctionId,
         });
