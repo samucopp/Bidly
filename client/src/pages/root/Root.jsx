@@ -1,12 +1,19 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-const Home = () => {
+
+const Root = () => {
     return (
         <div>
-            <h1>Página principal provisional</h1>
+            <h1>Futuro navbar</h1>
             <Outlet/>
         </div>
     );
 };
 
-export default Home;
+export default Root;
+
+
+
+
+
+
