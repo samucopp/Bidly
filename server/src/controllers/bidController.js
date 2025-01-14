@@ -6,21 +6,20 @@ const createBid = async (req, res) => {
         const { auctionId, userId, amount } = req.body;
         
         const auction = await Auction.findById(auctionId);
-        if (!auction || auction.status !== 'active') {
-            return res.status(400).json({ success: false, message: "La subasta no está activa o no existe" });
+        if (!auction) {
+            return res.status(400).json({ success: false, message: "La subasta no existe" });
         }
         
-        const now = new Date();
-        if (now < new Date(auction.startTime)) {
+        if (auction.status === 'inactive') {
             return res.status(400).json({ success: false, message: "La subasta aún no ha comenzado" });
         }
-        if (now >= new Date(auction.endTime)) {
+        if (auction.status === 'closed') {
             return res.status(400).json({ success: false, message: "La subasta ha finalizado" });
         }
         
         const lastBid = await Bid.findOne({ auctionId }).sort({ amount: -1 });
 
-        const minAllowed = lastBid ? lastBid.amount + auction.minIncrement : auction.startingPrice + auction.minIncrement;
+        const minAllowed = lastBid ? lastBid.amount + auction.minIncrement : auction.startingPrice;
 
         if (amount < minAllowed) {
             return res.status(400).json({ success: false, message: `El monto mínimo permitido es ${minAllowed}` });
