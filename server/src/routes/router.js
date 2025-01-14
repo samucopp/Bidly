@@ -1,9 +1,12 @@
 import { Router } from "express";
 
+import auctionController from "./auctionRoutes.js";
+import bidController from "./bidRoutes.js";
+
 const router = Router();
 
-router.get('/', (req, res) => {
-    res.render('index');
-});
+router.use('/auction', auctionController);
+router.use('/bid', bidController);
+
 
 export default router;

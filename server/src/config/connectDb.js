@@ -12,10 +12,7 @@ const DB_NAME = process.env.MONGO_DATABASE;
 
 async function connectDb() {
     try {
-        await mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        await mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`);
         console.log('Conectado a la base de datos');
     } catch (error) {
         console.error(error);

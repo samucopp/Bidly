@@ -1,6 +1,4 @@
 import Auction from "../models/auctionModel.js";
-//import Category from "../models/categoryModel.js";
-//import Bid from "../models/bidModel.js";
 
 const createAuction = async (req, res) => {
     try {
