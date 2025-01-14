@@ -1,4 +1,6 @@
 import Auction from "../models/auctionModel.js";
+import Bid from "../models/bidModel.js";
+import { handleAuctionStarted, handleAuctionFinished, handleAuctionWon } from "../helpers/automaticNotification.js";
 
 const createAuction = async (req, res) => {
     try {
@@ -8,6 +10,15 @@ const createAuction = async (req, res) => {
         res.status(201).json({ succes: true, savedAuction });
     } catch (error) {
         res.status(500).json({ succes: false, message: "Error al crear la subasta", error });
+    }
+};
+
+const getAuctions = async (req, res) => {
+    try {
+        const auctions = await Auction.find().populate('category', 'title').populate('sellerId', 'name');
+        res.status(200).json({ success: true, auctions });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error al obtener las subastas", error });
     }
 };
 
@@ -40,21 +51,21 @@ const updateAuction = async (req, res) => {
     try {
         const { id } = req.params;
         const updates = req.body;
-    
+
         const auction = await Auction.findByIdAndUpdate(id);
         if (!auction) {
             return res.status(404).json({ success: false, message: "Subasta no encontrada" });
         }
-    
+
         const now = new Date();
         if (now >= new Date(auction.startTime)) {
             return res.status(400).json({ success: false, message: "La subasta no puede ser actualizada una vez iniciada" });
         }
-    
+
         if (now >= new Date(auction.endTime)) {
             return res.status(400).json({ success: false, message: "La subasta no puede ser actualizada una vez finalizada" });
         }
-    
+
         const updatedAuction = await Auction.findByIdAndUpdate(id, updates, { new: true });
         res.status(200).json({ success: true, updatedAuction });
     } catch (error) {
@@ -65,17 +76,17 @@ const updateAuction = async (req, res) => {
 const deleteAuction = async (req, res) => {
     try {
         const { id } = req.params;
-        
+
         const auction = await Auction.findById(id);
         if (!auction) {
             return res.status(404).json({ success: false, message: "Subasta no encontrada" });
         }
-        
+
         const now = new Date();
         if (now >= new Date(auction.startTime)) {
             return res.status(400).json({ success: false, message: "La subasta no puede ser eliminada una vez iniciada" });
         }
-        
+
         await Auction.findByIdAndDelete(id);
         res.status(200).json({ success: true, message: "Subasta eliminada exitosamente" });
     } catch (error) {
@@ -83,10 +94,86 @@ const deleteAuction = async (req, res) => {
     }
 };
 
+const handleActivateAuctions = async () => {
+    try {
+        const now = new Date();
+        const auctionsToActivate = await Auction.find({
+            status: 'inactive',
+            startTime: { $lte: now },
+        });
+        for (const auction of auctionsToActivate) {
+            auction.status = 'active';
+            await auction.save();
+            await handleAuctionStarted(auction);
+        }
+        console.log(`${auctionsToActivate.length} subasta(s) activada(s)`);
+    } catch (error) {
+        console.error('Error al activar las subastas:', error);
+    }
+};
+
+const activateAuctions = async (req, res) => {
+    try {
+        await handleActivateAuctions();
+        res.status(200).json({ success: true, message: "Subastas activadas exitosamente" });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error al activar las subastas", error });
+    }
+};
+
+const handleCloseAuctions = async () => {
+    try {
+        const now = new Date();
+        const auctionsToClose = await Auction.find({
+            status: 'active',
+            endTime: { $lte: now },
+        });
+        for (const auction of auctionsToClose) {
+            const winnerId = await setWinner(auction._id);
+            auction.winnerId = winnerId;
+            auction.status = 'closed';
+            await auction.save();
+
+            if (winnerId) {
+                await handleAuctionWon(winnerId, auction);
+            }
+            await handleAuctionFinished(auction.sellerId, auction);
+        }
+        console.log(`${auctionsToClose.length} subasta(s) cerrada(s)`);
+    } catch (error) {
+        console.error('Error al cerrar las subastas:', error);
+    }
+};
+
+const setWinner = async (auctionId) => {
+    try {
+        const lastBid = await Bid.findOne({ auctionId }).sort({ createdAt: -1 }).populate('userId', '_id');
+
+        if (!lastBid) return null;
+
+        return lastBid.userId._id;
+    } catch (error) {
+        console.error('Error al obtener el ganador de la subasta:', error);
+        return null;
+    }
+};
+
+const closeAuctions = async (req, res) => {
+    try {
+        await handleCloseAuctions();
+        res.status(200).json({ success: true, message: "Subastas cerradas exitosamente" });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error al cerrar las subastas", error });
+    }
+};
+
 export default {
     createAuction,
+    getAuctions,
     getActiveAuctions,
     getAuctionById,
     updateAuction,
-    deleteAuction
+    deleteAuction,
+    activateAuctions,
+    closeAuctions
 }
