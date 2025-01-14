@@ -1,6 +1,6 @@
 const datosPuja ={
     Nombre: "Ejemplo",
-    Imagen: "https://Ejemplo.com", 
+    Imagen: "/image/ImagenEjemploTarjeta.jpg", 
     PrecioEstimado: 3000, 
     PreciodeSalida: 500 
 }
