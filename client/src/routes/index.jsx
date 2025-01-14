@@ -21,29 +21,22 @@ const router = createBrowserRouter([
           {
             path: "",
             element: <ProductList />
-          },
-          {
-            path: ":productId",
-            element: <Home />
-          },
+          }
         ]
-      },
+      }
       /*{
           path: "/registro",     
           element: <registro />,
         },
-        {
-          path: "/login",     
-          element: <login />,
-        },
+   
         {
           path: "/acerca-de",     
           element: <acerca-de />,
-        }, */
+        }, 
       {
         path: "/contacto",
         element: <contacto />,
-      },
+      },*/
     ],
   },
 ]);

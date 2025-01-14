@@ -1,0 +1,62 @@
+.form-group input:focus {
+    border-color: #9ca3af;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.toggle-password::before {
+    content: "👁️";
+}
+
+.toggle-password.hide::before {
+    content: "👁️‍🗨️";
+}
+
+.forgot-password {
+    text-align: right;
+    margin: 1rem 0;
+}
+
+.forgot-password a {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.signin-button, .create-account-button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.signin-button {
+    background-color: #f3f4f6;
+    border: none;
+}
+
+.signin-button:hover {
+    background-color: #e5e7eb;
+}
+
+.create-account-button {
+    background-color: white;
+    border: 1px solid #d1d5db;
+}
+
+.create-account-button:hover {
+    background-color: #f9fafb;
+}
