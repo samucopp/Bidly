@@ -8,3 +8,5 @@ router.post("/create", notificationController.createNotification);
 router.put("/read/:id", notificationController.markNotificationAsRead);
 router.put("/read/:userId", notificationController.markAllNotificationsAsRead);
 router.delete("/delete/:id", notificationController.deleteNotification);
+
+export default router;
