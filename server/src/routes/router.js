@@ -1,6 +1,8 @@
 import { Router } from "express";
 import userRouter from "./userRouter.js";
 import categoryRouter from "./categoryRouter.js";
+import notificationRouter from "./notificationRouter.js";
+
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -8,5 +10,6 @@ router.get("/", (req, res) => {
 });
 router.use("/user", userRouter);
 router.use("/category", categoryRouter);
+router.use("/notification", notificationRouter);
 
 export default router;
