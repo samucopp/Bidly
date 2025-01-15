@@ -1,7 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDb from './config/connectDb.js';
-import router from './routes/router.js';// importar rutas
+import router from './routes/router.js';
+import cron from 'node-cron';
+import auctionController from './controllers/auctionController.js';
 
 dotenv.config();
 
@@ -18,6 +20,16 @@ app.get('/', (req, res) => {
 })
 
 app.use('/', router);// configurar rutas
+
+cron.schedule('* * * * *', async () => {
+    console.log("Ejecutando tareas automatizadas...");
+    await auctionController.activateAuctions({});
+});
+
+cron.schedule('* * * * *', async () => {
+    console.log("Ejecutando tareas automatizadas...");
+    await auctionController.closeAuctions({});
+});
 
 async function startServer(){
     await connectDb();
