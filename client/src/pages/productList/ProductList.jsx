@@ -3,10 +3,12 @@ import datosPuja from "../../components/DatosPuja";
 import Tarjeta from "../../components/Tarjeta";
 import "./ProductList.css";  
 
-const ProductList = () => {    
+const ProductList = () => {   
+    let _id=1; 
     const tarjetas = Array.from({ length: 12 }, (_, index) => ({
         ...datosPuja,
         Nombre: `${datosPuja.Nombre} ${index + 1}`,
+        _id:_id++
     }));
 
     return (

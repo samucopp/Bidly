@@ -3,6 +3,7 @@ import Catalogo from '../pages/catalogo/Catalogo';
 import Home from "../pages/home/Home";
 import Root from "../pages/root/Root";
 import ProductList from "../pages/productList/ProductList";
+import Modal from "../components/ModalTarjeta/ModalTarjeta";
 
 // Definimos nuestras rutas
 const router = createBrowserRouter([
@@ -19,8 +20,8 @@ const router = createBrowserRouter([
         element: <Catalogo />,
         children: [
           {
-            path: "",
-            element: <ProductList />
+            path: ":productId",
+            element: <Modal visible={true}/>
           }
         ]
       }

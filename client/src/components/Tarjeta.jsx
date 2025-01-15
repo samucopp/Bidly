@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./ModalTarjeta/ModalTarjeta";
+import { Link } from "react-router-dom";
 
 const Tarjeta = ({ datosPuja }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -18,26 +19,28 @@ const Tarjeta = ({ datosPuja }) => {
             />
             <p>Puja de Salida: {datosPuja.PujadeSalida} €</p>
             <p>Puja Actual: {datosPuja.PujaActual} €</p>
-            <button
-                style={{
-                    marginTop: "16px",
-                    padding: "10px 16px",
-                    backgroundColor: "#007BFF",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer"
-                }}
-                onClick={toggleModal}
-            >
-                Mas información
-            </button>
+            <Link to={"/catalogo/"+datosPuja._id}>
+                <button
+                    style={{
+                        marginTop: "16px",
+                        padding: "10px 16px",
+                        backgroundColor: "#007BFF",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer"
+                    }}
 
-            <Modal
+                >
+                    Mas información
+                </button>
+            </Link>
+
+            {/* <Modal
                 visible={modalVisible}
                 onClose={toggleModal}
                 onBid={() => alert("Esto llevará a puja")}
-            />
+            /> */}
         </div>
     );
 };

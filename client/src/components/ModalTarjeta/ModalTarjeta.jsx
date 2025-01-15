@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Modal = ({ visible, onClose, onBid }) => {
     if (!visible) return null;
 
@@ -16,12 +16,15 @@ const Modal = ({ visible, onClose, onBid }) => {
                 >
                     Pujar
                 </button>
-                <button
+                {/* <button
                     style={buttonStyles.close}
                     onClick={onClose}
                 >
                     Cerrar
-                </button>
+                </button> */}
+                <Link to="/catalogo">
+                <button>X</button>
+                </Link>
             </div>
         </div>
     );
