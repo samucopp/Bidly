@@ -4,6 +4,7 @@ import Home from "../pages/home/Home";
 import Root from "../pages/root/Root";
 import ProductList from "../pages/productList/ProductList";
 import Modal from "../components/ModalTarjeta/ModalTarjeta";
+import Subasta from '../pages/subasta/Subasta';
 
 // Definimos nuestras rutas
 const router = createBrowserRouter([
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
             element: <Modal visible={true}/>
           }
         ]
-      }
+      },
+      {
+        path: "subasta",
+        element: <Subasta />
+      },
       /*{
           path: "/registro",     
           element: <registro />,
