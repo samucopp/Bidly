@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginModal from '../modals/LoginModal';
 import './Navbar.css';
 
 const Navbar = () => {
+    const navigate = useNavigate(); 
     const [searchQuery, setSearchQuery] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -16,6 +17,12 @@ const Navbar = () => {
         e.preventDefault(); // Previene la navegación a /login
         setIsLoginOpen(true);
     };
+    const handleRegisterClick = (e) => {
+        e.preventDefault(); // Previene la navegación a /register
+        navigate ('/registro');
+    };
+
+
 
     return (
         <>
@@ -52,7 +59,7 @@ const Navbar = () => {
                             {/* Auth Links */}
                             <div className="auth-links">
                                 <a href="/login" onClick={handleLoginClick}>Iniciar sesión</a>
-                                <a href="/registro">Regístrate</a>
+                                <a href="/registro"onClick={handleRegisterClick}>Regístrate</a>
                             </div>
                         </div>
 

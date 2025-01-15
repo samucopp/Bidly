@@ -1,12 +1,16 @@
-import { createBrowserRouter, BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Catalogo from '../pages/catalogo/Catalogo';
+import RegisterForm from "../pages/auth/RegisterForm";
 import Home from "../pages/home/Home";
 import Root from "../pages/root/Root";
-import ProductList from "../pages/productList/ProductList";
 import Modal from "../components/ModalTarjeta/ModalTarjeta";
 
 // Definimos nuestras rutas
 const router = createBrowserRouter([
+  {
+    path: "registro",
+    element: <RegisterForm />,
+  },
   {
     path: "/",
     element: <Root />,
@@ -21,15 +25,11 @@ const router = createBrowserRouter([
         children: [
           {
             path: ":productId",
-            element: <Modal visible={true}/>
+            element: <Modal visible={true} />
           }
         ]
       }
-      /*{
-          path: "/registro",     
-          element: <registro />,
-        },
-   
+      /*
         {
           path: "/acerca-de",     
           element: <acerca-de />,
