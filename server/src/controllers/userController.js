@@ -91,15 +91,19 @@ async function getUser(req, res) {
 
 async function addAuctionToFavorites(req, res) {
     try {
-        const {userId, auctionId} = req.body;
+        const { userId, auctionId } = req.body;
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+            return res
+                .status(404)
+                .json({ success: false, message: "Usuario no encontrado" });
         }
         const auction = await Auction.findById(auctionId);
         if (!auction) {
-            return res.status(404).json({ success: false, message: "Subasta no encontrada" });
+            return res
+                .status(404)
+                .json({ success: false, message: "Subasta no encontrada" });
         }
 
         if (!user.favoriteAuctions.includes(auctionId)) {
@@ -112,17 +116,27 @@ async function addAuctionToFavorites(req, res) {
             await auction.save();
         }
 
-        return res.status(200).json({ success: true, message: "Subasta agregada a favoritos y usuario agregado a seguidores" });
+        return res
+            .status(200)
+            .json({
+                success: true,
+                message:
+                    "Subasta agregada a favoritos y usuario agregado a seguidores",
+            });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ success: false, message: "Error interno del servidor" });
+        return res
+            .status(500)
+            .json({ success: false, message: "Error interno del servidor" });
     }
 }
+
+async function getAuctionWhereBidDone(req, res) {}
 
 export default {
     getAll,
     register,
     login,
     getUser,
-    addAuctionToFavorites
+    addAuctionToFavorites,
 };
