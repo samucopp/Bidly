@@ -1,7 +1,6 @@
-// ImageCarousel.js
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import "./carrousel.css"; // Puedes agregar estilos específicos para el carrusel aquí
+import "./carrousel.css";
 
 const ImageCarousel = ({ images, initialIndex = 0 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
