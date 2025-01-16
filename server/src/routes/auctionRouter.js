@@ -15,5 +15,14 @@ router.get(
     "/user/:userId/participated",
     auctionController.getAuctionsWhereBidDone
 );
+router.get(
+    "/user/:userId/finished-participated",
+    auctionController.getFinishedAuctionsWhereBidDone
+);
 router.get("/user/:userId/owner", auctionController.getAuctionsByOwner);
+router.get(
+    "/user/:userId/following",
+    auctionController.getActiveFollowedAuctions
+);
+
 export default router;

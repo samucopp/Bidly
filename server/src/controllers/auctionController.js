@@ -1,5 +1,6 @@
 import Auction from "../models/auctionModel.js";
 import Bid from "../models/bidModel.js";
+import User from "../models/userModel.js";
 import {
     handleAuctionStarted,
     handleAuctionFinished,
@@ -44,7 +45,7 @@ const createAuction = async (req, res) => {
 const getAuctions = async (req, res) => {
     try {
         const auctions = await Auction.find()
-            .populate("category", "title")
+            .populate("category", "name")
             .populate("sellerId", "name");
         res.status(200).json({ success: true, auctions });
     } catch (error) {
@@ -62,7 +63,7 @@ const getActiveAuctions = async (req, res) => {
             status: "active",
             endTime: { $gt: new Date() },
         })
-            .populate("category", "title")
+            .populate("category", "name")
             .populate("sellerId", "name");
         res.status(200).json({ success: true, auctions });
     } catch (error) {
@@ -78,7 +79,7 @@ const getAuctionById = async (req, res) => {
     try {
         const { id } = req.params;
         const auction = await Auction.findById(id)
-            .populate("category", "title")
+            .populate("category", "name")
             .populate("sellerId", "name");
         if (!auction) {
             return res
@@ -264,7 +265,36 @@ const getAuctionsWhereBidDone = async (req, res) => {
         const bids = await Bid.find({ userId });
         if (bids.length > 0) {
             const auctionIds = bids.map((bid) => bid.auctionId);
-            const auctions = await Auction.find({ _id: { $in: auctionIds } });
+            const auctions = await Auction.find({ _id: { $in: auctionIds } })
+                .populate("category", "name")
+                .populate("sellerId", "name");
+            return res.status(200).json({ success: true, auctions });
+        } else {
+            return res.status(404).json({
+                success: true,
+                message: "No se han realizado pujas en ninguna subasta",
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las subastas donde se hizo un bid",
+            error,
+        });
+    }
+};
+const getFinishedAuctionsWhereBidDone = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const bids = await Bid.find({ userId });
+        if (bids.length > 0) {
+            const auctionIds = bids.map((bid) => bid.auctionId);
+            const auctions = await Auction.find({
+                _id: { $in: auctionIds },
+                status: "closed",
+            })
+                .populate("category", "name")
+                .populate("sellerId", "name");
             return res.status(200).json({ success: true, auctions });
         } else {
             return res.status(404).json({
@@ -283,12 +313,42 @@ const getAuctionsWhereBidDone = async (req, res) => {
 const getAuctionsByOwner = async (req, res) => {
     try {
         const { userId } = req.params;
-        const auctions = await Auction.find({ sellerId: userId });
+        const auctions = await Auction.find({ sellerId: userId })
+            .populate("Category", "title")
+            .populate("sellerId", "name");
         res.status(200).json({ success: true, auctions });
     } catch (error) {
         res.status(500).json({
             success: false,
             message: "Error al obtener las subastas del vendedor",
+            error,
+        });
+    }
+};
+
+const getActiveFollowedAuctions = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, message: "Usuario no encontrado" });
+        }
+
+        const favoriteAuctionsIds = user.favoriteAuctions;
+        const auctions = await Auction.find({
+            _id: { $in: favoriteAuctionsIds },
+            status: "active",
+        })
+            .populate("category", "name")
+            .populate("sellerId", "name");
+
+        res.status(200).json({ success: true, auctions });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las subastas activas seguidas",
             error,
         });
     }
@@ -304,5 +364,7 @@ export default {
     activateAuctions,
     closeAuctions,
     getAuctionsWhereBidDone,
+    getFinishedAuctionsWhereBidDone,
     getAuctionsByOwner,
+    getActiveFollowedAuctions,
 };
