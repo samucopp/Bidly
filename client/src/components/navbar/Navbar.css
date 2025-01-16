@@ -1,142 +1,238 @@
 .navbar {
-    width: 100%;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
-  
-  .navbar-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-  
-  .navbar-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  
-  .navbar-logo a {
-    font-family: serif;
-    font-size: 1.5rem;
-    color: #333;
-    text-decoration: none;
-  }
-  
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.navbar-container {
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+  overflow: hidden; /* opcional: si quieres asegurar que nada se desborde */
+}
+.menu-item {
+  letter-spacing: 1px;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  gap: 0;
+}
+
+.navbar-logo {
+  display: flex;
+  padding-right: 16px;
+  align-items: center;
+  height: 100%;
+  /* Para que ocupe toda la altura del navbar */
+}
+
+.navbar-logo img {
+  height: 35px;
+  /* O el tamaño específico que necesites */
+  width: auto;
+  /* Mantiene la proporción del logo */
+  object-fit: contain;
+  /* Asegura que la imagen se ajuste correctamente */
+}
+
+
+.navbar-links {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  /* Reducido a 0.5rem */
+  margin-left: -2rem;
+  /* Aumentamos el margen negativo para acercarlo más */
+}
+
+
+.navbar-links a {
+  color: #4a4a4a;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  /* Reducimos también el padding horizontal de los enlaces */
+  transition: color 0.3s ease;
+}
+
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  /* eliminar el margin-right: -0.5rem; */
+}
+
+.auth-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  /* Reducido de 1rem para que estén más juntos */
+}
+
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-container {
+  position: relative;
+
+}
+
+.search-container input {
+  width: 180px;
+  /* Opcional: reducido de 200px si quieres que ocupe menos espacio */
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.search-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+
+.auth-links a {
+  color: #4a4a4a;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.language-selector span {
+  color: #ddd;
+}
+
+.mobile-menu-button {
+  display: block;
+  background: none;
+  border: none;
+  padding-left: 16px;
+  padding-right: 0px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 2px;
+  background-color: #333;
+  margin: 4px 0;
+}
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background-color: white;
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box; /* Añadimos esta línea */
+  top: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu.active {
+  display: flex;
+}
+
+.menu-item-register {
+  font-weight: bold;
+}
+
+.menu-item-login {
+  font-weight: bold;
+}
+
+.mobile-menu a {
+  color: #4a4a4a;
+  text-decoration: none;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Media Queries */
+@media (min-width: 975px) {
   .navbar-links {
-    display: none;
-  }
-  
-  .navbar-links a {
-    color: #4a4a4a;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s ease;
-  }
-  
-  .navbar-links a:hover {
-    color: #000;
-  }
-  
-  .navbar-right {
     display: flex;
     align-items: center;
     gap: 1rem;
+    font-size: 0.9rem;
+    /* Tamaño de fuente más pequeño */
   }
-  
-  .search-container {
-    position: relative;
+
+  .navbar-links a {
+    padding: 0.4rem 0.6rem;
+    /* Reducir el padding para que ocupen menos espacio */
   }
-  
-  .search-container input {
-    width: 200px;
-    padding: 0.5rem 2rem 0.5rem 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.875rem;
+
+  .mobile-menu-button {
+    display: none;
   }
-  
-  .search-button {
-    position: absolute;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #666;
-    cursor: pointer;
-  }
-  
+
   .auth-links {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    font-size: 0.85rem;
+    /* Tamaño de fuente más pequeño para los enlaces de auth */
   }
-  
-  .auth-links a {
-    color: #4a4a4a;
-    text-decoration: none;
-    font-size: 0.875rem;
-  }
-  
-  .language-selector {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .language-selector span {
-    color: #ddd;
-  }
-  
-  .mobile-menu-button {
-    display: block;
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-  }
-  
-  .hamburger-line {
-    width: 24px;
-    height: 2px;
-    background-color: #333;
-    margin: 4px 0;
-  }
-  
-  .mobile-menu {
+}
+
+@media (max-width: 975px) {
+  .navbar-links {
     display: none;
-    flex-direction: column;
-    background-color: white;
-    padding: 1rem;
-    position: absolute;
-    width: 100%;
-    top: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Ocultar los enlaces en móvil */
   }
-  
-  .mobile-menu.active {
+
+  .auth-links {
+    display: none;
+    /* Ocultar los enlaces de auth en el navbar */
+  }
+
+  .mobile-menu .auth-mobile-links {
     display: flex;
+    flex-direction: column;
+    border-top: 1px solid #eee;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
   }
-  
-  .mobile-menu a {
+
+  .mobile-menu .auth-mobile-links a {
     color: #4a4a4a;
     text-decoration: none;
     padding: 0.75rem 0;
     border-bottom: 1px solid #eee;
   }
-  
-  /* Media Queries */
-  @media (min-width: 768px) {
-    .navbar-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-  
-    .mobile-menu-button {
-      display: none;
-    }
+}
+@media (min-width: 710px) and (max-width: 974px) {
+  .search-container input {
+    width: 450px; /* Aumentamos el ancho para tablets */
+    transition: width 0.3s ease; /* Agregamos una transición suave */
   }
+}
+@media (min-width: 500px) and (max-width: 709px) {
+  .search-container input {
+    width: 250px; /* Aumentamos el ancho para tablets */
+    transition: width 0.3s ease; /* Agregamos una transición suave */
+  }
+}
