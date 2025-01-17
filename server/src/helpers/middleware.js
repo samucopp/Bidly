@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import Auction from "../models/auctionModel.js";
+import Bid from "../models/bidModel.js";
 
 function checkAuthorization(req, res, next) {
     try {
@@ -24,7 +25,7 @@ function checkAuthorization(req, res, next) {
 
 function checkAuctionOwnership(req, res, next) {
     try {
-        const auctionId = req.params.id;
+        const { auctionId } = req.params;
         const userId = req.user.id;
 
         Auction.findById(auctionId)
@@ -45,7 +46,31 @@ function checkAuctionOwnership(req, res, next) {
     }
 }
 
+function checkBidOwnership(req, res, next) {
+    try {
+        const { bidId } = req.params;
+        const userId = req.user.id;
+
+        Bid.findById(bidId)
+            .then(bid => {
+                if (!bid) {
+                    return res.status(404).json({ message: "Puja no encontrada." });
+                }
+                if (bid.userId.toString() !== userId.toString()) {
+                    return res.status(403).json({ message: "No tienes permiso para editar esta puja." });
+                }
+                next();
+            })
+            .catch(error => {
+                return res.status(500).json({ message: "Error al verificar la puja.", error: error.message });
+            });
+    } catch (error) {
+        return res.status(500).json({ message: "Error interno del servidor.", error: error.message });
+    }
+}
+
 export {
     checkAuthorization,
     checkAuctionOwnership,
+    checkBidOwnership
 };
