@@ -1,5 +1,6 @@
 import User from "../models/userModel.js";
 import Auction from "../models/auctionModel.js";
+import { hashPassword, verifyPassword } from "../config/bcrypt.js";
 
 async function getAll(req, res) {
     try {
@@ -16,6 +17,12 @@ async function getAll(req, res) {
 async function register(req, res) {
     try {
         const { name, email, password, passwordRepeat, address } = req.body;
+        const hash = await hashPassword(password);
+        if (!hash) {
+            return res.status(400).json({
+                message: "Error al hashear la contraseña",
+            });
+        }
         if (password !== passwordRepeat) {
             return res.status(400).json({
                 message: "Las contraseñas no coinciden",
@@ -30,7 +37,7 @@ async function register(req, res) {
         const user = await User.create({
             name,
             email,
-            password,
+            password: hash,
             address,
         });
         return res.status(201).json(user);
@@ -56,7 +63,7 @@ async function login(req, res) {
                 message: "El correo no esta registrado",
             });
         }
-        const isMatch = await user.comparePassword(password);
+        const isMatch = await verifyPassword(password, user.password);
         if (!isMatch) {
             return res.status(400).json({
                 message: "La contraseña es incorrecta",
