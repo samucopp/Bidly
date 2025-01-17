@@ -4,7 +4,7 @@ import connectDb from "./config/connectDb.js";
 import router from "./routes/router.js";
 import cron from "node-cron";
 import auctionController from "./controllers/auctionController.js";
-
+import cors from "cors";
 dotenv.config();
 
 const PORT = 3000;
@@ -14,6 +14,7 @@ const app = express(); // crear servidor
 app.use(express.static("src/public")); // configurar directorio de archivos estáticos
 app.use(express.urlencoded({ extended: true })); // configurar body parser para recibir datos de formularios
 app.use(express.json()); // configurar body parser para recibir datos en formato json
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
