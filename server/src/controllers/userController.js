@@ -15,8 +15,8 @@ async function getAll(req, res) {
 
 async function getUser(req, res) {
     try {
-        const { id } = req.params;
-        const user = await User.findById(id);
+        const { userId } = req.params;
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(400).json({
                 message: "Usuario no encontrado",
