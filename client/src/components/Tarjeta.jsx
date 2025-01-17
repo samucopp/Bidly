@@ -19,7 +19,7 @@ const Tarjeta = ({ datosPuja }) => {
             />
             <p>Puja de Salida: {datosPuja.PujadeSalida} €</p>
             <p>Puja Actual: {datosPuja.PujaActual} €</p>
-            <Link to={"/catalogo/"+datosPuja._id}>
+            <Link to={"/catalog/"+datosPuja._id}>
                 <button
                     style={{
                         marginTop: "16px",

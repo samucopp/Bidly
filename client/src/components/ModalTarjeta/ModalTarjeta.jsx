@@ -10,14 +10,14 @@ const Modal = ({ visible, onClose, onBid }) => {
                 <p><strong>Origen Geográfico:</strong> Egipto</p>
                 <p><strong>Descripción Física:</strong> Reloj de arena artesanal con marco de madera tallada y ampollas de cristal soplado. Relleno con arena fina dorada.</p>
                 <p><strong>Precio Aproximado de Mercado:</strong> 5000 €</p>
-               <Link to= "/subasta"> <button
+               <Link to= "/auction"> <button
                     style={buttonStyles.bid}
                     
                 >
                     Pujar
                 </button>
                 </Link>
-                <Link to="/catalogo">
+                <Link to="/catalog">
                     <button>X</button>
                 </Link>
             </div>

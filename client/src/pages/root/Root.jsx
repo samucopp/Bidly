@@ -8,7 +8,7 @@ const Root = () => {
     return (
         <div>
             <Navbar/>
-            { (location.pathname.includes("/catalogo")|| location.pathname.includes("/subasta")) &&(
+            { (location.pathname.includes("/catalog")|| location.pathname.includes("/auction")) &&(
                 <h1>Aqui iria el banner de {location.pathname.replace("/","")}</h1>
             ) }
             <Outlet/>

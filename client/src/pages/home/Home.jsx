@@ -13,12 +13,16 @@ const Home = () => {
         '/image/portada_cinco.jpg',
       ];
     return (
-        <div>
+        <div className="home-container">
+        <div className="home-content">
             <CategoryNav/>
             <FrontPageCarrusel images={image} />
-            <h1>Seccion de novedades</h1>
+            <div className="novedades-section">
+                <h1>Seccion de novedades</h1>
+            </div>
             <Outlet/>
         </div>
+    </div>
     );
 };
 

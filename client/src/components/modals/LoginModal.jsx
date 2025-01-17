@@ -17,41 +17,41 @@ const LoginModal = ({ isOpen, onClose }) => {
     return (
         <GenericModal isOpen={isOpen} onClose={onClose}>
             <div className="login-content">
-                <h2>Inicia sesión para poder pujar en subasta</h2>
+                <h2>Please log in to bid on the auction</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <input
                             type="email"
                             value={formData.email}
-                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             placeholder="Email"
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group password-group">
                         <input
                             type={showPassword ? "text" : "password"}
                             value={formData.password}
-                            onChange={(e) => setFormData({...formData, password: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             placeholder="Password"
                         />
                         <button
                             type="button"
-                            className="toggle-password"
+                            className={`toggle-password ${showPassword ? 'hide' : ''}`}
                             onClick={() => setShowPassword(!showPassword)}
                         />
                     </div>
 
                     <div className="forgot-password">
-                        <a href="#">¿Olvidaste tu contraseña?</a>
+                        <a href="#">Forgot your password?</a>
                     </div>
 
                     <button type="submit" className="signin-button">
-                        INICIA SESIÓN
+                        LOG IN
                     </button>
 
                     <button type="button" className="create-account-button">
-                        CREA UNA CUENTA
+                        CREATE ACCOUNT
                     </button>
                 </form>
             </div>
