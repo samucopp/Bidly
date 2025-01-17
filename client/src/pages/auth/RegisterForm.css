@@ -1,44 +1,78 @@
-.title-register-form {
-    justify-content: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fff;
+    min-height: 100vh;
+    overflow: auto;
 }
 
 .register-container {
+    min-height: 100vh;
+    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Cambiado de center a flex-start */
-    min-height: 80vh; /* Reducido de 100vh */
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
     background-color: #fff;
-    padding: 20px;
-    margin-top: -50px; /* Para compensar el espacio del título */
+    padding: 20px 0;
+    /* Permitimos que el contenedor se ajuste al contenido */
+    height: auto;
+    /* Aseguramos que permita scroll */
+    overflow-y: auto;
+}
+
+.register-logo {
+    position: fixed; /* Mantiene el logo en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-color: #fff;
+}
+
+.register-logo img {
+    height: 35px;
+    width: auto;
+    object-fit: contain;
 }
 
 .register-form {
     width: 100%;
-    max-width: 400px; /* Reducido un poco el ancho máximo */
-    padding: 20px 40px; /* Ajustado el padding */
+    max-width: 400px;
+    padding: 0 20px;
+    margin-bottom: 2rem;
 }
 
-.title {
-    text-align: left; 
-    font-size: 24px;
-    margin-bottom: 30px;
-    font-weight: bold; 
+.register-title {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px 0;
+    padding-left: 0px;
+    /* Aseguramos que el formulario tenga espacio suficiente en móvil */
+    height: auto;
 }
 
 .input-field {
     width: 100%;
-    padding: 15px; 
+    border-radius: 4px;
+    padding: 15px;
     margin-bottom: 15px;
     border: 1px solid #f0f0f0;
     font-size: 16px;
     background-color: #fafafa;
-    border-radius: 0; 
 }
 
 .input-field::placeholder {
-    color: #a6a6a6;
+    color: #b8b5b5;
+    font-size: 15px;
 }
 
 .input-field:focus {
@@ -47,29 +81,34 @@
     background-color: #fff;
 }
 
-
 .button-container {
-    margin-top: 30px; 
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+ /* Hace que los botones se estiren para ocupar todo el espacio */
 }
 
 .submit-button {
     width: 100%;
     padding: 15px;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     background-color: #222;
     color: white;
     border: none;
     font-size: 14px;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1px; 
+    letter-spacing: 1px;
+    border-radius: 4px;
 }
 
 .submit-button:last-child {
     background-color: #fff;
     color: #222;
     border: 1px solid #222;
-    margin-bottom: 0; 
+    margin-bottom: 0;
 }
 
 .submit-button:hover {
@@ -78,4 +117,14 @@
 
 .submit-button:last-child:hover {
     background-color: #f8f8f8;
+}
+@media screen and (max-height: 700px) {
+    .register-container {
+        justify-content: flex-start;
+        padding-top: 60px; /* Espacio para el logo */
+    }
+    
+    .register-form {
+        margin-bottom: 40px; /* Añadimos espacio al final */
+    }
 }

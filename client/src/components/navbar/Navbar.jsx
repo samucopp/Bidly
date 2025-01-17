@@ -16,6 +16,7 @@ const Navbar = () => {
     const handleLoginClick = (e) => {
         e.preventDefault(); // Previene la navegación a /login
         setIsLoginOpen(true);
+        setIsMobileMenuOpen(false); 
     };
 
     const handleRegisterClick = (e) => {
