@@ -36,11 +36,7 @@ const Tarjeta = ({ datosPuja }) => {
                 </button>
             </Link>
 
-            {/* <Modal
-                visible={modalVisible}
-                onClose={toggleModal}
-                onBid={() => alert("Esto llevará a puja")}
-            /> */}
+           
         </div>
     );
 };

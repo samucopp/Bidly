@@ -1,10 +1,15 @@
 import React from "react";
 import "./subasta.css";  
-import "../productList/ProductList"
-import { Outlet } from "react-router-dom";
-import ProductList from "../productList/ProductList";
+import "../productList/ProductList";
+import ImageCarousel from "../../components/carrousel/Carrousel"; // Importa el nuevo componente
 
 const Subasta = () => {
+  const images = [
+    "/image/EspejoBorder1.jpg",
+    "/image/EspejoBorder2.jpg",
+    "/image/EspejoBorder3.jpg"
+  ];
+
   return (
     <div className="subasta-page">
       {/* Encabezado */}
@@ -18,8 +23,13 @@ const Subasta = () => {
         <section className="product-details">
           <div className="product-image">
             {/* Imagen del producto */}
-            <img src="/image/EspejoBorder" alt="Producto" />
+            <img src="/image/EspejoBorder" alt="Producto principal" />
+            {/* Carrusel de imágenes */}
+          <ImageCarousel images={images} initialIndex={0} />
           </div>
+
+          
+
           <div className="product-info">
             <h2>Bidly</h2>
             <p><strong>Lote 34567:</strong> Espejo Border</p>
@@ -30,7 +40,7 @@ const Subasta = () => {
             <button className="enter-auction">Entrar a subasta</button>
           </div>
         </section>
-
+        {/* Otros elementos del componente Subasta */}
         {/* Puja en directo */}
         <section className="live-bid">
           <div className="bids">
