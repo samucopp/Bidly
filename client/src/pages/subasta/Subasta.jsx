@@ -1,86 +1,120 @@
-import React from "react";
-import "./subasta.css";  
+import React, { useEffect, useState } from "react";
+import "./subasta.css";
 import "../productList/ProductList";
 import ImageCarousel from "../../components/carrousel/Carrousel"; // Importa el nuevo componente
 
+const BASE_URL= import.meta.env.VITE_BASE_URL
 const Subasta = () => {
-  const images = [
-    "/image/EspejoBorder1.jpg",
-    "/image/EspejoBorder2.jpg",
-    "/image/EspejoBorder3.jpg"
-  ];
+  const [auction, setAuction] = useState(null); // Datos de la subasta
+  const [bids, setBids] = useState([]); // Lista de pujas en directo
+  const [myBid, setMyBid] = useState(""); // Valor de mi puja
+  const [error, setError] = useState(null); // Errores de la API
+  const auctionId = "34567"; // ID de la subasta (puedes obtenerlo dinámicamente si es necesario)
+
+  // Fetch inicial para cargar los detalles de la subasta
+  useEffect(() => {
+    const fetchAuctionDetails = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/api/auctions/${auctionId}`);
+        if (!response.ok) throw new Error("Error al cargar los detalles de la subasta.");
+        const data = await response.json();
+        setAuction(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    const fetchLiveBids = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/api/auctions/${auctionId}/bids`);
+        if (!response.ok) throw new Error("Error al cargar las pujas en directo.");
+        const data = await response.json();
+        setBids(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchAuctionDetails();
+    fetchLiveBids();
+  }, [auctionId]);
+
+  // Enviar una nueva puja
+  const handleBid = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/auctions/${auctionId}/bid`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: myBid }),
+      });
+
+      if (!response.ok) throw new Error("Error al realizar la puja.");
+      const newBid = await response.json();
+      setBids((prevBids) => [...prevBids, newBid]); // Agregar la nueva puja a la lista
+      setMyBid(""); // Limpiar el campo de entrada
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
     <div className="subasta-page">
-      {/* Encabezado */}
       <header className="header">
         <h1>Subastas</h1>
       </header>
 
-      {/* Contenido principal */}
       <main className="main-content">
-        {/* Detalles del producto */}
-        <section className="product-details">
-          <div className="product-image">
-            {/* Imagen del producto */}
-            <img src="/image/EspejoBorder" alt="Producto principal" />
-            {/* Carrusel de imágenes */}
-          <ImageCarousel images={images} initialIndex={0} />
-          </div>
+        {error && <p className="error">{error}</p>}
 
-          
+        {auction ? (
+          <>
+            <section className="product-details">
+              <div className="product-image">
+                <img src={auction.image || "/image/default.jpg"} alt={auction.name || "Producto"} />
+                <ImageCarousel images={auction.images || []} initialIndex={0} />
+              </div>
 
-          <div className="product-info">
-            <h2>Bidly</h2>
-            <p><strong>Lote 34567:</strong> Espejo Border</p>
-            <p>Descripción del producto: una pieza elegante y funcional para cualquier espacio.</p>
-            <p><strong>Precio de salida:</strong> 20 €</p>
-            <p><strong>Fecha inicio de la subasta:</strong> 17/01/2025</p>
-            <p><strong>Fecha fin de la subasta:</strong> 18/01/2025</p>
-            <button className="enter-auction">Entrar a subasta</button>
-          </div>
-        </section>
-        {/* Otros elementos del componente Subasta */}
-        {/* Puja en directo */}
-        <section className="live-bid">
-          <div className="bids">
-            <h3>Pujas en directo</h3>
-            <ul>
-              <li>Maria - 16/01/2025 8:31 - 21€</li>
-              <li>Juan - 16/01/2025 8:32 - 22€</li>
-              <li>Sofia - 16/01/2025 8:33 - 23€</li>
-            </ul>
-          </div>
-          <div className="my-bid">
-            <h3>Mi Puja</h3>
-            <input type="number" placeholder="Introduce tu puja" />
-            <button>Pujar</button>
-          </div>
-        </section>
+              <div className="product-info">
+                <h2>{auction.name}</h2>
+                <p><strong>Lote {auction.id}:</strong> {auction.description}</p>
+                <p><strong>Precio de salida:</strong> {auction.startingPrice} €</p>
+                <p><strong>Fecha inicio de la subasta:</strong> {auction.startDate}</p>
+                <p><strong>Fecha fin de la subasta:</strong> {auction.endDate}</p>
+                <button className="enter-auction">Entrar a subasta</button>
+              </div>
+            </section>
 
-        {/* Temporizador */}
-        <div className="timer">
-          <p><strong>Tiempo restante:</strong> 1h 22m 27s</p>
-        </div>
+            <section className="live-bid">
+              <div className="bids">
+                <h3>Pujas en directo</h3>
+                <ul>
+                  {bids.map((bid, index) => (
+                    <li key={index}>
+                      {bid.user} - {bid.date} - {bid.amount}€
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-        {/* Sugerencias */}
-        <section className="suggestions">
-          <h3>Sugerencias</h3>
-          <div className="suggestion-items">
-            <div className="suggestion-item">
-              <img src="/image/EspejoBorder" alt="Sugerencia 1" />
-              <p>Producto 1</p>
+              <div className="my-bid">
+                <h3>Mi Puja</h3>
+                <input
+                  type="number"
+                  value={myBid}
+                  onChange={(e) => setMyBid(e.target.value)}
+                  placeholder="Introduce tu puja"
+                />
+                <button onClick={handleBid}>Pujar</button>
+              </div>
+            </section>
+
+            <div className="timer">
+              <p><strong>Tiempo restante:</strong> {auction.remainingTime}</p>
             </div>
-            <div className="suggestion-item">
-              <img src="/image/EspejoBorder" alt="Sugerencia 2" />
-              <p>Producto 2</p>
-            </div>
-            <div className="suggestion-item">
-              <img src="/image/EspejoBorder" alt="Sugerencia 3" />
-              <p>Producto 3</p>
-            </div>
-          </div>
-        </section>
+          </>
+        ) : (
+          <p>Cargando detalles de la subasta...</p>
+        )}
       </main>
     </div>
   );
