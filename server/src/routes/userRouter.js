@@ -7,8 +7,9 @@ const router = Router();
 
 router.post("/register", authController.register);
 router.get("/login", authController.login);
-router.get("/all", userController.getAll);
-router.get("/:userId", userController.getUser);
+router.get("/all", checkAuthorization, userController.getAll);
+router.get("/:userId", checkAuthorization, userController.getUser);
+router.put("/:userId", checkAuthorization, userController.editUser);
 router.put("/favorites/add", checkAuthorization, userController.addAuctionToFavorites);
 router.put("/favorites/remove", checkAuthorization, userController.removeAuctionFromFavorites);
 
