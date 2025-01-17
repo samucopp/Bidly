@@ -129,7 +129,7 @@ const CategoryNav = () => {
     }
   ];
 
-  const itemsPerView = window.innerWidth <= 768 ? 4 : 6;
+  const itemsPerView = window.innerWidth <= 768 ? 4 : 8;
   const itemWidth = 120; // Ajusta este valor según el diseño
 
   const nextSlide = () => {
@@ -183,6 +183,7 @@ const CategoryNav = () => {
                   </button>
                 </div>
               ))}
+              <div></div>
             </div>
           </div>
 
