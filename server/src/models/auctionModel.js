@@ -49,13 +49,19 @@ const auctionSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['active', 'closed'],
-        default: 'active',
+        enum: ['inactive', 'active', 'closed'],
+        default: 'inactive',
     },
     winnerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    followers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        },
+    ],
     createdAt: {
         type: Date,
         default: Date.now

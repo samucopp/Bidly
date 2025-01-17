@@ -3,8 +3,8 @@ import bidController from "../controllers/bidController.js";
 
 const router = Router();
 
-router.post('/bid', bidController.createBid);
-router.get('/bid/:auctionId', bidController.getBidsByAuction);
-router.delete('/bid/:id', bidController.deleteBid);
+router.post('/create', bidController.createBid);
+router.get('/:auctionId', bidController.getBidsByAuction);
+router.delete('/delete/:id', bidController.deleteBid);
 
 export default router;
