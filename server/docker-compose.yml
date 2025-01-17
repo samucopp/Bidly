@@ -1,7 +1,7 @@
 services:
     mongo: # mongodb
         container_name: ${MONGO_HOST}
-        image: mongo:latest
+        image: mongo:4.0
         restart: unless-stopped
         environment:
             MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
