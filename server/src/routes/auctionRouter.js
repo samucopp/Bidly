@@ -1,28 +1,20 @@
 import { Router } from "express";
 import auctionController from "../controllers/auctionController.js";
+import { checkAuthorization, checkAuctionOwnership } from "../helpers/middleware.js";
 
 const router = Router();
 
-router.post("/create", auctionController.createAuction);
+router.post("/create", checkAuthorization, auctionController.createAuction);
 router.get("/", auctionController.getAuctions);
 router.get("/active", auctionController.getActiveAuctions);
-router.get("/:id", auctionController.getAuctionById);
-router.put("/update/:id", auctionController.updateAuction);
+router.get("/:auctionId", auctionController.getAuctionById);
+router.put("/update/:auctionId", checkAuthorization, checkAuctionOwnership, auctionController.updateAuction);
 router.put("/activate", auctionController.activateAuctions);
 router.put("/close", auctionController.closeAuctions);
-router.delete("/delete/:id", auctionController.deleteAuction);
-router.get(
-    "/user/:userId/participated",
-    auctionController.getAuctionsWhereBidDone
-);
-router.get(
-    "/user/:userId/finished-participated",
-    auctionController.getFinishedAuctionsWhereBidDone
-);
-router.get("/user/:userId/owner", auctionController.getAuctionsByOwner);
-router.get(
-    "/user/:userId/following",
-    auctionController.getActiveFollowedAuctions
-);
+router.delete("/delete/:auctionId", checkAuthorization, checkAuctionOwnership, auctionController.deleteAuction);
+router.get("/user/:userId/participated", checkAuthorization, auctionController.getAuctionsWhereBidDone);
+router.get("/user/:userId/finished-participated", checkAuthorization, auctionController.getFinishedAuctionsWhereBidDone);
+router.get("/user/:userId/owner", checkAuthorization, auctionController.getAuctionsByOwner);
+router.get("/user/:userId/following", checkAuthorization, auctionController.getActiveFollowedAuctions);
 
 export default router;

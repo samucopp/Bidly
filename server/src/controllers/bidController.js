@@ -74,9 +74,9 @@ const getBidsByAuction = async (req, res) => {
 
 const deleteBid = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { bidId } = req.params;
 
-        const bid = await Bid.findById(id);
+        const bid = await Bid.findById(bidId);
         if (!bid) {
             return res
                 .status(404)
@@ -94,7 +94,7 @@ const deleteBid = async (req, res) => {
             });
         }
 
-        await Bid.findByIdAndDelete(id);
+        await Bid.findByIdAndDelete(bidId);
         res.status(200).json({
             success: true,
             message: "Puja eliminada exitosamente",
