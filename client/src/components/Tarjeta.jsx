@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Modal from "./ModalTarjeta/ModalTarjeta";
 import { Link } from "react-router-dom";
 
 const Tarjeta = ({ datosPuja }) => {
@@ -11,15 +10,14 @@ const Tarjeta = ({ datosPuja }) => {
 
     return (
         <div style={{ border: "1px solid #ccc", padding: "16px", borderRadius: "8px", maxWidth: "300px" }}>
-            <h2>{datosPuja.Nombre}</h2>
+            <h2>{datosPuja.title}</h2>
             <img
-                src={datosPuja.Imagen}
-                alt={datosPuja.Nombre}
+                src={datosPuja.images[0]}
+                alt={datosPuja.title}
                 style={{ width: "100%", borderRadius: "8px" }}
             />
-            <p>Puja de Salida: {datosPuja.PujadeSalida} €</p>
-            <p>Puja Actual: {datosPuja.PujaActual} €</p>
-            <Link to={"/catalogo/"+datosPuja._id}>
+            <p>{datosPuja.description}</p>
+            <Link to={"/catalogo/" + datosPuja._id}>
                 <button
                     style={{
                         marginTop: "16px",
@@ -30,13 +28,10 @@ const Tarjeta = ({ datosPuja }) => {
                         borderRadius: "4px",
                         cursor: "pointer"
                     }}
-
                 >
-                    Mas información
+                    Más información
                 </button>
             </Link>
-
-           
         </div>
     );
 };

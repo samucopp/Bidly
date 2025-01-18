@@ -1,47 +1,16 @@
 import './CategoriasCatalogo.css';
-import React, { useState } from "react";
+import React from "react";
 
-const categoriasData = [
-    {
-        nombre: 'Muebles',
-        subcategorias: ['Espejos', 'Mesas', 'Sillones']
-    },
-    {
-        nombre: 'Arte',
-        subcategorias: ['Jarrones', 'Cuadros', 'Escultura', 'Vinilos']
-    },
-    {
-        nombre: 'Motor',
-        subcategorias: ['Coches', 'Motos', 'Barcos', 'Drones']
-    }
-];
-
-const Categorias = () => {
-    const [openCategories, setOpenCategories] = useState([]);
-
-    const toggleCategory = (category) => {
-        if (openCategories.includes(category)) {
-            setOpenCategories(openCategories.filter((cat) => cat !== category));
-        } else {
-            setOpenCategories([...openCategories, category]);
-        }
-    };
+const Categorias = ({ categoriasData }) => {
 
     return (
         <div className="categorias">
             <h2>Categorías</h2>
             {categoriasData.map((categoria) => (
-                <div className="categoria" key={categoria.nombre}>
-                    <h3 onClick={() => toggleCategory(categoria.nombre)}>
-                        {categoria.nombre}
+                <div className="categoria" key={categoria._id}>
+                    <h3>
+                        {categoria.name}
                     </h3>
-                    {openCategories.includes(categoria.nombre) && (
-                        <ul>
-                            {categoria.subcategorias.map((subcategoria) => (
-                                <li key={subcategoria}>{subcategoria}</li>
-                            ))}
-                        </ul>
-                    )}
                 </div>
             ))}
         </div>
