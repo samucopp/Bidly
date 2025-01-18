@@ -3,6 +3,8 @@
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
+  z-index: 1000; 
+  margin-bottom: 0px;
 }
 
 .navbar-container {
@@ -28,16 +30,12 @@
   padding-right: 16px;
   align-items: center;
   height: 100%;
-  /* Para que ocupe toda la altura del navbar */
 }
 
 .navbar-logo img {
   height: 35px;
-  /* O el tamaño específico que necesites */
   width: auto;
-  /* Mantiene la proporción del logo */
   object-fit: contain;
-  /* Asegura que la imagen se ajuste correctamente */
 }
 
 
@@ -45,9 +43,7 @@
   display: none;
   align-items: center;
   gap: 0.5rem;
-  /* Reducido a 0.5rem */
   margin-left: -2rem;
-  /* Aumentamos el margen negativo para acercarlo más */
 }
 
 
@@ -55,7 +51,6 @@
   color: #4a4a4a;
   text-decoration: none;
   padding: 0.5rem 0.75rem;
-  /* Reducimos también el padding horizontal de los enlaces */
   transition: color 0.3s ease;
 }
 
@@ -64,14 +59,12 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  /* eliminar el margin-right: -0.5rem; */
 }
 
 .auth-links {
   display: flex;
   align-items: center;
   gap: 1rem;
-  /* Reducido de 1rem para que estén más juntos */
 }
 
 
@@ -88,7 +81,6 @@
 
 .search-container input {
   width: 180px;
-  /* Opcional: reducido de 200px si quieres que ocupe menos espacio */
   padding: 0.5rem 2rem 0.5rem 0.75rem;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -146,13 +138,16 @@
   flex-direction: column;
   background-color: white;
   padding: 1rem;
-  position: absolute;
+  position: fixed;
   width: 100%;
-  box-sizing: border-box; /* Añadimos esta línea */
-  top: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  top: 64px; /* Asegúrate de que este valor coincida exactamente con la altura de tu navbar */
+  left: 0;
+  z-index: 999;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
 }
-
 .mobile-menu.active {
   display: flex;
 }
@@ -172,19 +167,16 @@
   border-bottom: 1px solid #eee;
 }
 
-/* Media Queries */
 @media (min-width: 975px) {
   .navbar-links {
     display: flex;
     align-items: center;
     gap: 1rem;
     font-size: 0.9rem;
-    /* Tamaño de fuente más pequeño */
   }
 
   .navbar-links a {
     padding: 0.4rem 0.6rem;
-    /* Reducir el padding para que ocupen menos espacio */
   }
 
   .mobile-menu-button {
@@ -194,19 +186,16 @@
   .auth-links {
     display: flex;
     font-size: 0.85rem;
-    /* Tamaño de fuente más pequeño para los enlaces de auth */
   }
 }
 
 @media (max-width: 975px) {
   .navbar-links {
     display: none;
-    /* Ocultar los enlaces en móvil */
   }
 
   .auth-links {
     display: none;
-    /* Ocultar los enlaces de auth en el navbar */
   }
 
   .mobile-menu .auth-mobile-links {
@@ -226,13 +215,13 @@
 }
 @media (min-width: 710px) and (max-width: 974px) {
   .search-container input {
-    width: 450px; /* Aumentamos el ancho para tablets */
-    transition: width 0.3s ease; /* Agregamos una transición suave */
+    width: 450px;
+    transition: width 0.3s ease;
   }
 }
 @media (min-width: 500px) and (max-width: 709px) {
   .search-container input {
-    width: 250px; /* Aumentamos el ancho para tablets */
-    transition: width 0.3s ease; /* Agregamos una transición suave */
+    width: 250px;
+    transition: width 0.3s ease; 
   }
 }

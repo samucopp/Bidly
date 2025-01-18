@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import './RegisterForm.css';
 
 const RegisterForm = () => {
@@ -23,42 +23,42 @@ const RegisterForm = () => {
     };
     const handleCancel = (e) => {
         e.preventDefault();
-        navigate('/'); // Navega a la página de login al cancelar
+        navigate('/'); 
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Validaciones básicas
         if (!formData.alias?.trim()) {
-            showError('El alias es obligatorio');
+            showError('Alias required');
             return;
         }
         if (!formData.first_name?.trim()) {
-            showError('El nombre es obligatorio');
+            showError('Name required');
             return;
         }
         if (!formData.last_name?.trim()) {
-            showError('El apellido es obligatorio');
+            showError('Last Name required');
             return;
         }
 
         if (!formData.email?.trim()) {
-            showError('El email es obligatorio');
+            showError('Email required');
             return;
         }
 
         if (!formData.password) {
-            showError('La contraseña es obligatoria');
+            showError('Password required');
             return;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            showError('Las contraseñas no coinciden');
+            showError('Passwords don´t match');
             return;
         }
 
         if (!formData.direction) {
-            showError('La direccion es obligatoria');
+            showError('Direction required');
             return;
         }
 
@@ -80,33 +80,37 @@ const RegisterForm = () => {
 
         } catch (error) {
             // Verificar directamente el mensaje de error que establecimos en fetchData
-            if (error.message === 'Usuario ya existente') {
-                showError('Usuario ya existente');
+            if (error.message === 'User already exists') {
+                showError('User already exists');
             } else {
-                showError('Error en el registro');
+                showError('Registration error');
             }
         }
     };
     return (
-        <>
-            <h1 className='title-register-form'>aquí iría el logotipo</h1>
-            <div className="register-container">
-                <form className="register-form" onSubmit={handleSubmit}>
-                    <h1 className="title">Crear Cuenta </h1>
-
+        <div className="register-container">
+            <div className="register-logo">
+                <Link to="/">
+                    <img src="/logo_bidly.png" alt="bidly"/>
+                </Link>
+            </div>
+            
+            <form className="register-form" onSubmit={handleSubmit}>
+                <h1 className="register-title">Create Account</h1>
+                
+                <input
+                    type="text"
+                    name="alias"
+                    placeholder="Alias"
+                    className="input-field"
+                    value={formData.alias}
+                    onChange={handleChange}
+                    required
+                />
                     <input
                         type="text"
-                        name="alias"
-                        placeholder="Alias"
-                        className="input-field"
-                        value={formData.alias}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="first_name" 
-                        placeholder="Nombre"
+                        name="first_name"
+                        placeholder="Name"
                         className="input-field"
                         value={formData.first_name}
                         onChange={handleChange}
@@ -114,8 +118,8 @@ const RegisterForm = () => {
                     />
                     <input
                         type="text"
-                        name="last_name" 
-                        placeholder="Apellido"
+                        name="last_name"
+                        placeholder="Last Name"
                         className="input-field"
                         value={formData.last_name}
                         onChange={handleChange}
@@ -133,7 +137,7 @@ const RegisterForm = () => {
                     <input
                         type="password"
                         name="password"
-                        placeholder="Contraseña"
+                        placeholder="Password"
                         className="input-field"
                         value={formData.password}
                         onChange={handleChange}
@@ -142,7 +146,7 @@ const RegisterForm = () => {
                     <input
                         type="password"
                         name="confirmPassword"
-                        placeholder="Confirmación contraseña"
+                        placeholder="Password Confirmation"
                         className="input-field"
                         value={formData.confirmPassword}
                         onChange={handleChange}
@@ -151,7 +155,7 @@ const RegisterForm = () => {
                     <input
                         type="direction"
                         name="direction"
-                        placeholder="Dirección"
+                        placeholder="Direction"
                         className="input-field"
                         value={formData.direction}
                         onChange={handleChange}
@@ -161,20 +165,18 @@ const RegisterForm = () => {
                     <button
                         type="submit"
                         className="submit-button">
-                        CREAR
+                        CREATE
                     </button>
                     <button
                         type="button"
                         className="submit-button"
                         onClick={handleCancel}
                     >
-                        CANCELAR
+                        CANCEL
                     </button>
 
                 </form>
             </div>
-
-        </>
     );
 };
 

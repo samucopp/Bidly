@@ -9,7 +9,7 @@ import Subasta from '../pages/subasta/Subasta';
 // Definimos nuestras rutas
 const router = createBrowserRouter([
   {
-    path: "registro",
+    path: "register",
     element: <RegisterForm />,
   },
   {
@@ -21,11 +21,11 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "subasta",
+        path: "auction",
         element: <Subasta />
       },
       {
-        path: "catalogo",
+        path: "catalog",
         element: <Catalogo />,
         children: [
           {
@@ -36,11 +36,7 @@ const router = createBrowserRouter([
       }
 
    
-      /*{
-          path: "/registro",     
-          element: <registro />,
-        },
-   
+      /*
         {
           path: "/acerca-de",     
           element: <acerca-de />,

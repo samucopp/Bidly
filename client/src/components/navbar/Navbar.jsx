@@ -16,11 +16,12 @@ const Navbar = () => {
     const handleLoginClick = (e) => {
         e.preventDefault(); // Previene la navegación a /login
         setIsLoginOpen(true);
+        setIsMobileMenuOpen(false); 
     };
 
     const handleRegisterClick = (e) => {
         e.preventDefault(); // Previene la navegación a /register
-        navigate('/registro');
+        navigate('/register');
     };
 
 
@@ -43,9 +44,9 @@ const Navbar = () => {
 
                         {/* Main Navigation */}
                         <div className="navbar-links">
-                            <Link to="/acerca-de" className="menu-item">ACERCA DE</Link>
-                            <Link to="/catalogo" className="menu-item">CATÁLOGO</Link>
-                            <Link to="/contacto" className="menu-item">CONTACTO</Link>
+                            <Link to="/about-us" className="menu-item">ABOUT US</Link>
+                            <Link to="/catalog" className="menu-item">CATALOG</Link>
+                            <Link to="/contact" className="menu-item">CONTACT</Link>
                         </div>
 
                         {/* Right side - Search and Auth */}
@@ -54,7 +55,7 @@ const Navbar = () => {
                             <div className="search-container">
                                 <input
                                     type="text"
-                                    placeholder="Buscar artículo..."
+                                    placeholder="Search product..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
@@ -83,8 +84,8 @@ const Navbar = () => {
 
                             {/* Auth Links */}
                             <div className="auth-links">
-                                <a href="/login" onClick={handleLoginClick}>Iniciar sesión</a>
-                                <a href="/registro" onClick={handleRegisterClick}>Regístrate</a>
+                                <a href="/login" onClick={handleLoginClick}>Log In</a>
+                                <a href="/register" onClick={handleRegisterClick}>Create Account</a>
                             </div>
                         </div>
 
@@ -103,12 +104,12 @@ const Navbar = () => {
 
                 {/* Mobile Menu */}
                 <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-                    <Link to="/acerca-de" className="menu-item" onClick={toggleMenu}>ACERCA DE</Link>
-                    <Link to="/catalogo" className="menu-item" onClick={toggleMenu}>CATÁLOGO</Link>
-                    <Link to="/contacto" className="menu-item" onClick={toggleMenu}>CONTACTO</Link>
+                    <Link to="/about-us" className="menu-item" onClick={toggleMenu}>ABOUT US</Link>
+                    <Link to="/catalog" className="menu-item" onClick={toggleMenu}>CATALOG</Link>
+                    <Link to="/contact" className="menu-item" onClick={toggleMenu}>CONTACT</Link>
                     <div className="auth-mobile-links">
-                        <a href="/login" className="menu-item-login" onClick={handleLoginClick}>Iniciar sesión</a>
-                        <a href="/registro" className="menu-item-register" onClick={handleRegisterClick}>Regístrate</a>
+                        <a href="/login" className="menu-item-login" onClick={handleLoginClick}>Log In</a>
+                        <a href="/register" className="menu-item-register" onClick={handleRegisterClick}>Create Account</a>
                     </div>
                 </div>
             </nav>

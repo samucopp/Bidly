@@ -8,7 +8,7 @@ const CategoryNav = () => {
   const categories = [
     {
       id: 1,
-      name: 'Muebles',
+      name: 'Furniture',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
           <path d="M7 3h10" />
@@ -23,71 +23,7 @@ const CategoryNav = () => {
     },
     {
       id: 2,
-      name: 'Vajilla y menaje',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
-          <path d="M4 4h12v13c0 2.5-12 2.5-12 0V4z" />
-          <path d="M16 6c3 0 5 2 5 5s-2 5-5 5" />
-        </svg>
-      )
-    },
-    {
-      id: 3,
-      name: 'Alfombras y textiles',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
-          <rect x="2" y="2" width="20" height="20" rx="2" />
-          <path d="M2 8h20" />
-          <path d="M2 16h20" />
-          <path d="M8 2v20" />
-          <path d="M16 2v20" />
-        </svg>
-      )
-    },
-    {
-      id: 4,
-      name: 'Joyas y relojes',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 6v6l4 2" />
-        </svg>
-      )
-    },
-    {
-      id: 5,
-      name: 'Oriental',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
-          <circle cx="12" cy="12" r="2" />
-          <path d="M12 6c2 2 6 2 8 0c-2 4-2 8 0 12c-2-2-6-2-8 0c-2-2-6-2-8 0c2-4 2-8 0-12c2 2 6 2 8 0z" />
-          <path d="M12 4c3 2 9 2 11-1c-2 5-2 11 1 15c-3-2-9-2-12 0c-3-2-9-2-11 1c2-5 2-11-1-15c3 2 9 2 12 0z" />
-        </svg>
-      )
-    },
-    {
-      id: 6,
-      name: 'Plata y metal',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
-          <path d="M12 2L2 7l10 5 10-5-10-5z" />
-          <path d="M2 17l10 5 10-5" />
-          <path d="M2 12l10 5 10-5" />
-        </svg>
-      )
-    },
-    {
-      id: 7,
-      name: 'Moda vintage y accesorios',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
-          <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
-        </svg>
-      )
-    },
-    {
-      id: 8,
-      name: 'Juguetes',
+      name: 'Antiquities',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
           <path d="M4 6
@@ -105,31 +41,129 @@ const CategoryNav = () => {
       )
     },
     {
-      id: 9,
-      name: 'Armas y militaria',
+      id: 3,
+      name: 'Art',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
-          <path d="M18 4l2 2-2 2" />
-          <path d="M4 20l2-2-2-2" />
-          <path d="M20 6L4 18" />
+          <rect x="2" y="2" width="20" height="20" rx="2" />
+          <path d="M2 8h20" />
+          <path d="M2 16h20" />
+          <path d="M8 2v20" />
+          <path d="M16 2v20" />
         </svg>
       )
     },
-
     {
-      id: 10,
-      name: 'Otros',
+      id: 4,
+      name: 'Jewelry',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
           <circle cx="12" cy="12" r="9" />
-          <path d="M12 8v8" />
-          <path d="M8 12h8" />
+          <path d="M12 6v6l4 2" />
         </svg>
       )
+    },
+    {
+      id: 5,
+      name: 'Games',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
+          <circle cx="12" cy="12" r="2" />
+          <path d="M12 6c2 2 6 2 8 0c-2 4-2 8 0 12c-2-2-6-2-8 0c-2-2-6-2-8 0c2-4 2-8 0-12c2 2 6 2 8 0z" />
+          <path d="M12 4c3 2 9 2 11-1c-2 5-2 11 1 15c-3-2-9-2-12 0c-3-2-9-2-11 1c2-5 2-11-1-15c3 2 9 2 12 0z" />
+        </svg>
+      )
+    },
+    {
+      id: 6,
+      name: 'Music',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className='category-icon'>
+          <path d="M14 3v14"
+            stroke-linecap="round" />
+          <path d="M14 17c0 2-1.8 3.5-4 3.5s-4-1.5-4-3.5 1.8-3.5 4-3.5 4 1.5 4 3.5z" />
+          <path d="M14 3c-4 0-7 2-7 5"
+            fill="none"
+            stroke-linecap="round" />
+          <path d="M14 6c-3 0-5 1.5-5 4"
+            fill="none"
+            stroke-linecap="round" />
+        </svg>
+      )
+    },
+    {
+      id: 7,
+      name: 'Clothing',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
+          <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+        </svg>
+      )
+    },
+    {
+      id: 8,
+      name: 'Toys',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"className='category-icon'>
+
+          <circle cx="12" cy="12" r="8" />
+
+
+          <path d="M12 4 C14 8, 18 10, 20 12" />
+          <path d="M4 12 C6 14, 8 18, 12 20" />
+
+
+          <path d="M7 7 C10 10, 14 14, 17 17"
+            stroke-linecap="round" />
+        </svg>
+      )
+    },
+    {
+      id: 9,
+      name: 'Electronics',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className='category-icon'>
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M8 21h8" />
+          <path d="M12 17v4" />
+          <line x1="6" y1="8" x2="18" y2="8" stroke-linecap="round" />
+          <line x1="6" y1="12" x2="14" y2="12" stroke-linecap="round" />
+        </svg>
+      )
+    },
+    {
+      id: 10,
+      name: 'Movies',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="M2 8h20" />
+          <path d="M6 4l2 4" />
+          <path d="M12 4l2 4" />
+          <path d="M18 4l2 4" />
+          <path d="M2 12h20" />
+        </svg>
+      )
+    },
+    {
+      id: 11,
+      name: 'Books',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className='category-icon'>
+        <path d="M4 4v16a2 2 0 0 0 2 2h14" stroke-linecap="round"/>
+        <path d="M4 19h14"/>
+        <path d="M4 4h14"/>
+        <path d="M18 4v17"/>
+        <path d="M8 8h6" stroke-linecap="round"/>
+        <path d="M8 12h6" stroke-linecap="round"/>
+        <path d="M8 16h6" stroke-linecap="round"/>
+      </svg>
+      )
     }
+
   ];
 
-  const itemsPerView = window.innerWidth <= 768 ? 4 : 6;
+  const itemsPerView = window.innerWidth <= 768 ? 4 : 8;
   const itemWidth = 120; // Ajusta este valor según el diseño
 
   const nextSlide = () => {
@@ -183,6 +217,7 @@ const CategoryNav = () => {
                   </button>
                 </div>
               ))}
+              <div></div>
             </div>
           </div>
 
