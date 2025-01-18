@@ -77,8 +77,8 @@ const getActiveAuctions = async (req, res) => {
 
 const getAuctionById = async (req, res) => {
     try {
-        const { id } = req.params;
-        const auction = await Auction.findById(id)
+        const { auctionId } = req.params;
+        const auction = await Auction.findById(auctionId)
             .populate("category", "name")
             .populate("sellerId", "name");
         if (!auction) {
@@ -98,10 +98,10 @@ const getAuctionById = async (req, res) => {
 
 const updateAuction = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { auctionId } = req.params;
         const updates = req.body;
 
-        const auction = await Auction.findByIdAndUpdate(id);
+        const auction = await Auction.findByIdAndUpdate(auctionId);
         if (!auction) {
             return res
                 .status(404)
@@ -124,7 +124,7 @@ const updateAuction = async (req, res) => {
             });
         }
 
-        const updatedAuction = await Auction.findByIdAndUpdate(id, updates, {
+        const updatedAuction = await Auction.findByIdAndUpdate(auctionId, updates, {
             new: true,
         });
         res.status(200).json({ success: true, updatedAuction });
@@ -139,9 +139,9 @@ const updateAuction = async (req, res) => {
 
 const deleteAuction = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { auctionId } = req.params;
 
-        const auction = await Auction.findById(id);
+        const auction = await Auction.findById(auctionId);
         if (!auction) {
             return res
                 .status(404)
@@ -156,7 +156,7 @@ const deleteAuction = async (req, res) => {
             });
         }
 
-        await Auction.findByIdAndDelete(id);
+        await Auction.findByIdAndDelete(auctionId);
         res.status(200).json({
             success: true,
             message: "Subasta eliminada exitosamente",
