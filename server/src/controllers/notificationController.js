@@ -33,8 +33,8 @@ const createNotification = async (req, res) => {
 
 const markNotificationAsRead = async (req, res) => {
     try {
-        const { id } = req.params;
-        const notification = await Notification.findById(id);
+        const { notificationId } = req.params;
+        const notification = await Notification.findById(notificationId);
         if (!notification) {
             return res.status(404).json({ succes: false, message: "Notificacion no encontrada" });
         }
@@ -60,8 +60,8 @@ const markAllNotificationsAsRead = async (req, res) => {
 
 const deleteNotification = async (req, res) => {
     try {
-        const { id } = req.params;
-        const notification = await Notification.findByIdAndDelete(id);
+        const { notificationId } = req.params;
+        const notification = await Notification.findByIdAndDelete(notificationId);
         if (!notification) {
             return res.status(404).json({ succes: false, message: "Notificacion no encontrada" });
         }
@@ -72,10 +72,26 @@ const deleteNotification = async (req, res) => {
     }
 }
 
+const deleteAllNotifications = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const result = await Notification.deleteMany({ userId });
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ succes: false, message: "No hay notificaciones para eliminar" });
+        }
+        return res.status(200).json({ succes: true, message: `${result.deletedCount} notificaciones eliminadas` });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ succes: false, message: "Error al eliminar las notificaciones", error });
+    }
+}
+
+
 export default {
     getUserNotifications,
     createNotification,
     markNotificationAsRead,
     markAllNotificationsAsRead,
-    deleteNotification
+    deleteNotification,
+    deleteAllNotifications
 }
