@@ -1,38 +1,50 @@
-/* Estilos para el contenedor principal */
-/* Estilos para el contenedor principal */
-
-h1 {
-    
-    text-align:center;
-}
-
-.catalogo-container {
+.catalog-page {
+    display: flex;
+    width: 100%;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    gap: 24px;
 }
 
-/* Estilos para el contenedor de las tarjetas */
+/* Categories sidebar styles */
+.categories-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #e0e0e0;
+}
+
+/* Main content area styles */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Product grid container */
 .tarjetas-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 16px;
-    margin-left: 0; /* Elimina el margen extra si no es necesario */
-    width: 80%; /* Ajusta el ancho del bloque para hacerlo más compacto */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    width: 100%;
 }
 
-/* Estilos para las tarjetas */
-.tarjetas-container .tarjeta {
-    width: 20px; /* Reduce el ancho de las tarjetas */
-    height: 25px; /* Ajusta la altura para hacerlas más pequeñas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Estilo opcional para tarjetas */
-    border-radius: 8px; /* Bordes redondeados */
-    overflow: hidden; /* Asegúrate de que el contenido no se salga */
-    background-color: #f9f9f9; /* Color de fondo opcional */
-    padding: 10px; /* Espaciado interno opcional */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Distribuir el contenido dentro de las tarjetas */
+/* Individual card styles */
+.tarjeta {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .catalog-page {
+        flex-direction: column;
+    }
+    
+    .categories-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
 }

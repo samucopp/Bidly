@@ -12,14 +12,12 @@ const ProductList = () => {
     }));
 
     return (
-        
-            <div className="tarjetas-container">  
-                {tarjetas.map((tarjeta, index) => (
-                    <Tarjeta key={index} datosPuja={tarjeta} />
-                ))}
-            </div>
+        <div className="tarjetas-container">  
+            {tarjetas.map((tarjeta, index) => (
+                <Tarjeta key={index} datosPuja={tarjeta} />
+            ))}
+        </div>
     );
 };
-
 
 export default ProductList;

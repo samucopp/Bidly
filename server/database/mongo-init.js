@@ -17,16 +17,16 @@ db.users.insertMany([
 // Categorías
 db.categories.insertMany([
     { name: "Electronics" },
-    { name: "Furniture" },
-    { name: "Art" },
-    { name: "Books" },
+    { name: "Furniture" }, 
+    { name: "Art" }, 
+    { name: "Books" }, 
     { name: "Antiquities" },
-    { name: "Jewelry" },
-    { name: "Clothing" },
-    { name: "Toys" },
-    { name: "Music" },
-    { name: "Movies" },
-    { name: "Games" },
+    { name: "Jewelry" }, 
+    { name: "Clothing" }, 
+    { name: "Toys" }, 
+    { name: "Music" }, 
+    { name: "Movies" }, 
+    { name: "Games" }, 
 ]);
 
 // Subastas
