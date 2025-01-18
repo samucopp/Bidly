@@ -1,57 +1,88 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import "./catalogo.css";
-import "../productList/ProductList";
 import { Outlet } from "react-router-dom";
 import ProductList from "../productList/ProductList";
 import Categorias from "../../components/categorias/CategoriasCatalogo";
 import { BASE_URL } from "../../const/api";
 
 const Catalogo = () => {
+    const [searchParams] = useSearchParams();
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [error, setError] = useState(null);
+
+    // Obtener la categoría de la URL
     useEffect(() => {
-        const fetchCategories = async () => {
+        const categoryFromUrl = searchParams.get('category');
+        if (categoryFromUrl) {
+            setSelectedCategory(categoryFromUrl);
+        }
+    }, [searchParams]);
+    // Cargar categorías y productos iniciales
+    useEffect(() => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/category/all`);
-                if (!response.ok) throw new Error("Error al cargar los detalles de la subasta.");
-                const data = await response.json();
-                setCategories(data);
-            } catch (err) {
-                setError(err.message);
-            }
-        };
-        // Fetch inicial para cargar los detalles de la subasta
-        fetchCategories();
-        const fetchProducts = async () => {
-            try {
-                const response = await fetch(`${BASE_URL}/auction`);
-                if (!response.ok) throw new Error("Error al cargar los detalles de la subasta.");
-                const data = await response.json();
-                console.log(data);
-                setProducts(data.auctions);
-                
-            } catch (err) {
-                setError(err.message);
-            }
-        };
-        // Fetch inicial para cargar los detalles de la subasta
-        fetchProducts();
+                // Cargar categorías
+                const categoriesResponse = await fetch(`${BASE_URL}/category/all`);
+                if (!categoriesResponse.ok) throw new Error("Error al cargar las categorías.");
+                const categoriesData = await categoriesResponse.json();
+                setCategories(categoriesData);
 
+                // Cargar todos los productos inicialmente
+                const productsResponse = await fetch(`${BASE_URL}/auction`);
+                if (!productsResponse.ok) throw new Error("Error al cargar los productos.");
+                const productsData = await productsResponse.json();
+                setProducts(productsData.auctions);
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+        fetchData();
     }, []);
-    return (
-        <div className="catalogo-container">
-            <h1>Catálogo de Lotes</h1>
-            <p>Aquí tienes una selección de nuestros lotes en puja.</p>
 
-            {/* Sección de Categorías */}
-            <Categorias categoriasData={categories} />
-            {/* Sección de Productos */}
+    // Manejar el cambio de categoría
+    const handleCategoryChange = (categoryId) => {
+        setSelectedCategory(categoryId);
+        // Actualizar URL
+        const newSearchParams = new URLSearchParams(window.location.search);
+        if (categoryId) {
+            newSearchParams.set('category', categoryId);
+        } else {
+            newSearchParams.delete('category');
+        }
+        window.history.pushState({}, '', `${window.location.pathname}?${newSearchParams}`);
+    };
 
-            <ProductList auctions={products} />
-            <Outlet />
-        </div>
-    );
-};
+    // Filtrar productos según la categoría seleccionada
+    const filteredProducts = selectedCategory
+        ? products.filter(product => product.category._id === selectedCategory)
+        : products;
 
-export default Catalogo;
+        return (
+            <div className="catalog-page">
+                {/* Sidebar de Categorías */}
+                <aside className="categories-sidebar">
+                    <Categorias
+                        categoriasData={categories}
+                        selectedCategory={selectedCategory}
+                        onCategoryChange={handleCategoryChange}
+                    />
+                </aside>
+    
+                {/* Contenido Principal */}
+                <main className="main-content">
+                    <p>Aquí tienes una selección de nuestros lotes en puja.</p>
+                    {error ? (
+                        <div className="error">{error}</div>
+                    ) : (
+                        <ProductList auctions={filteredProducts} />
+                    )}
+                    <Outlet />
+                </main>
+            </div>
+        );
+    };
+    
+    export default Catalogo;

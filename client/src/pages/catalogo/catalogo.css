@@ -1,7 +1,7 @@
 .catalog-page {
     display: flex;
     width: 100%;
-    padding: 20px;
+    min-height: 100vh;
     gap: 24px;
 }
 
@@ -20,20 +20,13 @@
     padding: 20px;
 }
 
-/* Product grid container */
-.tarjetas-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-    width: 100%;
-}
-
-/* Individual card styles */
-.tarjeta {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 16px;
+/* Error message styles */
+.error {
+    color: #dc3545;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f8d7da;
+    border-radius: 4px;
 }
 
 /* Responsive adjustments */
