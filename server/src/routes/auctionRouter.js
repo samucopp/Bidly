@@ -5,6 +5,7 @@ import { checkAuthorization, checkAuctionOwnership } from "../helpers/middleware
 const router = Router();
 
 router.post("/create", checkAuthorization, auctionController.createAuction);
+router.get("/search", auctionController.searchAuctions);
 router.get("/", auctionController.getAuctions);
 router.get("/:categoryId", auctionController.getAuctionsByCategory);
 router.get("/active", auctionController.getActiveAuctions);
