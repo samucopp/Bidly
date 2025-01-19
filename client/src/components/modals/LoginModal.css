@@ -4,7 +4,7 @@
 }
 
 .form-group input {
-    width: 94%;
+    width: 100%;
     padding: 0.75rem;
     border: 1px solid #d1d5db;
     border-radius: 4px;
@@ -81,4 +81,48 @@
 
 .create-account-button:hover {
     background-color: #f9fafb;
+}
+
+.status-modal {
+    max-width: 24rem !important;
+    padding: 1.5rem !important;
+}
+
+.status-content {
+    text-align: center;
+    padding: 1rem;
+}
+
+.status-content.success {
+    color: #059669;
+}
+
+.status-content.error {
+    color: #dc2626;
+}
+
+.status-content p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Estilos adicionales para los mensajes de estado dentro del formulario */
+.form-status {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    text-align: center;
+}
+
+.form-status.success {
+    background-color: #d1fae5;
+    color: #059669;
+    border: 1px solid #34d399;
+}
+
+.form-status.error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #f87171;
 }

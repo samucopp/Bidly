@@ -31,6 +31,11 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
+    console.log('Recibida petición de login:', {
+        method: req.method,
+        body: req.body,
+        path: req.path
+    });
     try {
         const { email, password } = req.body;
         if (!email || !password) {

@@ -21,7 +21,7 @@ const CATEGORY_ICONS = {
       <path d="M4 6 h6 c2 0 2 4 4 4 c2 0 2 -4 4 -4 h2 v12 h-6 c-2 0 -2 4 -4 4 c-2 0 -2 -4 -4 -4 h-2 z" />
     </svg>
   ),
-
+ 
   Art: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="category-icon">
       <rect x="2" y="2" width="20" height="20" rx="2" />
@@ -47,14 +47,14 @@ const CATEGORY_ICONS = {
   Music: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className='category-icon'>
       <path d="M14 3v14"
-        stroke-linecap="round" />
+       strokeLinecap="round" />
       <path d="M14 17c0 2-1.8 3.5-4 3.5s-4-1.5-4-3.5 1.8-3.5 4-3.5 4 1.5 4 3.5z" />
       <path d="M14 3c-4 0-7 2-7 5"
         fill="none"
-        stroke-linecap="round" />
+       strokeLinecap="round" />
       <path d="M14 6c-3 0-5 1.5-5 4"
         fill="none"
-        stroke-linecap="round" />
+       strokeLinecap="round" />
     </svg>
   ),
   Clothing: (
@@ -73,7 +73,7 @@ const CATEGORY_ICONS = {
 
 
       <path d="M7 7 C10 10, 14 14, 17 17"
-        stroke-linecap="round" />
+       strokeLinecap="round" />
     </svg>
   ),
 
@@ -83,8 +83,8 @@ const CATEGORY_ICONS = {
         <rect x="2" y="3" width="20" height="14" rx="2" />
         <path d="M8 21h8" />
         <path d="M12 17v4" />
-        <line x1="6" y1="8" x2="18" y2="8" stroke-linecap="round" />
-        <line x1="6" y1="12" x2="14" y2="12" stroke-linecap="round" />
+        <line x1="6" y1="8" x2="18" y2="8"strokeLinecap="round" />
+        <line x1="6" y1="12" x2="14" y2="12"strokeLinecap="round" />
       </svg>
     ),
   Movies: (
@@ -99,13 +99,13 @@ const CATEGORY_ICONS = {
   ),
   Books: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className='category-icon'>
-      <path d="M4 4v16a2 2 0 0 0 2 2h14" stroke-linecap="round" />
+      <path d="M4 4v16a2 2 0 0 0 2 2h14"strokeLinecap="round" />
       <path d="M4 19h14" />
       <path d="M4 4h14" />
       <path d="M18 4v17" />
-      <path d="M8 8h6" stroke-linecap="round" />
-      <path d="M8 12h6" stroke-linecap="round" />
-      <path d="M8 16h6" stroke-linecap="round" />
+      <path d="M8 8h6"strokeLinecap="round" />
+      <path d="M8 12h6"strokeLinecap="round" />
+      <path d="M8 16h6"strokeLinecap="round" />
     </svg>
   )
 };

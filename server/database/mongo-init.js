@@ -2,8 +2,8 @@ db = db.getSiblingDB("bidly");
 
 // Usuarios
 db.users.insertMany([
-    { name: "Alice Johnson", email: "alice@example.com", password: "password123", address: "123 Main St" },
-    { name: "Bob Smith", email: "bob@example.com", password: "password123", address: "456 Elm St" },
+    { name: "Alice Johnson", email: "alice@example.com", password: "password123", address: "123 Main St"},
+    { name: "Bob Smith", email: "bob@example.com", password: "password123", address: "456 Elm St"},
     { name: "Carol Williams", email: "carol@example.com", password: "password123", address: "789 Pine St" },
     { name: "Dave Brown", email: "dave@example.com", password: "password123", address: "321 Oak St" },
     { name: "Eve Davis", email: "eve@example.com", password: "password123", address: "654 Cedar St" },

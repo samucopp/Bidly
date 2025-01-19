@@ -19,18 +19,14 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra horizontalmente */
-    justify-content: center; /* Centra verticalmente */
+    align-items: center;
+    justify-content: flex-start; /* Cambiado a flex-start */
     background-color: #fff;
     padding: 20px 0;
-    /* Permitimos que el contenedor se ajuste al contenido */
-    height: auto;
-    /* Aseguramos que permita scroll */
     overflow-y: auto;
 }
-
 .register-logo {
-    position: fixed; /* Mantiene el logo en la parte superior */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -40,7 +36,9 @@ body {
     padding-top: 16px;
     padding-bottom: 16px;
     background-color: #fff;
+    z-index: 10;
 }
+
 
 .register-logo img {
     height: 35px;
@@ -52,18 +50,17 @@ body {
     width: 100%;
     max-width: 400px;
     padding: 0 20px;
+    margin-top: 80px; /* Espacio para el logo fijo */
     margin-bottom: 2rem;
 }
-
 .register-title {
+    font-size: 26px;
+    color: #222;
+    margin-bottom: 15px;
+    text-align: left;
     width: 100%;
-    max-width: 400px;
-    margin: 20px 0;
-    padding-left: 0px;
-    /* Aseguramos que el formulario tenga espacio suficiente en móvil */
-    height: auto;
+    font-weight: normal;
 }
-
 .input-field {
     width: 100%;
     border-radius: 4px;
@@ -129,13 +126,83 @@ body {
 .submit-button:last-child:hover {
     background-color: #f8f8f8;
 }
+
 @media screen and (max-height: 700px) {
     .register-container {
         justify-content: flex-start;
-        padding-top: 60px; /* Espacio para el logo */
     }
     
     .register-form {
-        margin-bottom: 40px; /* Añadimos espacio al final */
+        margin-top: 80px; /* Mantener espacio consistente */
+    }
+}
+
+@media screen and (min-height: 701px) {
+    .register-form {
+        margin-top: 80px; /* Asegurar espacio suficiente en pantallas más altas */
+    }
+}
+.avatar-section {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.avatar-title {
+    font-size: 15px;
+    margin-bottom: 15px;
+    color: #b8b5b5; /* Mismo color que los placeholders */
+    text-align: left; /* Alineado a la izquierda como los inputs */
+    padding-left: 2px; /* Pequeño padding para alinear con el borde del input */
+}
+
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    max-width: 280px; /* Mantiene el tamaño compacto de la grilla */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.avatar-option {
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 2px;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+}
+
+.avatar-option.selected {
+    border-color: #222;
+    transform: scale(1.1);
+}
+
+.avatar-option:hover {
+    transform: scale(1.1);
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #f0f0f0;
+}
+
+/* Para pantallas más pequeñas */
+@media screen and (max-width: 400px) {
+    .avatar-option {
+        width: 50px;
+        height: 50px;
+    }
+
+    .avatar-grid {
+        gap: 12px;
     }
 }
