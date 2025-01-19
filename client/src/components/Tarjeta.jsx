@@ -17,7 +17,7 @@ const Tarjeta = ({ datosPuja }) => {
                 style={{ width: "100%", borderRadius: "8px" }}
             />
             <p>{datosPuja.description}</p>
-            <Link to={"/catalogo/" + datosPuja._id}>
+            <Link to={"/catalog/" + datosPuja._id}>
                 <button
                     style={{
                         marginTop: "16px",

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import "./catalogo.css";
 import { Outlet } from "react-router-dom";
-import ProductList from "../productList/ProductList";
+import AuctionList from "../auction/AuctionList";
 import Categorias from "../../components/categorias/CategoriasCatalogo";
 import { BASE_URL } from "../../const/api";
 
@@ -77,7 +77,7 @@ const Catalogo = () => {
                     {error ? (
                         <div className="error">{error}</div>
                     ) : (
-                        <ProductList auctions={filteredProducts} />
+                        <AuctionList auctions={filteredProducts} />
                     )}
                     <Outlet />
                 </main>

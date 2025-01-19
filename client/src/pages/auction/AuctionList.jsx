@@ -1,9 +1,9 @@
 import React from "react";
 import datosPuja from "../../components/DatosPuja";
 import Tarjeta from "../../components/Tarjeta";
-import "./ProductList.css";  
+import "./AuctionList.css";  
 
-const ProductList = ({auctions}) => {   
+const AuctionList = ({auctions}) => {   
     
 
     return (
@@ -17,4 +17,4 @@ const ProductList = ({auctions}) => {
 };
 
 
-export default ProductList;
+export default AuctionList;

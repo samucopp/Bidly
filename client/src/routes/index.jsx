@@ -34,8 +34,8 @@ const router = createBrowserRouter([
         element: <Catalogo />,
         children: [
           {
-            path: ":productId",
-            element: <Modal visible={true} />
+            path: ":auctionId",
+            element: <Modal visible={true}/>
           }
         ]
       }

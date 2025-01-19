@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./subasta.css";
-import "../productList/ProductList";
+import "../auction/AuctionList";
 import ImageCarousel from "../../components/carrousel/Carrousel"; // Importa el nuevo componente
 
 const BASE_URL= import.meta.env.VITE_BASE_URL

@@ -1,24 +1,70 @@
-import React from "react";
-import { Link } from "react-router-dom";
-const Modal = ({ visible, onClose, onBid }) => {
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { BASE_URL } from "../../const/api";
+
+const Modal = ({ visible }) => {
+    const { auctionId } = useParams(); // Obtén el parámetro auctionId de la ruta
+    const [auction, setAuction] = useState(null); // Cambiado a null para manejar el estado inicial vacío
+    const [error, setError] = useState(null); // Manejar errores
+
     if (!visible) return null;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const auctionResponse = await fetch(`${BASE_URL}/auction/${auctionId}`);
+                if (!auctionResponse.ok) throw new Error("Error al cargar los productos.");
+                const auctionData = await auctionResponse.json();
+                setAuction(auctionData.auction);
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+        fetchData();
+    }, [auctionId]);
+
+    if (error) {
+        return (
+            <div style={modalStyles.overlay}>
+                <div style={modalStyles.modal}>
+                    <h2>Error</h2>
+                    <p>{error}</p>
+                    <Link to="/catalog">
+                        <button style={buttonStyles.close}>Cerrar</button>
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
+    if (!auction) {
+        return (
+            <div style={modalStyles.overlay}>
+                <div style={modalStyles.modal}>
+                    <h2>Cargando...</h2>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div style={modalStyles.overlay}>
             <div style={modalStyles.modal}>
-                <h2>Reloj de Arena Antiguo</h2>
-                <p><strong>Origen Geográfico:</strong> Egipto</p>
-                <p><strong>Descripción Física:</strong> Reloj de arena artesanal con marco de madera tallada y ampollas de cristal soplado. Relleno con arena fina dorada.</p>
-                <p><strong>Precio Aproximado de Mercado:</strong> 5000 €</p>
-               <Link to= "/auction"> <button
-                    style={buttonStyles.bid}
-                    
-                >
-                    Pujar
-                </button>
+                <h2>{auction.title}</h2>
+                <p><strong>Descripción:</strong> {auction.description}</p>
+                <img 
+                    src={`${BASE_URL}/images/${auction.images[0]}`} 
+                    alt={auction.title} 
+                    style={{ maxWidth: "100%", height: "auto", marginBottom: "16px" }} 
+                />
+                <p><strong>Precio Inicial:</strong> {auction.startingPrice} €</p>
+                <p><strong>Hora de Inicio:</strong> {new Date(auction.startTime).toLocaleString()}</p>
+                <p><strong>Estado:</strong> {auction.status}</p>
+                <Link to="/auction">
+                    <button style={buttonStyles.bid}>Pujar</button>
                 </Link>
                 <Link to="/catalog">
-                    <button>X</button>
+                    <button style={buttonStyles.close}>Cerrar</button>
                 </Link>
             </div>
         </div>
