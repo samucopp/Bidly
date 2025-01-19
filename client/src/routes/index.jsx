@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <AboutUs />,
       },
       {
-        path: "auction",
+        path: "auction/:auctionId",
         element: <Subasta />
       },
       {
