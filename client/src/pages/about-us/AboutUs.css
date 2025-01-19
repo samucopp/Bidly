@@ -1,0 +1,217 @@
+/* About Container */
+.about-container {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  /* Hero Section */
+  .hero {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .hero h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.125rem;
+    color: #4B5563;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Section Styles */
+  .section {
+    margin-bottom: 4rem;
+  }
+  .section-services {
+    background-color: black;
+    color: white;
+    margin: 4rem -50vw;
+    padding: 4rem calc(50vw - 36rem);
+    position: relative;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+}
+ 
+.section-services .service-item {
+  background-color: transparent;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.section-services .service-dot {
+  background-color: white;
+}
+
+.section-services .service-text {
+  color: white;
+}
+  .section-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .section-title-centered {
+    font-size: 1.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  
+  /* Grid Layouts */
+  .grid-3-cols {
+    display: grid;
+    gap: 2rem;
+  }
+  
+  .grid-2-cols {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .grid-3-cols {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .grid-2-cols {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Card Styles */
+  .card {
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  /* Service Items */
+  .service-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+    background-color: #F9FAFB;
+    border-radius: 0.5rem;
+  }
+  
+  .service-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-top: 0.5rem;
+    background-color: #3B82F6;
+    border-radius: 9999px;
+  }
+  
+  .service-text {
+    margin-left: 1rem;
+    color: #4B5563;
+  }
+  
+  /* Team Section */
+  .team-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  
+  .team-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    padding: 0px;
+    margin-bottom: 30px;
+
+  }
+  
+  .team-members-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2rem;
+    min-width: max-content;
+  }
+  
+  .team-member {
+    width: 20rem;
+    flex: none;
+    text-align: center;
+  }
+  
+  .member-image-container {
+    margin-bottom: 1rem;
+  }
+  
+  .member-image {
+    width: 10rem;
+    height: 10rem;
+    margin: 0 auto;
+    border-radius: 9999px;
+    object-fit: cover;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .member-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .member-role {
+    font-size: 1.125rem;
+    color: #4B5563;
+    margin-bottom: 0.75rem;
+  }
+  
+  .member-bio {
+    color: #4B5563;
+    font-size: 0.875rem;
+  }
+  
+  /* Footer */
+  .footer-quote {
+    text-align: center;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 2rem;
+    margin-top: 4rem;
+  }
+  
+  .footer-text {
+    font-size: 1rem;
+    font-style: italic;
+    color: #4B5563;
+  }
+  
+  /* Utility Classes */
+  .text-gray-600 {
+    color: #4B5563;
+  }
+  
+  /* Media Queries for Team Section */
+  @media (min-width: 768px) {
+    .team-members-container {
+      min-width: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }

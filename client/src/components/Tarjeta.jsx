@@ -22,14 +22,13 @@ const Tarjeta = ({ datosPuja }) => {
                     style={{
                         marginTop: "16px",
                         padding: "10px 16px",
-                        backgroundColor: "#007BFF",
-                        color: "#fff",
+                        color: "#000",
                         border: "none",
                         borderRadius: "4px",
                         cursor: "pointer"
                     }}
                 >
-                    Más información
+                    + INFO
                 </button>
             </Link>
         </div>

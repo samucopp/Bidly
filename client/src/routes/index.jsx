@@ -5,6 +5,7 @@ import Home from "../pages/home/Home";
 import Root from "../pages/root/Root";
 import Modal from "../components/ModalTarjeta/ModalTarjeta";
 import Subasta from '../pages/subasta/Subasta';
+import AboutUs from "../pages/about-us/AboutUs";
 
 // Definimos nuestras rutas
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />
+      },
+      {
+        path: "about-us",
+        element: <AboutUs />,
       },
       {
         path: "auction",
