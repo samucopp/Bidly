@@ -8,13 +8,21 @@ import User from "../models/userModel.js";
 const uploadAuctionImages = async (req, res) => {
     try {
         const { auctionId } = req.params;
+        const folderPath = `uploads/auctions/${auctionId}`;
         const auction = await Auction.findById(auctionId);
         if (!auction) {
             return res
                 .status(404)
                 .json({ success: false, message: "Subasta no encontrada" });
         }
-        console.log(req.files);
+        const fileCount = await countFilesInFolder(folderPath);
+        if (fileCount >= 10) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "La carpeta ya contiene el número máximo de archivos (10).",
+            });
+        }
         const result = await s3Uploadv2AuctionImages(req.files, auctionId);
         const paths = result.map((uploadResult) => uploadResult.Location);
 
@@ -184,6 +192,18 @@ const deleteUserAvatar = async (req, res) => {
             error: error.message,
         });
     }
+};
+const countFilesInFolder = async (folderPath) => {
+    const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Prefix: folderPath, // Carpeta que deseas listar
+    };
+
+    // Listar los archivos en la carpeta
+    const listedObjects = await s3.listObjectsV2(params).promise();
+
+    // Retornar el número de archivos
+    return listedObjects.Contents.length;
 };
 
 export default {
