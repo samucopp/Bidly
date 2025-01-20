@@ -6,7 +6,7 @@ import { checkAuthorization } from "../helpers/middleware.js";
 const router = Router();
 
 router.post("/register", authController.register);
-router.get("/login", authController.login);
+router.post("/login", authController.login);
 router.get("/all", checkAuthorization, userController.getAll);
 router.get("/:userId", checkAuthorization, userController.getUser);
 router.put("/:userId", checkAuthorization, userController.editUser);
