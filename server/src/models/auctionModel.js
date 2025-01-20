@@ -23,15 +23,13 @@ const auctionSchema = new mongoose.Schema({
     startingPrice: {
         type: Number,
         required: true,
-        min: 0,
+        min: 1,
     },
     currentPrice: {
         type: Number,
-        default: 0,
     },
     minIncrement: {
         type: Number,
-        required: true,
         default: 1,
     },
     sellerId: {
