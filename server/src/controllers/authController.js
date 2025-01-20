@@ -55,7 +55,7 @@ async function login(req, res) {
                 message: "La contraseña es incorrecta",
             });
         }
-        const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
+        const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
         return res.status(200).json({message: "Login exitoso", token});
     } catch (error) {
         console.error(error);

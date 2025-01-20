@@ -19,25 +19,22 @@ const LoginModal = ({ isOpen, onClose }) => {
 
         try {
             const response = await login(formData);
-            
+
             if (response.token) {
                 // Guardar el token en localStorage
                 localStorage.setItem('token', response.token);
-                
-                setStatus({ 
-                    type: 'success', 
+
+                setStatus({
+                    type: 'success',
                     message: 'Login exitoso! Redirigiendo...'
                 });
+                onClose();
+                window.location.reload();
 
-                // Esperar 1.5 segundos antes de cerrar y recargar
-                setTimeout(() => {
-                    onClose();
-                    window.location.reload();
-                }, 1500);
             }
         } catch (error) {
-            setStatus({ 
-                type: 'error', 
+            setStatus({
+                type: 'error',
                 message: error.message || 'Error en el inicio de sesión'
             });
         }
@@ -53,7 +50,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             <GenericModal isOpen={isOpen} onClose={onClose}>
                 <div className="login-content">
                     <h2>Please log in to bid on the auction</h2>
-                    
+
                     {/* Mensajes de estado */}
                     {status.message && (
                         <div className={`form-status ${status.type}`}>
@@ -95,8 +92,8 @@ const LoginModal = ({ isOpen, onClose }) => {
                             LOG IN
                         </button>
 
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className="create-account-button"
                             onClick={handleCreateAccount}
                         >
@@ -105,7 +102,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                     </form>
                 </div>
             </GenericModal>
-            
+
         </>
     );
 };

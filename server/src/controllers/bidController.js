@@ -1,5 +1,7 @@
 import Bid from "../models/bidModel.js";
 import Auction from "../models/auctionModel.js";
+import userController from "./userController.js";
+
 const createBid = async (req, res) => {
     try {
         const { auctionId, userId, amount } = req.body;
@@ -25,8 +27,9 @@ const createBid = async (req, res) => {
 
         const lastBid = await Bid.findOne({ auctionId }).sort({ amount: -1 });
 
+        const minIncrement = Math.ceil(auction.currentPrice * (auction.minIncrement / 100));
         const minAllowed = lastBid
-            ? lastBid.amount + auction.minIncrement
+            ? lastBid.amount + minIncrement
             : auction.startingPrice;
 
         if (amount < minAllowed) {
@@ -36,10 +39,15 @@ const createBid = async (req, res) => {
             });
         }
 
+        await userController.handleAddAuctionToFavorites(userId, auctionId);
+
         const newBid = new Bid({ auctionId, userId, amount });
         const savedBid = await newBid.save();
+        auction.currentPrice = savedBid.amount;
+        await auction.save();
         res.status(201).json({ success: true, savedBid });
     } catch (error) {
+        console.error(error);
         res.status(500).json({
             success: false,
             message: "Error al crear la puja",
@@ -62,7 +70,16 @@ const getBidsByAuction = async (req, res) => {
         const bids = await Bid.find({ auctionId })
             .sort({ amount: -1 })
             .populate("userId", "name");
-        res.status(200).json({ success: true, bids });
+        
+        if (bids.length === 0) {
+            return res.status(200).json({ success: true, bids, minAllowed: auction.startingPrice });
+        }
+
+        const minIncrement = Math.ceil(auction.currentPrice * (auction.minIncrement / 100));
+        const minAllowed = auction.currentPrice + minIncrement;
+        console.log(auction)
+
+        res.status(200).json({ success: true, bids, minAllowed });
     } catch (error) {
         res.status(500).json({
             success: false,

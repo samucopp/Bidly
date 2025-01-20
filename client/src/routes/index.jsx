@@ -6,6 +6,7 @@ import Root from "../pages/root/Root";
 import Modal from "../components/ModalTarjeta/ModalTarjeta";
 import Subasta from '../pages/subasta/Subasta';
 import AboutUs from "../pages/about-us/AboutUs";
+import UserProfile from "../pages/user-profile/UserProfile";
 
 // Definimos nuestras rutas
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
         element: <AboutUs />,
       },
       {
+        path: "my-profile",
+        element: <UserProfile />,
+      },
+      {
         path: "auction/:auctionId",
         element: <Subasta />
       },
@@ -39,13 +44,7 @@ const router = createBrowserRouter([
           }
         ]
       }
-
-   
       /*
-        {
-          path: "/acerca-de",     
-          element: <acerca-de />,
-        }, 
       {
         path: "/contacto",
         element: <contacto />,
