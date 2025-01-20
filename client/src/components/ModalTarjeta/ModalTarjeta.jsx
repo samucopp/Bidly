@@ -15,6 +15,7 @@ const Modal = ({ visible }) => {
                 const auctionResponse = await fetch(`${BASE_URL}/auction/${auctionId}`);
                 if (!auctionResponse.ok) throw new Error("Error al cargar los productos.");
                 const auctionData = await auctionResponse.json();
+                console.log(auctionData);
                 setAuction(auctionData.auction);
             } catch (err) {
                 setError(err.message);
