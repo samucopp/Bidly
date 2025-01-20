@@ -20,13 +20,17 @@ const createAuction = async (req, res) => {
             startTime,
             endTime,
         } = req.body;
+
+        const startingPriceRounded = Math.ceil(startingPrice);
+        const minIncrementRounded = Math.min(100, Math.max(Math.ceil(minIncrement), 1));
+
         const newAuction = new Auction({
             title,
             description,
             images,
             category,
-            startingPrice,
-            minIncrement,
+            startingPrice: startingPriceRounded,
+            minIncrement: minIncrementRounded,
             sellerId,
             startTime,
             endTime,
@@ -42,6 +46,31 @@ const createAuction = async (req, res) => {
     }
 };
 
+const searchAuctions = async (req, res) => {
+    try {
+        const { query } = req.query;
+
+        if (!query || query.trim() === "") {
+            return res.status(400).json({ success: false, message: "Por favor, ingrese una consulta de búsqueda válida" });
+        }
+        const auctions = await Auction.find({ title: { $regex: query, $options: 'i' } })
+            .populate("category", "name")
+            .populate("sellerId", "name");
+
+        if (auctions.length === 0) {
+            return res.status(404).json({ success: false, message: "No se encontraron subastas que coincidan con la consulta de búsqueda" });
+        }
+
+        res.status(200).json({ success: true, auctions });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al buscar subastas",
+            error,
+        });
+    }
+};
+
 const getAuctions = async (req, res) => {
     try {
         const auctions = await Auction.find()
@@ -52,6 +81,22 @@ const getAuctions = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error al obtener las subastas",
+            error,
+        });
+    }
+};
+
+const getAuctionsByCategory = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        const auctions = await Auction.find({ category: categoryId })
+            .populate("category", "name")
+            .populate("sellerId", "name");
+        res.status(200).json({ success: true, auctions });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las subastas por categoría",
             error,
         });
     }
@@ -356,7 +401,9 @@ const getActiveFollowedAuctions = async (req, res) => {
 
 export default {
     createAuction,
+    searchAuctions,
     getAuctions,
+    getAuctionsByCategory,
     getActiveAuctions,
     getAuctionById,
     updateAuction,
