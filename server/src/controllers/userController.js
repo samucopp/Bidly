@@ -70,42 +70,34 @@ async function editUser(req, res) {
     }
 }
 
+async function handleAddAuctionToFavorites(userId, auctionId) {
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new Error ("Usuario no encontrado");
+    }
+    const auction = await Auction.findById(auctionId);
+    if (!auction) {
+        throw new Error ("Subasta no encontrada"); 
+    }
+
+    if (!user.favoriteAuctions.includes(auctionId)) {
+        user.favoriteAuctions.push(auctionId);
+        await user.save();
+    }
+
+    if (!auction.followers.includes(userId)) {
+        auction.followers.push(userId);
+        await auction.save();
+    }
+
+    return "Subasta agregada a favoritos y usuario agregado a seguidores";
+};
+
 async function addAuctionToFavorites(req, res) {
     try {
         const { userId, auctionId } = req.body;
 
-        const user = await User.findById(userId);
-        if (!user) {
-            return res
-                .status(404)
-                .json({ success: false, message: "Usuario no encontrado" });
-        }
-        const auction = await Auction.findById(auctionId);
-        if (!auction) {
-            return res
-                .status(404)
-                .json({ success: false, message: "Subasta no encontrada" });
-        }
-
-        if (!user.favoriteAuctions.includes(auctionId)) {
-            user.favoriteAuctions.push(auctionId);
-            await user.save();
-        } else {
-            return res.status(400).json({
-                success: false,
-                message: "La subasta ya estaba en favoritos",
-            });
-        }
-
-        if (!auction.followers.includes(userId)) {
-            auction.followers.push(userId);
-            await auction.save();
-        } else {
-            return res.status(400).json({
-                success: false,
-                message: "La subasta ya contenia en seguidores al usuario",
-            });
-        }
+        await handleAddAuctionToFavorites(userId, auctionId);
 
         return res.status(200).json({
             success: true,
@@ -114,6 +106,9 @@ async function addAuctionToFavorites(req, res) {
         });
     } catch (error) {
         console.error(error);
+        if(error.message === "Subasta no encontrada" || error.message === "Usuario no encontrado") {
+            return res.status(404).json({ success: false, message: error.message });
+        }
         return res
             .status(500)
             .json({ success: false, message: "Error interno del servidor" });
@@ -174,6 +169,7 @@ export default {
     getAll,
     getUser,
     editUser,
+    handleAddAuctionToFavorites,
     addAuctionToFavorites,
     removeAuctionFromFavorites,
 };
