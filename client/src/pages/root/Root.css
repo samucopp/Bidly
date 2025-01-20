@@ -16,9 +16,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 55%; /* Ajusta la posición vertical de la imagen */
+    object-position: center 55%;
+    /* Ajusta la posición vertical de la imagen */
     transition: background-image 0.3s ease;
 }
+
 .banner-overlay {
     position: absolute;
     inset: 0;
@@ -39,21 +41,26 @@
     font-size: 2.25rem;
     font-weight: 700;
     color: white;
-    text-shadow: 
+    text-shadow:
         2px 2px 4px rgba(0, 0, 0, 0.5),
-        -2px -2px 4px rgba(0, 0, 0, 0.5); /* Sombra más definida */
+        -2px -2px 4px rgba(0, 0, 0, 0.5);
+    /* Sombra más definida */
+    text-transform: capitalize;
 }
 
 /* Media query para pantallas desktop */
 @media (min-width: 1024px) {
     .banner-container {
-        height: 20rem; /* Más altura para desktop */
+        height: 20rem;
+        /* Más altura para desktop */
     }
-    
+
     .banner-background {
         object-fit: cover;
-        object-position: center 65%; /* Ajusta esto para controlar el nivel de "zoom" */
+        object-position: center 65%;
+        /* Ajusta esto para controlar el nivel de "zoom" */
     }
+
     .banner-title {
         font-size: 2.6rem;
     }
