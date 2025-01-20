@@ -2,16 +2,16 @@ db = db.getSiblingDB("bidly");
 
 // Usuarios
 db.users.insertMany([
-    { name: "Alice Johnson", email: "alice@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "123 Main St" },
-    { name: "Bob Smith", email: "bob@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "456 Elm St" },
-    { name: "Carol Williams", email: "carol@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "789 Pine St" },
-    { name: "Dave Brown", email: "dave@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "321 Oak St" },
-    { name: "Eve Davis", email: "eve@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "654 Cedar St" },
-    { name: "Frank Moore", email: "frank@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "987 Birch St" },
-    { name: "Grace Lee", email: "grace@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "147 Maple St" },
-    { name: "Henry White", email: "henry@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "258 Spruce St" },
-    { name: "Irene Clark", email: "irene@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "369 Redwood St" },
-    { name: "Jack Thompson", email: "jack@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "741 Aspen St" }
+    { name: "Alice Johnson", email: "alice@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "123 Main St", avatar: "/avatars/mujer-cinco.png" },
+    { name: "Bob Smith", email: "bob@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "456 Elm St", avatar: "/avatars/hombre-cinco.png" },
+    { name: "Carol Williams", email: "carol@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "789 Pine St", avatar: "/avatars/mujer-cinco.png" },
+    { name: "Dave Brown", email: "dave@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "321 Oak St", avatar: "/avatars/hombre-cinco.png" },
+    { name: "Eve Davis", email: "eve@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "654 Cedar St", avatar: "/avatars/mujer-cinco.png" },
+    { name: "Frank Moore", email: "frank@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "987 Birch St", avatar: "/avatars/hombre-cinco.png" },
+    { name: "Grace Lee", email: "grace@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "147 Maple St", avatar: "/avatars/mujer-cinco.png" },
+    { name: "Henry White", email: "henry@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "258 Spruce St", avatar: "/avatars/hombre-cinco.png" },
+    { name: "Irene Clark", email: "irene@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "369 Redwood St", avatar: "/avatars/mujer-cinco.png" },
+    { name: "Jack Thompson", email: "jack@example.com", password: "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK", address: "741 Aspen St", avatar: "/avatars/hombre-cinco.png" }
 ]);
 
 // Categorías
@@ -29,9 +29,8 @@ db.categories.insertMany([
     { name: "Games" },
 ]);
 
-// Subastas
+// SUBASTAS CATEGORIA "ELECTRONICS"
 db.auctions.insertMany([
-    // Electronics
     {
         title: "Apple iPhone 14",
         description: "Latest model of the Apple iPhone with 128GB storage.",
@@ -58,7 +57,7 @@ db.auctions.insertMany([
     },
     {
         title: "Sony WH-1000XM5",
-        description: "Noise-cancelling wireless headphones.",
+        description: "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
         images: ["sony_headphones.jpg"],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 400,
@@ -92,7 +91,470 @@ db.auctions.insertMany([
         status: "inactive",
         createdAt: new Date()
     },
+    {
+        title: "PlayStation 5 Console",
+        description: "Next-generation gaming console with 4K support and ultra-fast SSD.",
+        images: ["ps5.jpg"],
+        category: db.categories.findOne({ name: "Games" })._id,
+        startingPrice: 500,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Nintendo Switch OLED Model",
+        description: "New version of Nintendo’s hybrid console with a 7-inch OLED display.",
+        images: ["switch_oled.jpg"],
+        category: db.categories.findOne({ name: "Games" })._id,
+        startingPrice: 350,
+        sellerId: db.users.findOne({ email: "bob@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 172800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Lenovo ThinkPad X1 Carbon",
+        description: "Ultra-light business laptop with a 14-inch display and powerful Intel processor.",
+        images: ["lenovo_thinkpad_x1_carbon.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 1000,
+        sellerId: db.users.findOne({ email: "irene@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Logitech MX Master 3",
+        description: "Advanced wireless mouse with ultrafast scrolling, ergonomic design, and customizable buttons.",
+        images: ["logitech_mx_master_3.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 100,
+        sellerId: db.users.findOne({ email: "irene@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "WD My Passport 2TB External SSD",
+        description: "Portable high-speed external solid state drive with durable design and password protection.",
+        images: ["wd_my_passport_2tb_ssd.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 200,
+        sellerId: db.users.findOne({ email: "irene@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Philips Hue Starter Kit",
+        description: "Smart lighting system including bulbs and a Hue Bridge for voice and remote control.",
+        images: ["philips_hue_starter_kit.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 120,
+        sellerId: db.users.findOne({ email: "jack@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Apple TV 4K (3rd Generation)",
+        description: "Streaming device that delivers 4K HDR content with Dolby Vision, Siri Remote, and Apple Arcade support.",
+        images: ["apple_tv_4k_3rd_gen.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 170,
+        sellerId: db.users.findOne({ email: "jack@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Amazon Echo Show 10",
+        description: "Smart display with a rotating screen, Alexa voice assistant, and built-in camera for video calls.",
+        images: ["amazon_echo_show_10.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 250,
+        sellerId: db.users.findOne({ email: "jack@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Xiaomi 12 Pro",
+        description: "Flagship smartphone with a powerful processor, triple camera setup, and fast charging technology.",
+        images: ["xiaomi_12_pro.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 800,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Apple iPad Air (5th Generation, M1)",
+        description: "Lightweight tablet featuring the Apple M1 chip, a 10.9-inch Liquid Retina display, and Touch ID.",
+        images: ["ipad_air_5th_gen.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 600,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "LG C2 65-inch OLED TV",
+        description: "4K OLED TV offering deep blacks and vibrant colors with AI-powered picture processing.",
+        images: ["lg_c2_65_oled_tv.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 1800,
+        sellerId: db.users.findOne({ email: "grace@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Garmin Fenix 7",
+        description: "Premium multisport GPS smartwatch with advanced health and fitness features.",
+        images: ["garmin_fenix_7.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 600,
+        sellerId: db.users.findOne({ email: "grace@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Fitbit Charge 5",
+        description: "Advanced fitness tracker with built-in GPS, ECG app, and stress management tools.",
+        images: ["fitbit_charge_5.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 150,
+        sellerId: db.users.findOne({ email: "grace@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Xbox Series X",
+        description: "The most powerful Xbox gaming console.",
+        images: ["xbox_series_x.jpg"],
+        category: db.categories.findOne({ name: "Games" })._id,
+        startingPrice: 500,
+        sellerId: db.users.findOne({ email: "carol@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 259200000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Apple MacBook Pro (M1)",
+        description: "High-performance laptop featuring Apple’s M1 chip and 8GB of RAM.",
+        images: ["macbook_pro_m1.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 1200,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Samsung 55-inch 4K Smart TV",
+        description: "55-inch 4K UHD Smart TV with HDR and built-in streaming apps.",
+        images: ["samsung_55_4k_tv.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 600,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Bose QuietComfort 35 II",
+        description: "Wireless headphones with noise cancellation and up to 20 hours of battery life.",
+        images: ["bose_qc35_ii.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 250,
+        sellerId: db.users.findOne({ email: "henry@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Canon EOS R5",
+        description: "High-end mirrorless camera with a 45MP full-frame sensor and 8K video recording.",
+        images: ["canon_eos_r5.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 3000,
+        sellerId: db.users.findOne({ email: "henry@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Apple AirPods Pro (2nd Generation)",
+        description: "Wireless earbuds with active noise cancellation and improved battery life.",
+        images: ["apple_airpods_pro_2.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 200,
+        sellerId: db.users.findOne({ email: "henry@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Microsoft Surface Pro 9",
+        description: "Versatile 2-in-1 laptop with a 13-inch touchscreen and optional keyboard attachment.",
+        images: ["microsoft_surface_pro_9.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 900,
+        sellerId: db.users.findOne({ email: "henry@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "GoPro Hero 11 Black",
+        description: "Action camera with 5.3K video recording, improved stabilization, and waterproof design.",
+        images: ["gopro_hero_11_black.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 400,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+]);
 
+//SUBASTAS CATEGORIA "BOOKS"
+db.auction.insertMany([
+    {
+        title: "To Kill a Mockingbird",
+        description: "Harper Lee's Pulitzer Prize-winning novel set in the 1930s Deep South, addressing racial injustice and moral growth.",
+        images: ["to_kill_a_mockingbird.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 20,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "1984",
+        description: "George Orwell's dystopian novel depicting a totalitarian regime and the perils of government overreach.",
+        images: ["1984.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 15,
+        sellerId: db.users.findOne({ email: "bob@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 172800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Pride and Prejudice",
+        description: "Jane Austen's classic novel exploring themes of love, social standing, and personal growth in early 19th-century England.",
+        images: ["pride_and_prejudice.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 15,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "The Great Gatsby",
+        description: "F. Scott Fitzgerald's novel about the enigmatic Jay Gatsby and the American Dream in the Roaring Twenties.",
+        images: ["great_gatsby.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 25,
+        sellerId: db.users.findOne({ email: "carol@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 259200000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Moby-Dick",
+        description: "Herman Melville's epic tale of Captain Ahab's obsessive quest to hunt down the white whale, Moby Dick.",
+        images: ["moby_dick.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 18,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Brave New World",
+        description: "Aldous Huxley's futuristic novel exploring a technologically advanced society's dangers of conformity and state control.",
+        images: ["brave_new_world.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 11,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Jane Eyre",
+        description: "Charlotte Brontë's pioneering novel in first-person, charting the life and struggles of the independent-minded Jane Eyre.",
+        images: ["jane_eyre.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 13,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Crime and Punishment",
+        description: "Fyodor Dostoevsky's psychological masterpiece examining guilt, morality, and redemption in 19th-century Russia.",
+        images: ["crime_and_punishment.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 20,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Little Women",
+        description: "Louisa May Alcott's classic following the lives of the March sisters as they navigate love, family, and growing up.",
+        images: ["little_women.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 12,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "The Catcher in the Rye",
+        description: "J.D. Salinger's classic novel.",
+        images: ["catcher_rye.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 18,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Harry Potter and the Philosopher's Stone",
+        description: "The first book in the Harry Potter series by J.K. Rowling, introducing Harry's life at Hogwarts and the wizarding world.",
+        images: ["harry_potter_1.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 10,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000), // 7 days
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Harry Potter and the Chamber of Secrets",
+        description: "The second installment of the series, where Harry returns to Hogwarts and encounters the mysteries of the Chamber of Secrets.",
+        images: ["harry_potter_2.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 11,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Harry Potter and the Prisoner of Azkaban",
+        description: "Harry’s third year at Hogwarts brings the threat of escaped prisoner Sirius Black—and reveals more about Harry’s past.",
+        images: ["harry_potter_3.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 12,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Harry Potter and the Goblet of Fire",
+        description: "Harry's fourth year features the Triwizard Tournament, new challenges, and the alarming return of dark forces.",
+        images: ["harry_potter_4.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 13,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Harry Potter and the Order of the Phoenix",
+        description: "In his fifth year, Harry battles skepticism about Lord Voldemort’s return and faces O.W.L. exams amid a growing rebellion.",
+        images: ["harry_potter_5.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 14,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Harry Potter and the Half-Blood Prince",
+        description: "Harry delves into Voldemort's dark past with Dumbledore, while secrets from an old potions book spark new suspicions.",
+        images: ["harry_potter_6.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 15,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Harry Potter and the Deathly Hallows",
+        description: "The final book in the series follows Harry, Ron, and Hermione on a perilous quest to defeat Voldemort once and for all.",
+        images: ["harry_potter_7.jpg"],
+        category: db.categories.findOne({ name: "Books" })._id,
+        startingPrice: 16,
+        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    }
+]);
+
+// Subastas
+db.auctions.insertMany([
     // Furniture
     {
         title: "IKEA EKTORP Sofa",
@@ -210,68 +672,6 @@ db.auctions.insertMany([
         images: ["banksy_canvas.jpg"],
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 600,
-        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 604800000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-
-    // Books
-    {
-        title: "To Kill a Mockingbird",
-        description: "Classic novel by Harper Lee.",
-        images: ["to_kill_a_mockingbird.jpg"],
-        category: db.categories.findOne({ name: "Books" })._id,
-        startingPrice: 20,
-        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 86400000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "1984 by George Orwell",
-        description: "Dystopian novel by George Orwell.",
-        images: ["1984.jpg"],
-        category: db.categories.findOne({ name: "Books" })._id,
-        startingPrice: 15,
-        sellerId: db.users.findOne({ email: "bob@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 172800000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "The Great Gatsby",
-        description: "F. Scott Fitzgerald's classic novel.",
-        images: ["great_gatsby.jpg"],
-        category: db.categories.findOne({ name: "Books" })._id,
-        startingPrice: 25,
-        sellerId: db.users.findOne({ email: "carol@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 259200000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Harry Potter and the Sorcerer's Stone",
-        description: "The first book in the Harry Potter series.",
-        images: ["harry_potter.jpg"],
-        category: db.categories.findOne({ name: "Books" })._id,
-        startingPrice: 30,
-        sellerId: db.users.findOne({ email: "dave@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 432000000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "The Catcher in the Rye",
-        description: "J.D. Salinger's classic novel.",
-        images: ["catcher_rye.jpg"],
-        category: db.categories.findOne({ name: "Books" })._id,
-        startingPrice: 18,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
         startTime: new Date(),
         endTime: new Date(Date.now() + 604800000),
@@ -652,42 +1052,6 @@ db.auctions.insertMany([
     },
 
     // Games
-    {
-        title: "PlayStation 5 Console",
-        description: "The latest gaming console from Sony.",
-        images: ["ps5.jpg"],
-        category: db.categories.findOne({ name: "Games" })._id,
-        startingPrice: 500,
-        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 86400000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Nintendo Switch OLED Model",
-        description: "Portable gaming console with an OLED screen.",
-        images: ["switch_oled.jpg"],
-        category: db.categories.findOne({ name: "Games" })._id,
-        startingPrice: 350,
-        sellerId: db.users.findOne({ email: "bob@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 172800000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Xbox Series X",
-        description: "The most powerful Xbox gaming console.",
-        images: ["xbox_series_x.jpg"],
-        category: db.categories.findOne({ name: "Games" })._id,
-        startingPrice: 500,
-        sellerId: db.users.findOne({ email: "carol@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 259200000),
-        status: "inactive",
-        createdAt: new Date()
-    },
     {
         title: "The Legend of Zelda: Tears of the Kingdom",
         description: "Highly anticipated sequel in the Zelda series.",
