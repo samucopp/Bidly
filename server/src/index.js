@@ -5,8 +5,8 @@ import router from "./routes/router.js";
 import cron from "node-cron";
 import auctionController from "./controllers/auctionController.js";
 import cors from "cors";
-import http from "http";
-import { Server as socketIo } from "socket.io";
+import { createServer } from "http";
+import startSocket from "./config/socket.js";
 dotenv.config();
 
 const PORT = 3000;
