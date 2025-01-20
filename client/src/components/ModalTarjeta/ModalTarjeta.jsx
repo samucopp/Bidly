@@ -60,7 +60,7 @@ const Modal = ({ visible }) => {
                 <p><strong>Precio Inicial:</strong> {auction.startingPrice} €</p>
                 <p><strong>Hora de Inicio:</strong> {new Date(auction.startTime).toLocaleString()}</p>
                 <p><strong>Estado:</strong> {auction.status}</p>
-                <Link to="/auction">
+                <Link to={`/auction/${auctionId}`}>
                     <button style={buttonStyles.bid}>Pujar</button>
                 </Link>
                 <Link to="/catalog">
