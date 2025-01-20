@@ -46,6 +46,19 @@ db.auctions.insertMany([
         createdAt: new Date()
     },
     {
+        title: "Apple iPhone 14 Max",
+        description: "Latest model of the Apple iPhone with 128GB storage.",
+        images: ["iphone14Max.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 1000,
+        minIncrement: 50,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
         title: "Samsung Galaxy S23",
         description: "High-performance smartphone with 256GB storage.",
         images: ["galaxy_s23.jpg"],

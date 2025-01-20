@@ -16,8 +16,8 @@ const Root = () => {
     };
 
     const getPageTitle = () => {
-        return location.pathname.replace("/", "").charAt(0).toUpperCase() + 
-               location.pathname.replace("/", "").slice(1);
+        return location.pathname.split("/")[1];
+       
     };
 
     return (
