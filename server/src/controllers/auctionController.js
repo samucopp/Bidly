@@ -20,13 +20,17 @@ const createAuction = async (req, res) => {
             startTime,
             endTime,
         } = req.body;
+
+        const startingPriceRounded = Math.ceil(startingPrice);
+        const minIncrementRounded = Math.min(100, Math.max(Math.ceil(minIncrement), 1));
+
         const newAuction = new Auction({
             title,
             description,
             images,
             category,
-            startingPrice,
-            minIncrement,
+            startingPrice: startingPriceRounded,
+            minIncrement: minIncrementRounded,
             sellerId,
             startTime,
             endTime,
