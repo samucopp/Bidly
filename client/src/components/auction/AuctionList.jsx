@@ -1,6 +1,5 @@
 import React from "react";
-import datosPuja from "../../components/DatosPuja";
-import Tarjeta from "../../components/Tarjeta";
+import Tarjeta from "../Tarjeta";
 import "./AuctionList.css";  
 
 const AuctionList = ({auctions}) => {   

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BASE_URL } from "../../const/api";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 import ActiveBids from "../../components/activeBids/ActiveBids";
 import LiveBidding from "../../components/liveBidding/LiveBidding";
+import LoginModal from "../../components/modals/LoginModal"; // Importa el modal de login
 import "./subasta.css";
 
-const Subasta = () => {
+const Subasta = ({ onLogin }) => {
   const { auctionId } = useParams();
   const [auction, setAuction] = useState(null);
   const [bids, setBids] = useState([]); // Estado para almacenar las pujas dinámicas
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Simula si el usuario está logueado
-  const [currentUserId, setCurrentUserId] = useState("678e32ba9e321d7fda566083"); // Simula el ID del usuario logueado*
+  const [currentUserId, setCurrentUserId] = useState(1); // Simula el ID del usuario logueado
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para el modal de login
 
   // Fetch para obtener la subasta
   useEffect(() => {
@@ -82,19 +84,34 @@ const Subasta = () => {
 
           <div className="product-info">
             <h2>{auction.title}</h2>
-            <p><strong>Categoría:</strong> {auction.category.name}</p>
-            <p><strong>Descripción:</strong> {auction.description}</p>
-            <p><strong>Precio de salida:</strong> {auction.startingPrice} €</p>
-            <p><strong>Fecha inicio de la subasta:</strong> {new Date(auction.startTime).toLocaleString()}</p>
-            <p><strong>Fecha fin de la subasta:</strong> {new Date(auction.endTime).toLocaleString()}</p>
+            <p>
+              <strong>Categoría:</strong> {auction.category.name}
+            </p>
+            <p>
+              <strong>Descripción:</strong> {auction.description}
+            </p>
+            <p>
+              <strong>Precio de salida:</strong> {auction.startingPrice} €
+            </p>
+            <p>
+              <strong>Fecha inicio de la subasta:</strong>{" "}
+              {new Date(auction.startTime).toLocaleString()}
+            </p>
+            <p>
+              <strong>Fecha fin de la subasta:</strong>{" "}
+              {new Date(auction.endTime).toLocaleString()}
+            </p>
 
             {/* Botón condicional para loguearse */}
-            {!isLoggedIn && auction.status === "active" && (
+            {!isLoggedIn && (
               <div className="login-prompt">
                 <p>Tienes que estar logueado para poder pujar</p>
-                <Link to="/login">
-                  <button className="login-button">Ir a Login</button>
-                </Link>
+                <button
+                  className="login-button"
+                  onClick={() => setIsLoginModalOpen(true)} // Abrir modal
+                >
+                  Iniciar Sesión
+                </button>
               </div>
             )}
 
@@ -104,7 +121,6 @@ const Subasta = () => {
                 No puedes pujar en tu propia subasta.
               </p>
             )}
-
           </div>
         </section>
         {isLoggedIn && (
@@ -112,18 +128,17 @@ const Subasta = () => {
             {/* Puja en directo */}
             <LiveBidding bids={bids} />
 
-            {/* condiciones bajo las cuales se visualizan (o no) componentes */}
+            {/* Condiciones bajo las cuales se visualizan (o no) componentes */}
             {!isSeller && <ActiveBids bids={auction.bids} />}
 
             {/* Temporizador */}
             <div className="timer">
               <p>
-                <strong>Tiempo restante:</strong> {/* Aquí podrías implementar un temporizador dinámico */}
+                <strong>Tiempo restante:</strong>{" "}
+                {/* Aquí podrías implementar un temporizador dinámico */}
               </p>
             </div>
-
           </>
-
         )}
 
         {/* Sugerencias */}
@@ -134,6 +149,12 @@ const Subasta = () => {
           </div>
         </section>
       </main>
+
+      {/* Modal de login */}
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)} // Cierra el modal
+      />
     </div>
   );
 };
