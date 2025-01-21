@@ -346,7 +346,7 @@ db.auctions.insertMany([
 ]);
 
 //SUBASTAS CATEGORIA "BOOKS"
-db.auction.insertMany([
+db.auctions.insertMany([
     {
         title: "To Kill a Mockingbird",
         description: "Harper Lee's Pulitzer Prize-winning novel set in the 1930s Deep South, addressing racial injustice and moral growth.",
@@ -1582,200 +1582,200 @@ db.auctions.insertMany([
 ]);
 
 //SUBASTAS CATEGORIA "TOYS"
-db.auctions.insertMany([
-    {
-        title: "LEGO Star Wars Millennium Falcon",
-        description: "Detailed LEGO set of the iconic Millennium Falcon.",
-        images: ["lego_falcon.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 150,
-        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Barbie Dreamhouse",
-        description: "Luxury dollhouse with multiple rooms and accessories.",
-        images: ["barbie_dreamhouse.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 200,
-        sellerId: db.users.findOne({ email: "bob@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 172800000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Hot Wheels Ultimate Garage",
-        description: "Large Hot Wheels garage playset with multiple levels.",
-        images: ["hot_wheels_garage.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 120,
-        sellerId: db.users.findOne({ email: "carol@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 259200000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "NERF Elite 2.0 Blaster",
-        description: "High-performance NERF blaster with extra darts.",
-        images: ["nerf_blaster.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 70,
-        sellerId: db.users.findOne({ email: "dave@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 432000000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Fisher-Price Laugh & Learn Smart Stages Chair",
-        description: "Interactive learning chair for toddlers.",
-        images: ["fisher_price_chair.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 50,
-        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 604800000),
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "LEGO Star Wars UCS Imperial Star Destroyer",
-        description: "Massive collector’s set featuring over 4,700 pieces to build the fearsome Imperial flagship.",
-        images: ["lego_star_destroyer.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 800,
-        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(), // 1 day from now
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "LEGO Star Wars UCS Death Star",
-        description: "Iconic Death Star set loaded with minifigures and interactive scenes from the Star Wars saga.",
-        images: ["lego_death_star.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 700,
-        sellerId: db.users.findOne({ email: "bob@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 172800000), // 2 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "LEGO Technic Liebherr R 9800 Excavator",
-        description: "Advanced and massive Technic set equipped with multiple motors and app-controlled features.",
-        images: ["lego_liebherr_excavator.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 450,
-        sellerId: db.users.findOne({ email: "carol@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 259200000), // 3 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "LEGO Creator Expert Titanic",
-        description: "Remarkably detailed 9,000+ piece replica of the RMS Titanic, measuring over 4 feet in length.",
-        images: ["lego_creator_titanic.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 650,
-        sellerId: db.users.findOne({ email: "dave@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 432000000), // 5 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "LEGO Technic Bugatti Chiron",
-        description: "High-end supercar model featuring a replica W16 engine, Technic gearbox, and authentic interior details.",
-        images: ["lego_bugatti_chiron.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 400,
-        sellerId: db.users.findOne({ email: "eve@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 604800000), // 7 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Transformers Masterpiece MP-44 Optimus Prime",
-        description: "Premium Masterpiece series Optimus Prime figure featuring G1-accurate design and accessories.",
-        images: ["transformers_mp44_optimus_prime.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 450,
-        sellerId: db.users.findOne({ email: "grace@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 172800000), // 2 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Sideshow Collectibles Darth Vader Premium Format Figure",
-        description: "High-end polystone statue with fabric cape and detailed armor, capturing the menacing Sith Lord.",
-        images: ["sideshow_darth_vader.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 650,
-        sellerId: db.users.findOne({ email: "irene@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 345600000), // 4 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Bandai Hobby Star Wars 1/72 X-Wing Starfighter",
-        description: "Highly detailed model kit of the classic X-Wing, featuring movable S-foils and cockpit details.",
-        images: ["bandai_xwing_model.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 80,
-        sellerId: db.users.findOne({ email: "jack@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 432000000), // 5 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Barbie Collector 60th Anniversary Doll",
-        description: "Limited edition Barbie doll celebrating 60 years, with special packaging and commemorative details.",
-        images: ["barbie_60th_anniversary.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 250,
-        sellerId: db.users.findOne({ email: "frank@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 518400000), // 6 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "Meccano Erector Super Construction Set",
-        description: "Large-scale construction kit with motorized parts, enabling the creation of various mechanical models.",
-        images: ["meccano_super_construction_set.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 120,
-        sellerId: db.users.findOne({ email: "grace@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 604800000), // 7 days
-        status: "inactive",
-        createdAt: new Date()
-    },
-    {
-        title: "NECA Teenage Mutant Ninja Turtles 4-Pack",
-        description: "Collector’s edition set featuring the four Turtles with accurate detailing, weapons, and alternate hands.",
-        images: ["neca_tmnt_4pack.jpg"],
-        category: db.categories.findOne({ name: "Toys" })._id,
-        startingPrice: 200,
-        sellerId: db.users.findOne({ email: "hank@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 432000000), // 5 days
-        status: "inactive",
-        createdAt: new Date()
-    }
-]);
+// db.auctions.insertMany([
+//     {
+//         title: "LEGO Star Wars Millennium Falcon",
+//         description: "Detailed LEGO set of the iconic Millennium Falcon.",
+//         images: ["lego_falcon.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 150,
+//         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(),
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "Barbie Dreamhouse",
+//         description: "Luxury dollhouse with multiple rooms and accessories.",
+//         images: ["barbie_dreamhouse.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 200,
+//         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 172800000),
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "Hot Wheels Ultimate Garage",
+//         description: "Large Hot Wheels garage playset with multiple levels.",
+//         images: ["hot_wheels_garage.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 120,
+//         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 259200000),
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "NERF Elite 2.0 Blaster",
+//         description: "High-performance NERF blaster with extra darts.",
+//         images: ["nerf_blaster.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 70,
+//         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 432000000),
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "Fisher-Price Laugh & Learn Smart Stages Chair",
+//         description: "Interactive learning chair for toddlers.",
+//         images: ["fisher_price_chair.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 50,
+//         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 604800000),
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "LEGO Star Wars UCS Imperial Star Destroyer",
+//         description: "Massive collector’s set featuring over 4,700 pieces to build the fearsome Imperial flagship.",
+//         images: ["lego_star_destroyer.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 800,
+//         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(), // 1 day from now
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "LEGO Star Wars UCS Death Star",
+//         description: "Iconic Death Star set loaded with minifigures and interactive scenes from the Star Wars saga.",
+//         images: ["lego_death_star.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 700,
+//         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 172800000), // 2 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "LEGO Technic Liebherr R 9800 Excavator",
+//         description: "Advanced and massive Technic set equipped with multiple motors and app-controlled features.",
+//         images: ["lego_liebherr_excavator.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 450,
+//         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 259200000), // 3 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "LEGO Creator Expert Titanic",
+//         description: "Remarkably detailed 9,000+ piece replica of the RMS Titanic, measuring over 4 feet in length.",
+//         images: ["lego_creator_titanic.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 650,
+//         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 432000000), // 5 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "LEGO Technic Bugatti Chiron",
+//         description: "High-end supercar model featuring a replica W16 engine, Technic gearbox, and authentic interior details.",
+//         images: ["lego_bugatti_chiron.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 400,
+//         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 604800000), // 7 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "Transformers Masterpiece MP-44 Optimus Prime",
+//         description: "Premium Masterpiece series Optimus Prime figure featuring G1-accurate design and accessories.",
+//         images: ["transformers_mp44_optimus_prime.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 450,
+//         sellerId: db.users.findOne({ email: "grace@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 172800000), // 2 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "Sideshow Collectibles Darth Vader Premium Format Figure",
+//         description: "High-end polystone statue with fabric cape and detailed armor, capturing the menacing Sith Lord.",
+//         images: ["sideshow_darth_vader.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 650,
+//         sellerId: db.users.findOne({ email: "irene@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 345600000), // 4 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "Bandai Hobby Star Wars 1/72 X-Wing Starfighter",
+//         description: "Highly detailed model kit of the classic X-Wing, featuring movable S-foils and cockpit details.",
+//         images: ["bandai_xwing_model.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 80,
+//         sellerId: db.users.findOne({ email: "jack@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 432000000), // 5 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "Barbie Collector 60th Anniversary Doll",
+//         description: "Limited edition Barbie doll celebrating 60 years, with special packaging and commemorative details.",
+//         images: ["barbie_60th_anniversary.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 250,
+//         sellerId: db.users.findOne({ email: "frank@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 518400000), // 6 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "Meccano Erector Super Construction Set",
+//         description: "Large-scale construction kit with motorized parts, enabling the creation of various mechanical models.",
+//         images: ["meccano_super_construction_set.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 120,
+//         sellerId: db.users.findOne({ email: "grace@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 604800000), // 7 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     },
+//     {
+//         title: "NECA Teenage Mutant Ninja Turtles 4-Pack",
+//         description: "Collector’s edition set featuring the four Turtles with accurate detailing, weapons, and alternate hands.",
+//         images: ["neca_tmnt_4pack.jpg"],
+//         category: db.categories.findOne({ name: "Toys" })._id,
+//         startingPrice: 200,
+//         sellerId: db.users.findOne({ email: "hank@example.com" })._id,
+//         startTime: new Date(),
+//         endTime: new Date(Date.now() + 432000000), // 5 days
+//         status: "inactive",
+//         createdAt: new Date()
+//     }
+// ]);
 
 //SUBASTAS CATEGORIA "MUSIC"
 db.auctions.insertMany([
@@ -1959,7 +1959,7 @@ db.auctions.insertMany([
         status: "inactive",
         createdAt: new Date()
     }
-]);
+], { ordered: false });
 
 //SUBASTAS CATEGORIA "MOVIES"
 db.auctions.insertMany([
@@ -2680,4 +2680,4 @@ db.bids.insertMany([
     { auctionId: db.auctions.findOne({ title: "Elden Ring" })._id, userId: db.users.findOne({ email: "eve@example.com" })._id, amount: 76 },
     { auctionId: db.auctions.findOne({ title: "Elden Ring" })._id, userId: db.users.findOne({ email: "frank@example.com" })._id, amount: 80 },
 
-]);
+], { ordered: false });

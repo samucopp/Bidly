@@ -51,13 +51,17 @@ async function login(req, res) {
             });
         }
         const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        return res.status(200).json({message: "Login exitoso", token});
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            message: "Error interno del servidor",
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24,
         });
-    }
+        return res.status(200).json({ message: "El token se ha creado satisfactoriamente en una cookie", userInfo: { userId: user._id, userName: user.name, userEmail: user.email } });
+} catch (error) {
+    console.error(error);
+    return res.status(500).json({
+        message: "Error interno del servidor",
+    });
+}
 }
 
 export default {
