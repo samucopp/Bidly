@@ -33,8 +33,9 @@ async function fetchData(route, method = "GET", data = null) {
     }
 }
 
-async function enterAuction(params) {}
+async function enterAuction(auctionId, userId) {}
+async function exitAuction(auctionId, userId) {}
 
-async function placeBid(params) {}
+async function placeBid(auctionId, userId, bidAmount) {}
 
 export { enterAuction, placeBid };

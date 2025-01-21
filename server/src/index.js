@@ -6,7 +6,8 @@ import cron from "node-cron";
 import auctionController from "./controllers/auctionController.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import { createServer } from "http";
+import { startSocket } from "./config/socket.js";
 dotenv.config();
 
 const PORT = 3000;
@@ -30,6 +31,8 @@ app.use((req, res, next) => {
     req.emitToUser = emitToUser;
     next();
 });
+const httpServer = createServer(app);
+const { io, emitToUser } = startSocket(httpServer);
 
 cron.schedule("* * * * *", async () => {
     console.log("Ejecutando tareas automatizadas...");
