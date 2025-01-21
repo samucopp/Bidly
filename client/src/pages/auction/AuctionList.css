@@ -1,0 +1,50 @@
+.catalog-page {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    gap: 24px;
+}
+
+/* Categories sidebar styles */
+.categories-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #e0e0e0;
+}
+
+/* Main content area styles */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.tarjetas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+.tarjeta {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    height: auto;
+    width: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .catalog-page {
+        flex-direction: column;
+    }
+    
+    .categories-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+}

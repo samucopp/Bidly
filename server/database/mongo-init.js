@@ -17,16 +17,16 @@ db.users.insertMany([
 // CATEGORIAS
 db.categories.insertMany([
     { name: "Electronics" },
-    { name: "Furniture" },
-    { name: "Art" },
-    { name: "Books" },
+    { name: "Furniture" }, 
+    { name: "Art" }, 
+    { name: "Books" }, 
     { name: "Antiquities" },
-    { name: "Jewelry" },
-    { name: "Clothing" },
-    { name: "Toys" },
-    { name: "Music" },
-    { name: "Movies" },
-    { name: "Games" },
+    { name: "Jewelry" }, 
+    { name: "Clothing" }, 
+    { name: "Toys" }, 
+    { name: "Music" }, 
+    { name: "Movies" }, 
+    { name: "Games" }, 
 ]);
 
 // SUBASTAS CATEGORIA "ELECTRONICS"
@@ -40,6 +40,19 @@ db.auctions.insertMany([
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
         startTime: new Date(),
         endTime: new Date(Date.now() + 604800000),
+        status: "inactive",
+        createdAt: new Date()
+    },
+    {
+        title: "Apple iPhone 14 Max",
+        description: "Latest model of the Apple iPhone with 128GB storage.",
+        images: ["iphone14Max.jpg"],
+        category: db.categories.findOne({ name: "Electronics" })._id,
+        startingPrice: 1000,
+        minIncrement: 50,
+        sellerId: db.users.findOne({ email: "alice@example.com" })._id,
+        startTime: new Date(),
+        endTime: new Date(),
         status: "inactive",
         createdAt: new Date()
     },
