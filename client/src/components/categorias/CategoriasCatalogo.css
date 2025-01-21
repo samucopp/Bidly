@@ -1,0 +1,58 @@
+.categorias {
+    padding-right: 20px;
+}
+
+.categorias h2 {
+    font-family: Arial;
+    font-weight: lighter;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding-left: 8px;
+}
+
+.categoria h3 {
+    cursor: pointer;
+    padding: 8px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.categoria ul {
+    list-style: none;
+    padding-left: 16px;
+    margin: 4px 0;
+}
+
+.categoria li {
+    padding: 6px 0;
+    color: #666;
+    cursor: pointer;
+}
+
+.categoria li:hover {
+    color: #333;
+}
+
+/* Estilos para el filtrado */
+.categoria {
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+    margin: 2px 0;
+    padding: 4px 8px;
+}
+
+.categoria:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.categoria.selected {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.categoria.selected h3 {
+    font-weight: bold;
+    color: #000;
+}

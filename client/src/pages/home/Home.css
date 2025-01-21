@@ -1,0 +1,24 @@
+
+.home-container {
+    position: relative;
+    padding-top: 0px;
+    /* Altura del navbar */
+}
+
+.home-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ajusta el estilo del carrusel principal */
+.front-page-carrusel {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ajusta el estilo de las secciones */
+.novedades-section {
+    position: relative;
+    z-index: 1;
+    padding: 1rem;
+}

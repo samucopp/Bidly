@@ -2,6 +2,7 @@ import bcryptjs from "bcryptjs";
 import User from "../models/userModel.js";
 import Auction from "../models/auctionModel.js";
 
+
 async function getAll(req, res) {
     try {
         const users = await User.find();

@@ -9,8 +9,7 @@ import { createServer } from "http";
 import startSocket from "./config/socket.js";
 dotenv.config();
 
-const PORT = 3000;
-
+const PORT = process.env.PORT || 3000;
 const app = express(); // crear servidor
 app.use(express.static("src/public")); // configurar directorio de archivos estáticos
 app.use(express.urlencoded({ extended: true })); // configurar body parser para recibir datos de formularios
