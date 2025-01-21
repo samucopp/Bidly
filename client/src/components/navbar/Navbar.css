@@ -11,8 +11,9 @@
   width: 100%;
   padding: 0 16px;
   box-sizing: border-box;
-  overflow: hidden; /* opcional: si quieres asegurar que nada se desborde */
+  overflow: hidden;
 }
+
 .menu-item {
   letter-spacing: 1px;
 }
@@ -38,7 +39,6 @@
   object-fit: contain;
 }
 
-
 .navbar-links {
   display: none;
   align-items: center;
@@ -46,14 +46,12 @@
   margin-left: -2rem;
 }
 
-
 .navbar-links a {
   color: #4a4a4a;
   text-decoration: none;
   padding: 0.5rem 0.75rem;
   transition: color 0.3s ease;
 }
-
 
 .navbar-right {
   display: flex;
@@ -67,16 +65,8 @@
   gap: 1rem;
 }
 
-
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
 .search-container {
   position: relative;
-
 }
 
 .search-container input {
@@ -98,21 +88,35 @@
   cursor: pointer;
 }
 
-
 .auth-links a {
   color: #4a4a4a;
   text-decoration: none;
   font-size: 0.875rem;
 }
 
-.language-selector {
+/* Estilos para el avatar */
+.user-avatar {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
 }
 
-.language-selector span {
-  color: #ddd;
+.avatar-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.user-avatar-mobile {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+.user-avatar-mobile .avatar-img {
+  width: 40px;
+  height: 40px;
 }
 
 .mobile-menu-button {
@@ -124,7 +128,6 @@
   padding-top: 8px;
   padding-bottom: 8px;
   cursor: pointer;
-
 }
 
 .hamburger-line {
@@ -133,6 +136,7 @@
   background-color: #333;
   margin: 4px 0;
 }
+
 .mobile-menu {
   display: none;
   flex-direction: column;
@@ -141,22 +145,21 @@
   position: fixed;
   width: 100%;
   box-sizing: border-box;
-  top: 64px; /* Asegúrate de que este valor coincida exactamente con la altura de tu navbar */
+  top: 64px;
   left: 0;
   z-index: 999;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-height: calc(100vh - 64px);
   overflow-y: auto;
 }
+
 .mobile-menu.active {
   display: flex;
 }
 
-.menu-item-register {
-  font-weight: bold;
-}
-
-.menu-item-login {
+.menu-item-register,
+.menu-item-login,
+.menu-item-logout {
   font-weight: bold;
 }
 
@@ -213,12 +216,14 @@
     border-bottom: 1px solid #eee;
   }
 }
+
 @media (min-width: 710px) and (max-width: 974px) {
   .search-container input {
     width: 450px;
     transition: width 0.3s ease;
   }
 }
+
 @media (min-width: 500px) and (max-width: 709px) {
   .search-container input {
     width: 250px;

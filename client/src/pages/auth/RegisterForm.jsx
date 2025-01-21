@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { register, showError } from '../../api/apiService';
+import { BASE_URL } from '../../const/api';
 import './RegisterForm.css';
+
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -41,11 +42,16 @@ const RegisterForm = () => {
             avatar: avatarPath
         }));
     };
+    const showError = (message) => {
+        // Puedes implementar tu propia lógica de mostrar errores
+        alert(message); // O usar un sistema de notificaciones más sofisticado
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validaciones
+        // Mantenemos las mismas validaciones
         if (!formData.name?.trim()) {
             showError('Name required');
             return;
@@ -67,8 +73,30 @@ const RegisterForm = () => {
             return;
         }
 
+        
         try {
-            await register(formData);
+            const response = await fetch(`${BASE_URL}/user/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                    passwordRepeat: formData.passwordRepeat,
+                    address: formData.address,
+                    avatar: formData.avatar
+                })
+            });
+
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message);
+            }
+
             navigate('/login');
         } catch (error) {
             if (error.message === 'El correo ya esta registrado') {
@@ -112,7 +140,7 @@ const RegisterForm = () => {
                 <input
                     type="text"
                     name="name"
-                    placeholder="Full Name"
+                    placeholder="Username"
                     className="input-field"
                     value={formData.name}
                     onChange={handleChange}
