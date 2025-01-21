@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import "./catalogo.css";
 import { Outlet } from "react-router-dom";
-import AuctionList from "../auction/AuctionList";
+import AuctionList from "../../components/auction/AuctionList";
 import Categorias from "../../components/categorias/CategoriasCatalogo";
 import { BASE_URL } from "../../const/api";
 

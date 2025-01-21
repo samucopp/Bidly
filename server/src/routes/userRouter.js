@@ -7,6 +7,7 @@ const router = Router();
 
 router.post("/register", authController.register);
 router.post("/login", authController.login);
+router.post("/logout", authController.logout);
 router.get("/all", checkAuthorization, userController.getAll);
 router.get("/:userId", checkAuthorization, userController.getUser);
 router.put("/:userId", checkAuthorization, userController.editUser);
