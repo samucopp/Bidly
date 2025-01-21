@@ -12,13 +12,15 @@ const Navbar = () => {
     const [isAuth, setIsAuth] = useState(false);
     const [userData, setUserData] = useState(null);
 
+
     useEffect(() => {
         const checkAuth = async () => {
             const token = localStorage.getItem('token');
+            const userId= localStorage.getItem ('userId'); // luego quitarlo para pruebas
             
             if (token) {
                 try {
-                    const response = await fetch(`${BASE_URL}/user/profile`, {
+                    const response = await fetch(`${BASE_URL}/user/${userId}`, {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Content-Type': 'application/json'
@@ -60,6 +62,7 @@ const Navbar = () => {
             e.preventDefault();
         }
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         setIsAuth(false);
         setUserData(null);
         navigate('/', { replace: true });
@@ -147,7 +150,7 @@ const Navbar = () => {
                                     </>
                                 ) : (
                                     <>
-                                        <a href="/login" onClick={handleLoginClick}>Log In</a>
+                                        <a href="/" onClick={handleLoginClick}>Log In</a>
                                         <a href="/register" onClick={handleRegisterClick}>Create Account</a>
                                     </>
                                 )}
@@ -186,7 +189,7 @@ const Navbar = () => {
                             </>
                         ) : (
                             <>
-                                <a href="/login" className="menu-item-login" onClick={handleLoginClick}>Log In</a>
+                                <a href="/" className="menu-item-login" onClick={handleLoginClick}>Log In</a>
                                 <a href="/register" className="menu-item-register" onClick={handleRegisterClick}>Create Account</a>
                             </>
                         )}
