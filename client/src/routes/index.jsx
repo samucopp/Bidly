@@ -4,7 +4,7 @@ import Catalogo from '../pages/catalogo/Catalogo';
 import RegisterForm from "../pages/auth/RegisterForm";
 import Home from "../pages/home/Home";
 import Root from "../pages/root/Root";
-import Modal from "../components/ModalTarjeta/ModalTarjeta";
+import Modal from "../components/modals/ModalTarjeta";
 import Subasta from '../pages/subasta/Subasta';
 import AboutUs from "../pages/about-us/AboutUs";
 import UserProfile from "../pages/user-profile/UserProfile";

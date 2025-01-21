@@ -96,8 +96,10 @@ const RegisterForm = () => {
             if (!response.ok) {
                 throw new Error(data.message);
             }
+            navigate('/', { 
+                state: { openLoginModal: true }
+              });
 
-            navigate('/login');
         } catch (error) {
             if (error.message === 'El correo ya esta registrado') {
                 showError('User already exists');
