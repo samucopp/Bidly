@@ -1,14 +1,48 @@
-// UserProfile.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './UserProfile.css';
 
 const UserProfile = () => {
     const [userData, setUserData] = useState({
-        name: 'Lola Flores',
-        avatar: '/avatars/mujer-uno.png'
+        name: '',
+        avatar: ''
     });
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [myAuctions, setMyAuctions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const fetchUserAuctions = async () => {
+        try {
+            // Obtenemos el token y el userId del localStorage o donde lo tengas almacenado
+            const token = localStorage.getItem('token');
+            const userId = localStorage.getItem('userId'); // O extraerlo del token si está ahí
+
+            const response = await fetch(`/api/auctions/${userId}/owner`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+
+            if (!data.success) {
+                throw new Error(data.message);
+            }
+
+            setMyAuctions(data.auctions);
+            setLoading(false);
+        } catch (error) {
+            setError('Error al cargar las subastas');
+            setLoading(false);
+            console.error('Error:', error);
+        }
+    };
+    useEffect(() => {
+        fetchUserAuctions();
+    }, []);
+
 
     const handleSettingsClick = () => {
         setIsSettingsOpen(!isSettingsOpen);
@@ -26,6 +60,31 @@ const UserProfile = () => {
         setIsSettingsOpen(false);
     };
 
+    const handleDeleteAuction = async (auctionId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`/api/auctions/${auctionId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            const data = await response.json();
+    
+            if (data.success) {
+                // Actualizar el estado eliminando la subasta
+                setMyAuctions(myAuctions.filter(auction => auction._id !== auctionId));
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            console.error('Error al eliminar la subasta:', error);
+            // Aquí podrías mostrar un mensaje de error al usuario
+        }
+    };
+    
     return (
         <div className="profile-container">
             <div className="profile-header">
@@ -79,28 +138,43 @@ const UserProfile = () => {
             </section>
 
             {/* My Auctions */}
+            {/* My Auctions Section */}
             <section className="my-auctions">
                 <h2>My Auctions</h2>
-                <div className="auction-detail">
-                    <div className="auction-info">
-                        <h3>lote 34567, Espejo Border</h3>
-                        <p>Aquí irá la descripción del producto y sus características</p>
-                        <p>Aquí irá la descripción del producto y sus características</p>
-                        <p>Aquí irá la descripción del producto y sus características</p>
-                    </div>
-                    <div className="auction-price">
-                        <span className="price-label">PRECIO DE SALIDA</span>
-                        <span className="price">20 €</span>
-                        <div className="auction-dates">
-                            <p>Fecha inicio de la subasta: 17/01/2025</p>
-                            <p>Fin de la subasta: 18/01/2025 8:30 pm</p>
+                {loading ? (
+                    <div className="loading">Cargando subastas...</div>
+                ) : error ? (
+                    <div className="error">{error}</div>
+                ) : (
+                    myAuctions.map((auction) => (
+                        <div key={auction._id} className="auction-detail">
+                            <div className="auction-info">
+                                <h3>lote {auction._id}, {auction.title}</h3>
+                                <p>{auction.description}</p>
+                                {auction.Category && (
+                                    <p>Categoría: {auction.Category.title}</p>
+                                )}
+                            </div>
+                            <div className="auction-price">
+                                <span className="price-label">PRECIO DE SALIDA</span>
+                                <span className="price">{auction.startingPrice} €</span>
+                                <div className="auction-dates">
+                                    <p>Fecha inicio de la subasta: {new Date(auction.startDate).toLocaleDateString()}</p>
+                                    <p>Fin de la subasta: {new Date(auction.endDate).toLocaleString()}</p>
+                                </div>
+                            </div>
+                            <div className="auction-actions">
+                                <button
+                                    className="delete-button"
+                                    onClick={() => handleDeleteAuction(auction._id)}
+                                >
+                                    BORRAR
+                                </button>
+                                <button className="create-bid-button">CREATE NEW BID</button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="auction-actions">
-                    <button className="delete-button">BORRAR</button>
-                    <button className="create-bid-button">CREATE NEW BID</button>
-                </div>
+                    ))
+                )}
             </section>
             <section className="auction-history">
                 <h2>Auction History</h2>

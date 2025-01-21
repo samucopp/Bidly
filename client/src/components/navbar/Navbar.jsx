@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LoginModal from '../modals/LoginModal';
+import { BASE_URL } from '../../const/api'; 
 import './Navbar.css';
 
 const Navbar = () => {
@@ -8,22 +9,71 @@ const Navbar = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [isAuth, setIsAuth] = useState(false);
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const token = localStorage.getItem('token');
+            
+            if (token) {
+                try {
+                    const response = await fetch(`${BASE_URL}/user/profile`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUserData(data);
+                        setIsAuth(true);
+                    } else {
+                        handleLogout();
+                    }
+                } catch (error) {
+                    console.error('Error al obtener datos del usuario:', error);
+                    handleLogout();
+                }
+            } else {
+                setIsAuth(false);
+                setUserData(null);
+            }
+        };
+
+        checkAuth();
+    }, []);
 
     const toggleMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
     const handleLoginClick = (e) => {
-        e.preventDefault(); // Previene la navegación a /login
+        e.preventDefault();
         setIsLoginOpen(true);
         setIsMobileMenuOpen(false); 
     };
 
-    const handleRegisterClick = (e) => {
-        e.preventDefault(); // Previene la navegación a /register
-        navigate('/register');
+    const handleLogout = (e) => {
+        if (e) {
+            e.preventDefault();
+        }
+        localStorage.removeItem('token');
+        setIsAuth(false);
+        setUserData(null);
+        navigate('/', { replace: true });
     };
 
+    const handleRegisterClick = (e) => {
+        e.preventDefault();
+        navigate('/register');
+        setIsMobileMenuOpen(false); // Añadido para cerrar el menú móvil al registrarse
+    };
+
+    const getAvatarUrl = () => {
+        return userData?.avatar || '/hombre-cinco.png';
+    };
 
 
     return (
@@ -82,10 +132,25 @@ const Navbar = () => {
                                 </button>
                             </div>
 
-                            {/* Auth Links */}
-                            <div className="auth-links">
-                                <a href="/login" onClick={handleLoginClick}>Log In</a>
-                                <a href="/register" onClick={handleRegisterClick}>Create Account</a>
+                           {/* Auth Links */}
+                           <div className="auth-links">
+                                {isAuth ? (
+                                    <>
+                                        <div className="user-avatar">
+                                            <img 
+                                                src={getAvatarUrl()} 
+                                                alt={`${userData?.name || 'User'}'s avatar`}
+                                                className="avatar-img" 
+                                            />
+                                        </div>
+                                        <a href="/" onClick={handleLogout}>Log Out</a>
+                                    </>
+                                ) : (
+                                    <>
+                                        <a href="/login" onClick={handleLoginClick}>Log In</a>
+                                        <a href="/register" onClick={handleRegisterClick}>Create Account</a>
+                                    </>
+                                )}
                             </div>
                         </div>
 
@@ -102,14 +167,29 @@ const Navbar = () => {
                 </div>
 
 
-                {/* Mobile Menu */}
-                <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+                 {/* Mobile Menu */}
+                 <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
                     <Link to="/about-us" className="menu-item" onClick={toggleMenu}>ABOUT US</Link>
                     <Link to="/catalog" className="menu-item" onClick={toggleMenu}>CATALOG</Link>
                     <Link to="/contact" className="menu-item" onClick={toggleMenu}>CONTACT</Link>
                     <div className="auth-mobile-links">
-                        <a href="/login" className="menu-item-login" onClick={handleLoginClick}>Log In</a>
-                        <a href="/register" className="menu-item-register" onClick={handleRegisterClick}>Create Account</a>
+                        {isAuth ? (
+                            <>
+                                <div className="user-avatar-mobile">
+                                    <img 
+                                        src={getAvatarUrl()} 
+                                        alt={`${userData?.name || 'User'}'s avatar`}
+                                        className="avatar-img" 
+                                    />
+                                </div>
+                                <a href="/" className="menu-item-logout" onClick={handleLogout}>Log Out</a>
+                            </>
+                        ) : (
+                            <>
+                                <a href="/login" className="menu-item-login" onClick={handleLoginClick}>Log In</a>
+                                <a href="/register" className="menu-item-register" onClick={handleRegisterClick}>Create Account</a>
+                            </>
+                        )}
                     </div>
                 </div>
             </nav>
