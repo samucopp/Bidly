@@ -1,6 +1,7 @@
 import { Server as socketIo } from "socket.io";
 import Auction from "../models/auctionModel.js";
-
+import bidController from "../controllers/bidController.js";
+import userController from "../controllers/userController.js";
 export function startSocket(server) {
     const io = new socketIo(server, {
         cors: {
@@ -22,36 +23,49 @@ export function startSocket(server) {
         });
         // Unirse a una sala específica de la subasta
         socket.on("join-auction", async (auctionId) => {
-            socket.join(auctionId);
             console.log(
                 `Usuario ${socket.id} se unió a la subasta ${auctionId}`
             );
+            socket.join(auctionId);
+        });
+
+        // Salir de una sala específica de la subasta
+        socket.on("leave-auction", (auctionId) => {
+            console.log(
+                `Usuario ${socket.id} salió de la subasta ${auctionId}`
+            );
+            socket.leave(auctionId); // Dejar la sala
         });
 
         // Manejar una nueva puja
-        socket.on(
-            "place-bid",
-            async ({
-                auctionId,
-                userId,
-                username,
-                bidAmount,
-                bidTime,
-                minAllowed,
-            }) => {
+        socket.on("place-bid", async ({ auctionId, userId, bidAmount }) => {
+            try {
                 console.log(
                     `Nueva puja en subasta ${auctionId}: ${bidAmount} por ${userId}`
                 );
 
-                io.to(auctionId).emit("place-bid", {
+                const { bidId, bidTime, minAllowed } =
+                    await bidController.addBid(auctionId, userId, bidAmount);
+                const { name } = await userController.getUserData(userId);
+                // Emitir el evento a todos los usuarios en la sala de la subasta
+                io.to(auctionId).emit("new-bid", {
                     userId: userId,
-                    username: username,
+                    name,
+                    bidId,
                     bidAmount: bidAmount,
-                    bidTime: bidTime,
-                    minAllowed: minAllowed,
+                    bidTime,
+                    minAllowed,
+                });
+            } catch (error) {
+                console.error("Error al procesar la puja:", error);
+
+                // Notificar al cliente sobre el error
+                socket.emit("bid-error", {
+                    message:
+                        "Hubo un problema al procesar tu puja. Inténtalo de nuevo.",
                 });
             }
-        );
+        });
         socket.on("send-notification", ({ receiverId }) => {
             const receiverSocketId = users.get(receiverId);
             io.to(receiverSocketId).emit("send-notification", null);

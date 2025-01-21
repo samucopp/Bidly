@@ -2,7 +2,6 @@ import bcryptjs from "bcryptjs";
 import User from "../models/userModel.js";
 import Auction from "../models/auctionModel.js";
 
-
 async function getAll(req, res) {
     try {
         const users = await User.find();
@@ -18,12 +17,7 @@ async function getAll(req, res) {
 async function getUser(req, res) {
     try {
         const { userId } = req.params;
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(400).json({
-                message: "Usuario no encontrado",
-            });
-        }
+        const user = await getUserData(userId);
         return res.status(200).json(user);
     } catch (error) {
         console.error(error);
@@ -39,12 +33,17 @@ async function editUser(req, res) {
         const { name, email, address, password, passwordRepeat } = req.body;
 
         if (password && password !== passwordRepeat) {
-            return res.status(400).json({ success: false, message: "Las contraseñas no coinciden" });
+            return res.status(400).json({
+                success: false,
+                message: "Las contraseñas no coinciden",
+            });
         }
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+            return res
+                .status(404)
+                .json({ success: false, message: "Usuario no encontrado" });
         }
 
         if (name) user.name = name;
@@ -60,7 +59,7 @@ async function editUser(req, res) {
         return res.status(200).json({
             success: true,
             message: "Información del usuario actualizada",
-            user
+            user,
         });
     } catch (error) {
         console.error(error);
@@ -74,11 +73,11 @@ async function editUser(req, res) {
 async function handleAddAuctionToFavorites(userId, auctionId) {
     const user = await User.findById(userId);
     if (!user) {
-        throw new Error ("Usuario no encontrado");
+        throw new Error("Usuario no encontrado");
     }
     const auction = await Auction.findById(auctionId);
     if (!auction) {
-        throw new Error ("Subasta no encontrada"); 
+        throw new Error("Subasta no encontrada");
     }
 
     if (!user.favoriteAuctions.includes(auctionId)) {
@@ -92,7 +91,7 @@ async function handleAddAuctionToFavorites(userId, auctionId) {
     }
 
     return "Subasta agregada a favoritos y usuario agregado a seguidores";
-};
+}
 
 async function addAuctionToFavorites(req, res) {
     try {
@@ -107,8 +106,13 @@ async function addAuctionToFavorites(req, res) {
         });
     } catch (error) {
         console.error(error);
-        if(error.message === "Subasta no encontrada" || error.message === "Usuario no encontrado") {
-            return res.status(404).json({ success: false, message: error.message });
+        if (
+            error.message === "Subasta no encontrada" ||
+            error.message === "Usuario no encontrado"
+        ) {
+            return res
+                .status(404)
+                .json({ success: false, message: error.message });
         }
         return res
             .status(500)
@@ -166,9 +170,18 @@ async function removeAuctionFromFavorites(req, res) {
     }
 }
 
+async function getUserData(userId) {
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new Error("Usuario no encontrado");
+    }
+    return user;
+}
+
 export default {
     getAll,
     getUser,
+    getUserData,
     editUser,
     handleAddAuctionToFavorites,
     addAuctionToFavorites,
