@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BASE_URL } from "../../const/api";
-import "./subasta.css";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 import ActiveBids from "../../components/activeBids/ActiveBids";
+import LiveBidding from "../../components/liveBidding/LiveBidding";
+import "./subasta.css";
 
 const Subasta = () => {
   const { auctionId } = useParams();
   const [auction, setAuction] = useState(null);
+  const [bids, setBids] = useState([]); // Estado para almacenar las pujas dinámicas
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Simula si el usuario está logueado
-  const [currentUserId, setCurrentUserId] = useState("678e32ba9e321d7fda566083"); // Simula el ID del usuario logueado
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Simula si el usuario está logueado
+  const [currentUserId, setCurrentUserId] = useState("678e32ba9e321d7fda566083"); // Simula el ID del usuario logueado*
 
+  // Fetch para obtener la subasta
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAuction = async () => {
       try {
         const auctionResponse = await fetch(`${BASE_URL}/auction/${auctionId}`);
         if (!auctionResponse.ok) throw new Error("Error al cargar la subasta.");
@@ -23,7 +26,24 @@ const Subasta = () => {
         setError(err.message);
       }
     };
-    fetchData();
+
+    fetchAuction();
+  }, [auctionId]);
+
+  // Fetch para obtener las pujas relacionadas
+  useEffect(() => {
+    const fetchBids = async () => {
+      try {
+        const bidsResponse = await fetch(`${BASE_URL}/bid/${auctionId}`);
+        if (!bidsResponse.ok) throw new Error("Error al cargar las pujas.");
+        const bidsData = await bidsResponse.json();
+        setBids(bidsData.bids); // Suponiendo que los datos de pujas vienen en la clave `bids`
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchBids();
   }, [auctionId]);
 
   if (error) {
@@ -85,22 +105,26 @@ const Subasta = () => {
               </p>
             )}
 
-            {/* Botón para entrar a subasta */}
-            {!isSeller && isLoggedIn && (
-              <button className="enter-auction">Entrar a subasta</button>
-            )}
           </div>
         </section>
+        {isLoggedIn && (
+          <>
+            {/* Puja en directo */}
+            <LiveBidding bids={bids} />
 
-        {/* Puja en directo */}
-        {isLoggedIn && !isSeller && <ActiveBids followers={auction.followers} />}
+            {/* condiciones bajo las cuales se visualizan (o no) componentes */}
+            {!isSeller && <ActiveBids bids={auction.bids} />}
 
-        {/* Temporizador */}
-        <div className="timer">
-          <p>
-            <strong>Tiempo restante:</strong> {/* Aquí podrías implementar un temporizador dinámico */}
-          </p>
-        </div>
+            {/* Temporizador */}
+            <div className="timer">
+              <p>
+                <strong>Tiempo restante:</strong> {/* Aquí podrías implementar un temporizador dinámico */}
+              </p>
+            </div>
+
+          </>
+
+        )}
 
         {/* Sugerencias */}
         <section className="suggestions">
