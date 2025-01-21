@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'Elika-Gorica';
+    src: url('../fonts/Elika-Gorica.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sauce';
+    src: url('../fonts/open-sauce-sans-light.woff') format('woff');
+    font-weight: 300; /* light */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sauce';
+    src: url('../fonts/open-sauce-sans-light-italic.woff') format('woff');
+    font-weight: 300; /* light */
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sauce';
+    src: url('../fonts/open-sauce.sans-medium.woff') format('woff');
+    font-weight: 500; /* medium */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sauce';
+    src: url('../fonts/open-sauce.sans-medium-italic.woff') format('woff');
+    font-weight: 500; /* medium */
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sauce';
+    src: url('../fonts/open-sauce.sans-bold.woff') format('woff');
+    font-weight: 700; /* bold */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sauce';
+    src: url('../fonts/open-sauce.sans-bold-italic.woff') format('woff');
+    font-weight: 700; /* bold */
+    font-style: italic;
+}

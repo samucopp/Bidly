@@ -31,6 +31,11 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
+    console.log('Recibida petición de login:', {
+        method: req.method,
+        body: req.body,
+        path: req.path
+    });
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -51,7 +56,7 @@ async function login(req, res) {
             });
         }
         const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        return res.status(200).json({message: "Login exitoso", token});
+        return res.status(200).json({message: "Login exitoso", token, userId: user._id});
     } catch (error) {
         console.error(error);
         return res.status(500).json({
@@ -59,6 +64,7 @@ async function login(req, res) {
         });
     }
 }
+
 
 export default {
     register,
