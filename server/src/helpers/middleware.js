@@ -5,12 +5,11 @@ import Notification from "../models/notificationModel.js";
 
 function checkAuthorization(req, res, next) {
     try {
-        const token = req.headers.authorization;
+        const token = req.cookies?.token;
         if (!token) {
             return res.status(401).json({ message: "No autorizado" });
         }
-        const tokenValue = token.split(" ")[1];
-        const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
         const userIdFromParams = req.params.userId;
         if (userIdFromParams && userIdFromParams !== decoded.userId) {
