@@ -8,6 +8,7 @@ import Modal from "../components/modals/ModalTarjeta";
 import Subasta from '../pages/subasta/Subasta';
 import AboutUs from "../pages/about-us/AboutUs";
 import UserProfile from "../pages/user-profile/UserProfile";
+import ContactPage from "../pages/contacto/Contacto";
 
 // Definimos nuestras rutas
 const router = createBrowserRouter([
@@ -44,12 +45,12 @@ const router = createBrowserRouter([
             element: <Modal visible={true}/>
           }
         ]
-      }
-      /*
+      },
+      
       {
-        path: "/contacto",
-        element: <contacto />,
-      },*/
+        path: "/contact",
+        element: <ContactPage />,
+      },
     ],
   },
 ]);
