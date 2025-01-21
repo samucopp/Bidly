@@ -18,6 +18,9 @@ const LoginModal = ({ isOpen, onClose }) => {
         setStatus({ type: null, message: '' });
 
         try {
+
+            console.log('Making request to:', `${BASE_URL}/user/login`);
+            console.log('Request body:', formData);
             const response = await fetch(`${BASE_URL}/user/login`, {
                 method: 'POST',
                 headers: {
@@ -27,6 +30,8 @@ const LoginModal = ({ isOpen, onClose }) => {
             });
 
             const data = await response.json();
+    
+            console.log('Response data:', data);
 
             if (!response.ok) {
                 throw new Error(data.message || 'Error en el inicio de sesión');
@@ -34,6 +39,7 @@ const LoginModal = ({ isOpen, onClose }) => {
 
             if (data.token) {
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('userId',data.userId)
                 setStatus({
                     type: 'success',
                     message: 'Login exitoso! Redirigiendo...'

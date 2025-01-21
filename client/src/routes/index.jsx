@@ -1,3 +1,4 @@
+import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Catalogo from '../pages/catalogo/Catalogo';
 import RegisterForm from "../pages/auth/RegisterForm";
