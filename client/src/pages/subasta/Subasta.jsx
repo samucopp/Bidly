@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../../const/api";
-import "./subasta.css";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 import ActiveBids from "../../components/activeBids/ActiveBids";
+import LiveBidding from "../../components/liveBidding/LiveBidding";
+import LoginModal from "../../components/modals/LoginModal"; // Importa el modal de login
+import "./subasta.css";
 
-const Subasta = () => {
+const Subasta = ({ onLogin }) => {
   const { auctionId } = useParams();
   const [auction, setAuction] = useState(null);
+  const [bids, setBids] = useState([]); // Estado para almacenar las pujas dinámicas
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Simula el estado de login
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Simula si el usuario está logueado
+  const [currentUserId, setCurrentUserId] = useState(1); // Simula el ID del usuario logueado
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para el modal de login
 
+  // Fetch para obtener la subasta
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAuction = async () => {
       try {
         const auctionResponse = await fetch(`${BASE_URL}/auction/${auctionId}`);
         if (!auctionResponse.ok) throw new Error("Error al cargar la subasta.");
@@ -22,7 +28,24 @@ const Subasta = () => {
         setError(err.message);
       }
     };
-    fetchData();
+
+    fetchAuction();
+  }, [auctionId]);
+
+  // Fetch para obtener las pujas relacionadas
+  useEffect(() => {
+    const fetchBids = async () => {
+      try {
+        const bidsResponse = await fetch(`${BASE_URL}/bid/${auctionId}`);
+        if (!bidsResponse.ok) throw new Error("Error al cargar las pujas.");
+        const bidsData = await bidsResponse.json();
+        setBids(bidsData.bids); // Suponiendo que los datos de pujas vienen en la clave `bids`
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchBids();
   }, [auctionId]);
 
   if (error) {
@@ -33,33 +56,105 @@ const Subasta = () => {
     return <p>Cargando...</p>;
   }
 
+  const isSeller = auction.sellerId._id === currentUserId; // Verifica si el usuario es el vendedor
+
   return (
     <div className="subasta-page">
+      {/* Encabezado */}
       <header className="header">
         <h1>Subasta: {auction.title}</h1>
       </header>
+
+      {/* Contenido principal */}
       <main className="main-content">
+        {/* Detalles del producto */}
         <section className="product-details">
           <div className="product-image">
-            <img src={`${BASE_URL}/images/${auction.images[0]}`} alt={auction.title} />
-            <ImageCarousel images={auction.images.map((image) => `${BASE_URL}/images/${image}`)} initialIndex={0} />
+            <img
+              src={`${BASE_URL}/images/${auction.images[0]}`}
+              alt={auction.title}
+            />
+            <ImageCarousel
+              images={auction.images.map(
+                (image) => `${BASE_URL}/images/${image}`
+              )}
+              initialIndex={0}
+            />
           </div>
+
           <div className="product-info">
             <h2>{auction.title}</h2>
-            <p><strong>Categoría:</strong> {auction.category.name}</p>
-            <p><strong>Descripción:</strong> {auction.description}</p>
-            <p><strong>Precio de salida:</strong> {auction.startingPrice} €</p>
-            <p><strong>Fecha inicio de la subasta:</strong> {new Date(auction.startTime).toLocaleString()}</p>
-            <p><strong>Fecha fin de la subasta:</strong> {new Date(auction.endTime).toLocaleString()}</p>
+            <p>
+              <strong>Categoría:</strong> {auction.category.name}
+            </p>
+            <p>
+              <strong>Descripción:</strong> {auction.description}
+            </p>
+            <p>
+              <strong>Precio de salida:</strong> {auction.startingPrice} €
+            </p>
+            <p>
+              <strong>Fecha inicio de la subasta:</strong>{" "}
+              {new Date(auction.startTime).toLocaleString()}
+            </p>
+            <p>
+              <strong>Fecha fin de la subasta:</strong>{" "}
+              {new Date(auction.endTime).toLocaleString()}
+            </p>
+
+            {/* Botón condicional para loguearse */}
+            {!isLoggedIn && (
+              <div className="login-prompt">
+                <p>Tienes que estar logueado para poder pujar</p>
+                <button
+                  className="login-button"
+                  onClick={() => setIsLoginModalOpen(true)} // Abrir modal
+                >
+                  Iniciar Sesión
+                </button>
+              </div>
+            )}
+
+            {/* Mensaje para el vendedor */}
+            {isSeller && (
+              <p className="seller-message">
+                No puedes pujar en tu propia subasta.
+              </p>
+            )}
           </div>
         </section>
+        {isLoggedIn && (
+          <>
+            {/* Puja en directo */}
+            <LiveBidding bids={bids} />
 
-        {isLoggedIn && <ActiveBids followers={auction.followers} />} {/* Muestra LiveBids si está logeado */}
+            {/* Condiciones bajo las cuales se visualizan (o no) componentes */}
+            {!isSeller && <ActiveBids bids={auction.bids} />}
 
-        <div className="timer">
-          <p><strong>Tiempo restante:</strong> {/* Temporizador dinámico aquí */}</p>
-        </div>
+            {/* Temporizador */}
+            <div className="timer">
+              <p>
+                <strong>Tiempo restante:</strong>{" "}
+                {/* Aquí podrías implementar un temporizador dinámico */}
+              </p>
+            </div>
+          </>
+        )}
+
+        {/* Sugerencias */}
+        <section className="suggestions">
+          <h3>Sugerencias</h3>
+          <div className="suggestion-items">
+            {/* Aquí podrías incluir productos sugeridos */}
+          </div>
+        </section>
       </main>
+
+      {/* Modal de login */}
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)} // Cierra el modal
+      />
     </div>
   );
 };

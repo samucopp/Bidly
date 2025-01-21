@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import LoginModal from '../modals/LoginModal';
-import { BASE_URL } from '../../const/api'; 
+import { BASE_URL } from '../../const/api';
 import './Navbar.css';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [searchQuery, setSearchQuery] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isAuth, setIsAuth] = useState(false);
     const [userData, setUserData] = useState(null);
 
+    useEffect(() => {
+        // Check if we should open the login modal based on navigation state
+        if (location.state?.openLoginModal) {
+            setIsLoginOpen(true);
+        // Clean up the state so the modal doesn't reopen on refresh
+            navigate('/', { replace: true, state: {} });
+        }
+    }, [location, navigate]);
 
     useEffect(() => {
         const checkAuth = async () => {
             const token = localStorage.getItem('token');
-            const userId= localStorage.getItem ('userId'); // luego quitarlo para pruebas
-            
+            const userId = localStorage.getItem('userId'); // luego quitarlo para pruebas
+
             if (token) {
                 try {
                     const response = await fetch(`${BASE_URL}/user/${userId}`, {
@@ -51,10 +60,10 @@ const Navbar = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    const handleLoginClick = (e) => {
+   const handleLoginClick = (e) => {
         e.preventDefault();
         setIsLoginOpen(true);
-        setIsMobileMenuOpen(false); 
+        setIsMobileMenuOpen(false);
     };
 
     const handleLogout = (e) => {
@@ -135,15 +144,15 @@ const Navbar = () => {
                                 </button>
                             </div>
 
-                           {/* Auth Links */}
-                           <div className="auth-links">
+                            {/* Auth Links */}
+                            <div className="auth-links">
                                 {isAuth ? (
                                     <>
                                         <div className="user-avatar">
-                                            <img 
-                                                src={getAvatarUrl()} 
+                                            <img
+                                                src={getAvatarUrl()}
                                                 alt={`${userData?.name || 'User'}'s avatar`}
-                                                className="avatar-img" 
+                                                className="avatar-img"
                                             />
                                         </div>
                                         <a href="/" onClick={handleLogout}>Log Out</a>
@@ -170,8 +179,8 @@ const Navbar = () => {
                 </div>
 
 
-                 {/* Mobile Menu */}
-                 <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+                {/* Mobile Menu */}
+                <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
                     <Link to="/about-us" className="menu-item" onClick={toggleMenu}>ABOUT US</Link>
                     <Link to="/catalog" className="menu-item" onClick={toggleMenu}>CATALOG</Link>
                     <Link to="/contact" className="menu-item" onClick={toggleMenu}>CONTACT</Link>
@@ -179,10 +188,10 @@ const Navbar = () => {
                         {isAuth ? (
                             <>
                                 <div className="user-avatar-mobile">
-                                    <img 
-                                        src={getAvatarUrl()} 
+                                    <img
+                                        src={getAvatarUrl()}
                                         alt={`${userData?.name || 'User'}'s avatar`}
-                                        className="avatar-img" 
+                                        className="avatar-img"
                                     />
                                 </div>
                                 <a href="/" className="menu-item-logout" onClick={handleLogout}>Log Out</a>
