@@ -17,7 +17,7 @@ const Navbar = () => {
         // Check if we should open the login modal based on navigation state
         if (location.state?.openLoginModal) {
             setIsLoginOpen(true);
-        // Clean up the state so the modal doesn't reopen on refresh
+            // Clean up the state so the modal doesn't reopen on refresh
             navigate('/', { replace: true, state: {} });
         }
     }, [location, navigate]);
@@ -60,7 +60,7 @@ const Navbar = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-   const handleLoginClick = (e) => {
+    const handleLoginClick = (e) => {
         e.preventDefault();
         setIsLoginOpen(true);
         setIsMobileMenuOpen(false);
@@ -148,13 +148,13 @@ const Navbar = () => {
                             <div className="auth-links">
                                 {isAuth ? (
                                     <>
-                                        <div className="user-avatar">
+                                        <Link to="/my-profile" className="user-avatar">
                                             <img
                                                 src={getAvatarUrl()}
                                                 alt={`${userData?.name || 'User'}'s avatar`}
                                                 className="avatar-img"
                                             />
-                                        </div>
+                                        </Link>
                                         <a href="/" onClick={handleLogout}>Log Out</a>
                                     </>
                                 ) : (
@@ -187,13 +187,13 @@ const Navbar = () => {
                     <div className="auth-mobile-links">
                         {isAuth ? (
                             <>
-                                <div className="user-avatar-mobile">
+                                <Link to="/my-profile" className="user-avatar">
                                     <img
                                         src={getAvatarUrl()}
                                         alt={`${userData?.name || 'User'}'s avatar`}
                                         className="avatar-img"
                                     />
-                                </div>
+                                </Link>
                                 <a href="/" className="menu-item-logout" onClick={handleLogout}>Log Out</a>
                             </>
                         ) : (

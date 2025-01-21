@@ -7,7 +7,7 @@ import auctionController from "./controllers/auctionController.js";
 import cors from "cors";
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const app = express(); // crear servidor
 
 app.use(express.static("src/public")); // configurar directorio de archivos estáticos

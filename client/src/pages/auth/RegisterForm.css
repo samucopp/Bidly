@@ -9,6 +9,7 @@ body {
     min-height: 100vh;
     overflow: auto;
 }
+
 .login-content h2 {
     font-size: 20px;
     padding-bottom: 10px;
@@ -20,11 +21,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Cambiado a flex-start */
+    justify-content: flex-start;
+    /* Cambiado a flex-start */
     background-color: #fff;
     padding: 20px 0;
     overflow-y: auto;
 }
+
 .register-logo {
     position: fixed;
     top: 0;
@@ -50,9 +53,11 @@ body {
     width: 100%;
     max-width: 400px;
     padding: 0 20px;
-    margin-top: 80px; /* Espacio para el logo fijo */
+    margin-top: 80px;
+    /* Espacio para el logo fijo */
     margin-bottom: 2rem;
 }
+
 .register-title {
     font-size: 26px;
     color: #222;
@@ -61,6 +66,7 @@ body {
     width: 100%;
     font-weight: normal;
 }
+
 .input-field {
     width: 100%;
     border-radius: 4px;
@@ -81,6 +87,7 @@ body {
     border-color: #000;
     background-color: #fff;
 }
+
 .form-group input {
     width: 100%;
     padding: 0.75rem;
@@ -95,7 +102,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
- /* Hace que los botones se estiren para ocupar todo el espacio */
+    /* Hace que los botones se estiren para ocupar todo el espacio */
 }
 
 .submit-button {
@@ -131,17 +138,20 @@ body {
     .register-container {
         justify-content: flex-start;
     }
-    
+
     .register-form {
-        margin-top: 80px; /* Mantener espacio consistente */
+        margin-top: 80px;
+        /* Mantener espacio consistente */
     }
 }
 
 @media screen and (min-height: 701px) {
     .register-form {
-        margin-top: 80px; /* Asegurar espacio suficiente en pantallas más altas */
+        margin-top: 80px;
+        /* Asegurar espacio suficiente en pantallas más altas */
     }
 }
+
 .avatar-section {
     width: 100%;
     margin-bottom: 20px;
@@ -150,41 +160,55 @@ body {
 .avatar-title {
     font-size: 15px;
     margin-bottom: 15px;
-    color: #b8b5b5; /* Mismo color que los placeholders */
-    text-align: left; /* Alineado a la izquierda como los inputs */
-    padding-left: 2px; /* Pequeño padding para alinear con el borde del input */
+    color: #b8b5b5;
+    text-align: left;
+    padding-left: 2px;
 }
 
 .avatar-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    display: flex;
+    flex-direction: row;
+    /* Cambiado a row para disposición horizontal */
+    gap: 30px;
+    /* Aumentado el gap para más separación horizontal */
     margin-top: 20px;
     margin-bottom: 15px;
-    max-width: 280px; /* Mantiene el tamaño compacto de la grilla */
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    max-width: 300px;
+    justify-content: flex-start;
+    /* Alinea los items al inicio */
 }
 
 .avatar-option {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    /* Cambiado a column para el título arriba de la imagen */
+    align-items: center;
+    gap: 8px;
     cursor: pointer;
-    border-radius: 50%;
-    padding: 2px;
+    padding: 5px;
     transition: all 0.2s ease;
-    border: 2px solid transparent;
+}
+
+.avatar-title-text {
+    font-size: 16px;
+    color: #222;
+    text-align: center;
+}
+
+.avatar-image-container {
+    position: relative;
     width: 60px;
     height: 60px;
-    margin: 0 auto;
+    border-radius: 50%;
+    padding: 2px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
 }
 
-.avatar-option.selected {
+.avatar-image-container.selected {
     border-color: #222;
-    transform: scale(1.1);
-}
-
-.avatar-option:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .avatar-image {
@@ -197,12 +221,16 @@ body {
 
 /* Para pantallas más pequeñas */
 @media screen and (max-width: 400px) {
-    .avatar-option {
+    .avatar-image-container {
         width: 50px;
         height: 50px;
     }
 
     .avatar-grid {
-        gap: 12px;
+        gap: 15px;
+    }
+
+    .avatar-title-text {
+        font-size: 14px;
     }
 }
