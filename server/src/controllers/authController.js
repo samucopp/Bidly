@@ -56,7 +56,7 @@ async function login(req, res) {
             });
         }
         const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        res.cookie('token', token, {
+        res.cookie('auth-cookie', token, {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24,
         });
