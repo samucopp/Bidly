@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie'; // Añadimos esta importación
 import LoginModal from '../modals/LoginModal';
-import { BASE_URL } from '../../const/api';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -14,45 +14,30 @@ const Navbar = () => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        // Check if we should open the login modal based on navigation state
         if (location.state?.openLoginModal) {
             setIsLoginOpen(true);
-            // Clean up the state so the modal doesn't reopen on refresh
             navigate('/', { replace: true, state: {} });
         }
     }, [location, navigate]);
 
     useEffect(() => {
-        const checkAuth = async () => {
-            const token = localStorage.getItem('token');
-            const userId = localStorage.getItem('userId'); // luego quitarlo para pruebas
-
-            if (token) {
-                try {
-                    const response = await fetch(`${BASE_URL}/user/${userId}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        setUserData(data);
-                        setIsAuth(true);
-                    } else {
-                        handleLogout();
-                    }
-                } catch (error) {
-                    console.error('Error al obtener datos del usuario:', error);
-                    handleLogout();
-                }
+        const checkAuth = () => {
+            const token = Cookies.get('token');
+            const userId = Cookies.get('userId');
+    
+            if (token && userId) {
+                setIsAuth(true);
+                setUserData({ 
+                    id: userId,
+                    avatar: Cookies.get('userAvatar') || '/hombre-cinco.png',
+                    name: Cookies.get('userName')
+                });
             } else {
                 setIsAuth(false);
                 setUserData(null);
             }
         };
-
+    
         checkAuth();
     }, []);
 
@@ -70,8 +55,11 @@ const Navbar = () => {
         if (e) {
             e.preventDefault();
         }
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
+        // Reemplazamos localStorage por Cookies
+        Cookies.remove('token');
+        Cookies.remove('userId');
+        Cookies.remove('userAvatar');
+        Cookies.remove('userName');
         setIsAuth(false);
         setUserData(null);
         navigate('/', { replace: true });
@@ -80,13 +68,12 @@ const Navbar = () => {
     const handleRegisterClick = (e) => {
         e.preventDefault();
         navigate('/register');
-        setIsMobileMenuOpen(false); // Añadido para cerrar el menú móvil al registrarse
+        setIsMobileMenuOpen(false);
     };
 
     const getAvatarUrl = () => {
         return userData?.avatar || '/hombre-cinco.png';
     };
-
 
     return (
         <>

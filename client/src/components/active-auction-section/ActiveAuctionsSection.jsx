@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ActiveAuctionsSection.css';
 import ImageWithFallback from '../fallback-image/ImageWithFallback';
-import { BASE_URL } from '../../const/api';
 
 const ActiveAuctionsSection = () => {
   const [auctions, setAuctions] = useState([]);

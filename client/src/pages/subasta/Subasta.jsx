@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { BASE_URL } from "../../const/api";
-import ImageCarousel from "../../components/carrousel/Carrousel";
+//import ImageCarousel from "../../components/carrousel/Carrousel";
 import ActiveBids from "../../components/activeBids/ActiveBids";
 import LiveBidding from "../../components/liveBidding/LiveBidding";
 import LoginModal from "../../components/modals/LoginModal"; // Importa el modal de login
+import { getAuctionById }  from "../../api/auction.js";
+//import { getBidsByAuctionId } from "../../api/bid.js";
 import "./subasta.css";
+
 
 const Subasta = ({ onLogin }) => {
   const { auctionId } = useParams();
@@ -20,8 +22,7 @@ const Subasta = ({ onLogin }) => {
   useEffect(() => {
     const fetchAuction = async () => {
       try {
-        const auctionResponse = await fetch(`${BASE_URL}/auction/${auctionId}`);
-        if (!auctionResponse.ok) throw new Error("Error al cargar la subasta.");
+        const auctionResponse = await getAuctionById(auctionId);
         const auctionData = await auctionResponse.json();
         setAuction(auctionData.auction);
       } catch (err) {
@@ -33,11 +34,10 @@ const Subasta = ({ onLogin }) => {
   }, [auctionId]);
 
   // Fetch para obtener las pujas relacionadas
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchBids = async () => {
       try {
-        const bidsResponse = await fetch(`${BASE_URL}/bid/${auctionId}`);
-        if (!bidsResponse.ok) throw new Error("Error al cargar las pujas.");
+        const bidsResponse = await getBidsByAuctionId(auctionId);
         const bidsData = await bidsResponse.json();
         setBids(bidsData.bids); // Suponiendo que los datos de pujas vienen en la clave `bids`
       } catch (err) {
@@ -56,7 +56,7 @@ const Subasta = ({ onLogin }) => {
     return <p>Cargando...</p>;
   }
 
-  const isSeller = auction.sellerId._id === currentUserId; // Verifica si el usuario es el vendedor
+  const isSeller = auction.sellerId._id === currentUserId; // Verifica si el usuario es el vendedor */
 
   return (
     <div className="subasta-page">
@@ -70,7 +70,7 @@ const Subasta = ({ onLogin }) => {
         {/* Detalles del producto */}
         <section className="product-details">
           <div className="product-image">
-            <img
+            {/* <img
               src={`${BASE_URL}/images/${auction.images[0]}`}
               alt={auction.title}
             />
@@ -79,7 +79,7 @@ const Subasta = ({ onLogin }) => {
                 (image) => `${BASE_URL}/images/${image}`
               )}
               initialIndex={0}
-            />
+            /> */}
           </div>
 
           <div className="product-info">

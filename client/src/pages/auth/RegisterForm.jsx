@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { BASE_URL } from '../../const/api';
+import { register } from '../../api/user';
 import './RegisterForm.css';
 
 

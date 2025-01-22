@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CategoryNav.css';
-import { BASE_URL } from '../../const/api';
+import { getAllCategories } from '../../api/category';
 
 
 const CATEGORY_ICONS = {
@@ -120,11 +120,9 @@ const CategoryNav = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/category/all`);
-        if (!response.ok) throw new Error("Error al cargar las categorías");
-        const data = await response.json();
+        const data = await getAllCategories(); 
         
-        // Combinar datos de la API con los iconos
+        // metemos un map para poder combinar la categoria con el icono
         const categoriesWithIcons = data.map(category => ({
           ...category,
           icon: CATEGORY_ICONS[category.name] || CATEGORY_ICONS.default
@@ -136,7 +134,7 @@ const CategoryNav = () => {
         console.error("Error cargando categorías:", err);
       }
     };
-
+  
     fetchCategories();
   }, []);
 
