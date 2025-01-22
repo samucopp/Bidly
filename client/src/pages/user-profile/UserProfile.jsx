@@ -1,108 +1,552 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import AuctionCarrusel from '../../components/carrusels/AuctionCarrusel';
+import GenericModal from '../../components/modals/GenericModal';
 import './UserProfile.css';
 
+const activeBids = {
+    "total": 170,
+    "page": 1,
+    "totalPages": 17,
+    "auctions": [
+        {
+            "_id": "678fd5c621f2309c37fe4951",
+            "title": "Apple iPhone 14",
+            "description": "Latest model of the Apple iPhone with 128GB storage.",
+            "images": [
+                "iphone14.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1000,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24f9",
+                "name": "Alice Johnson"
+            },
+            "startTime": "2025-01-21T17:13:42.474Z",
+            "endTime": "2025-01-28T17:13:42.474Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.474Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:00.996Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4952",
+            "title": "Apple iPhone 14 Max",
+            "description": "Latest model of the Apple iPhone with 128GB storage.",
+            "images": [
+                "iphone14Max.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1000,
+            "minIncrement": 50,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24f9",
+                "name": "Alice Johnson"
+            },
+            "startTime": "2025-01-21T17:13:42.475Z",
+            "endTime": "2025-01-21T17:13:42.475Z",
+            "status": "closed",
+            "createdAt": "2025-01-21T17:13:42.475Z",
+            "__v": 1,
+            "followers": [],
+            "updatedAt": "2025-01-21T17:15:00.871Z",
+            "winnerId": "678fd5c6e8764660b14a24fa"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4953",
+            "title": "Samsung Galaxy S23",
+            "description": "High-performance smartphone with 256GB storage.",
+            "images": [
+                "galaxy_s23.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 900,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fa",
+                "name": "Bob Smith"
+            },
+            "startTime": "2025-01-21T17:13:42.476Z",
+            "endTime": "2025-01-23T17:13:42.476Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.476Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.039Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4954",
+            "title": "Sony WH-1000XM5",
+            "description": "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
+            "images": [
+                "sony_headphones.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 400,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fb",
+                "name": "Carol Williams"
+            },
+            "startTime": "2025-01-21T17:13:42.478Z",
+            "endTime": "2025-01-24T17:13:42.478Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.478Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.050Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4955",
+            "title": "Dell XPS 13",
+            "description": "Ultra-slim laptop with Intel i7 processor.",
+            "images": [
+                "dell_xps13.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1200,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fc",
+                "name": "Dave Brown"
+            },
+            "startTime": "2025-01-21T17:13:42.479Z",
+            "endTime": "2025-01-26T17:13:42.479Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.479Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.061Z"
+        }]
+};
+const upcomingBids = {
+    "total": 170,
+    "page": 1,
+    "totalPages": 17,
+    "auctions": [
+        {
+            "_id": "678fd5c621f2309c37fe4951",
+            "title": "Apple iPhone 14",
+            "description": "Latest model of the Apple iPhone with 128GB storage.",
+            "images": [
+                "iphone14.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1000,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24f9",
+                "name": "Alice Johnson"
+            },
+            "startTime": "2025-01-21T17:13:42.474Z",
+            "endTime": "2025-01-28T17:13:42.474Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.474Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:00.996Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4952",
+            "title": "Apple iPhone 14 Max",
+            "description": "Latest model of the Apple iPhone with 128GB storage.",
+            "images": [
+                "iphone14Max.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1000,
+            "minIncrement": 50,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24f9",
+                "name": "Alice Johnson"
+            },
+            "startTime": "2025-01-21T17:13:42.475Z",
+            "endTime": "2025-01-21T17:13:42.475Z",
+            "status": "closed",
+            "createdAt": "2025-01-21T17:13:42.475Z",
+            "__v": 1,
+            "followers": [],
+            "updatedAt": "2025-01-21T17:15:00.871Z",
+            "winnerId": "678fd5c6e8764660b14a24fa"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4953",
+            "title": "Samsung Galaxy S23",
+            "description": "High-performance smartphone with 256GB storage.",
+            "images": [
+                "galaxy_s23.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 900,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fa",
+                "name": "Bob Smith"
+            },
+            "startTime": "2025-01-21T17:13:42.476Z",
+            "endTime": "2025-01-23T17:13:42.476Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.476Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.039Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4954",
+            "title": "Sony WH-1000XM5",
+            "description": "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
+            "images": [
+                "sony_headphones.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 400,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fb",
+                "name": "Carol Williams"
+            },
+            "startTime": "2025-01-21T17:13:42.478Z",
+            "endTime": "2025-01-24T17:13:42.478Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.478Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.050Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4955",
+            "title": "Dell XPS 13",
+            "description": "Ultra-slim laptop with Intel i7 processor.",
+            "images": [
+                "dell_xps13.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1200,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fc",
+                "name": "Dave Brown"
+            },
+            "startTime": "2025-01-21T17:13:42.479Z",
+            "endTime": "2025-01-26T17:13:42.479Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.479Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.061Z"
+        }]
+};
+const myAuctions = {
+    "total": 170,
+    "page": 1,
+    "totalPages": 17,
+    "auctions": [
+        {
+            "_id": "678fd5c621f2309c37fe4951",
+            "title": "Apple iPhone 14",
+            "description": "Latest model of the Apple iPhone with 128GB storage.",
+            "images": [
+                "iphone14.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1000,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24f9",
+                "name": "Alice Johnson"
+            },
+            "startTime": "2025-01-21T17:13:42.474Z",
+            "endTime": "2025-01-28T17:13:42.474Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.474Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:00.996Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4952",
+            "title": "Apple iPhone 14 Max",
+            "description": "Latest model of the Apple iPhone with 128GB storage.",
+            "images": [
+                "iphone14Max.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1000,
+            "minIncrement": 50,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24f9",
+                "name": "Alice Johnson"
+            },
+            "startTime": "2025-01-21T17:13:42.475Z",
+            "endTime": "2025-01-21T17:13:42.475Z",
+            "status": "closed",
+            "createdAt": "2025-01-21T17:13:42.475Z",
+            "__v": 1,
+            "followers": [],
+            "updatedAt": "2025-01-21T17:15:00.871Z",
+            "winnerId": "678fd5c6e8764660b14a24fa"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4953",
+            "title": "Samsung Galaxy S23",
+            "description": "High-performance smartphone with 256GB storage.",
+            "images": [
+                "galaxy_s23.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 900,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fa",
+                "name": "Bob Smith"
+            },
+            "startTime": "2025-01-21T17:13:42.476Z",
+            "endTime": "2025-01-23T17:13:42.476Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.476Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.039Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4954",
+            "title": "Sony WH-1000XM5",
+            "description": "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
+            "images": [
+                "sony_headphones.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 400,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fb",
+                "name": "Carol Williams"
+            },
+            "startTime": "2025-01-21T17:13:42.478Z",
+            "endTime": "2025-01-24T17:13:42.478Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.478Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.050Z"
+        },
+        {
+            "_id": "678fd5c621f2309c37fe4955",
+            "title": "Dell XPS 13",
+            "description": "Ultra-slim laptop with Intel i7 processor.",
+            "images": [
+                "dell_xps13.jpg"
+            ],
+            "category": {
+                "_id": "678fd5c6d89f46faf69a295b",
+                "name": "Electronics"
+            },
+            "startingPrice": 1200,
+            "sellerId": {
+                "_id": "678fd5c6e8764660b14a24fc",
+                "name": "Dave Brown"
+            },
+            "startTime": "2025-01-21T17:13:42.479Z",
+            "endTime": "2025-01-26T17:13:42.479Z",
+            "status": "active",
+            "createdAt": "2025-01-21T17:13:42.479Z",
+            "__v": 1,
+            "followers": [],
+            "minIncrement": 1,
+            "updatedAt": "2025-01-21T17:14:01.061Z"
+        }]
+};
+
+const user = {
+    name: "Estefania",
+    email: "gestefania@gmail.com",
+    avatar: "https://bidly-products.s3.eu-north-1.amazonaws.com/uploads/users/default-avatar/mujer-cinco.png",
+}
+
+
 const UserProfile = () => {
-    const [userData, setUserData] = useState({
-        name: '',
-        avatar: ''
-    });
-
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const [myAuctions, setMyAuctions] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    const fetchUserAuctions = async () => {
-        try {
-            // Obtenemos el token y el userId del localStorage o donde lo tengas almacenado
-            const token = localStorage.getItem('token');
-            const userId = localStorage.getItem('userId'); // O extraerlo del token si está ahí
-
-            const response = await fetch(`/api/auctions/${userId}/owner`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            const data = await response.json();
-
-            if (!data.success) {
-                throw new Error(data.message);
-            }
-
-            setMyAuctions(data.auctions);
-            setLoading(false);
-        } catch (error) {
-            setError('Error al cargar las subastas');
-            setLoading(false);
-            console.error('Error:', error);
-        }
-    };
-    useEffect(() => {
-        fetchUserAuctions();
-    }, []);
-
+    const [modalContent, setModalContent] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isCreateAuctionModalOpen, setIsCreateAuctionModalOpen] = useState(false);
+    const [selectedAuctionId, setSelectedAuctionId] = useState(null);
 
     const handleSettingsClick = () => {
         setIsSettingsOpen(!isSettingsOpen);
     };
 
     const handleChangeAvatar = () => {
-        // Aquí iría la lógica para cambiar el avatar
-        console.log('Changing avatar...');
+        setModalContent('avatar');
+        setIsModalOpen(true);
         setIsSettingsOpen(false);
     };
 
     const handleChangePassword = () => {
-        // Aquí iría la lógica para cambiar la contraseña
-        console.log('Changing password...');
+        setModalContent('password');
+        setIsModalOpen(true);
         setIsSettingsOpen(false);
     };
 
-    const handleDeleteAuction = async (auctionId) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`/api/auctions/${auctionId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-    
-            const data = await response.json();
-    
-            if (data.success) {
-                // Actualizar el estado eliminando la subasta
-                setMyAuctions(myAuctions.filter(auction => auction._id !== auctionId));
-            } else {
-                throw new Error(data.message);
-            }
-        } catch (error) {
-            console.error('Error al eliminar la subasta:', error);
-            // Aquí podrías mostrar un mensaje de error al usuario
-        }
+    const handleDeleteAuction = (auctionId) => {
+        setSelectedAuctionId(auctionId);
+        setIsDeleteModalOpen(true);
     };
-    
+
+    const handleCreateNewAuction = () => {
+        setIsCreateAuctionModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setModalContent(null);
+    };
+
+    const AvatarContent = () => (
+        <div className="modal-content">
+            <h2>Change Avatar</h2>
+            <input type="file" accept="image/*" />
+            <button onClick={() => {
+                // hay que meter controllador 
+                closeModal();
+            }}>Save</button>
+        </div>
+    );
+
+    const PasswordContent = () => (
+        <div className="modal-content">
+            <h2>Change Password</h2>
+            <input type="password" placeholder="Current Password" />
+            <input type="password" placeholder="New Password" />
+            <input type="password" placeholder="Confirm New Password" />
+            <button onClick={() => {
+                // hay que meter el controlador
+                closeModal();
+            }}>Save</button>
+        </div>
+    );
+
+
+    const DeleteAuctionContent = () => (
+        <div className="modal-content">
+            <h2>Delete Auction</h2>
+            <p>Are you sure you want to delete this auction?</p>
+            <div className="modal-actions">
+                <button
+                    className="cancel-button"
+                    onClick={() => setIsDeleteModalOpen(false)}
+                >
+                    Cancel
+                </button>
+                <button
+                    className="delete-button"
+                    onClick={() => {
+                        // Aquí iría tu controlador para borrar la subasta
+                        console.log('Deleting auction:', selectedAuctionId);
+                        setIsDeleteModalOpen(false);
+                    }}
+                >
+                    Delete
+                </button>
+            </div>
+        </div>
+    );
+
+
+    const CreateAuctionContent = () => (
+        <div className="modal-content">
+            <h2>Create New Auction</h2>
+            <form className="auction-form">
+                <input type="text" placeholder="Title" />
+                <textarea placeholder="Description" />
+                <input type="number" placeholder="Starting Price" />
+                <input type="file" accept="image/*" multiple />
+                <select>
+                    <option value="">Select Category</option>
+                    <option value="electronics">Electronics</option>
+                    {/* Más categorías... */}
+                </select>
+                <div className="date-inputs">
+                    <input type="datetime-local" placeholder="Start Date" />
+                    <input type="datetime-local" placeholder="End Date" />
+                </div>
+                <button
+                    type="submit"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        // Aquí iría tu controlador para crear la subasta
+                        setIsCreateAuctionModalOpen(false);
+                    }}
+                >
+                    Create Auction
+                </button>
+            </form>
+        </div>
+    );
+
+
+
     return (
         <div className="profile-container">
             <div className="profile-header">
                 <div className="user-info">
-                    <img src={userData.avatar} alt="Profile" className="avatar" />
-                    <h1 className="username">{userData.name}</h1>
+                    <img src={user.avatar} alt="Profile" className="avatar" />
+                    <h1 className="username">{user.name}</h1>
                 </div>
                 <div className="settings-dropdown">
                     <button
                         className="settings-button"
                         onClick={handleSettingsClick}
                     >
-                        settings  {isSettingsOpen ? '-' : '+'}
+                        Settings {isSettingsOpen ? '-' : '+'}
                     </button>
                     {isSettingsOpen && (
                         <div className="settings-options">
-                            <button onClick={handleChangeAvatar}>change avatar</button>
-                            <button onClick={handleChangePassword}>change password</button>
+                            <button onClick={handleChangeAvatar}>Change Avatar</button>
+                            <button onClick={handleChangePassword}>Change Password</button>
                         </div>
                     )}
                 </div>
@@ -115,10 +559,16 @@ const UserProfile = () => {
                 <div className="auction-category">
                     <h3>Active Bids</h3>
                     <div className="auction-grid">
-                        {[1, 2, 3].map((item) => (
-                            <div key={item} className="auction-card">
+                        {activeBids.auctions.slice(0, 3).map((auction) => (
+                            <div key={auction._id} className="auction-card">
                                 <button className="favorite-button">♥</button>
-                                <div className="auction-image"></div>
+                                <img
+                                    src="/logo_bidly.png"
+                                    alt={auction.title}
+                                    className="auction-image"
+                                />
+                                <h4>{auction.title}</h4>
+                                <p>${auction.startingPrice}</p>
                             </div>
                         ))}
                     </div>
@@ -127,10 +577,19 @@ const UserProfile = () => {
                 <div className="auction-category">
                     <h3>Upcoming Bids</h3>
                     <div className="auction-grid">
-                        {[1, 2, 3].map((item) => (
-                            <div key={item} className="auction-card">
+                        {upcomingBids.auctions.slice(0, 3).map((auction) => (
+                            <div key={auction._id} className="auction-card">
                                 <button className="favorite-button">♥</button>
-                                <div className="auction-image"></div>
+                                <img
+                                    src="logo_bidly.png"
+                                    alt={auction.title}
+                                    className="auction-image"
+                                />
+                                <h4>{auction.title}</h4>
+                                <p className='upcoming-start-price'>${auction.startingPrice}</p>
+                                <p className='upcoming-start-date'>Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
+                                <p className='upcoming-end-date'>End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
+
                             </div>
                         ))}
                     </div>
@@ -138,62 +597,82 @@ const UserProfile = () => {
             </section>
 
             {/* My Auctions */}
-            {/* My Auctions Section */}
-            <section className="my-auctions">
+            <section class="my-auctions">
                 <h2>My Auctions</h2>
-                {loading ? (
-                    <div className="loading">Cargando subastas...</div>
-                ) : error ? (
-                    <div className="error">{error}</div>
-                ) : (
-                    myAuctions.map((auction) => (
-                        <div key={auction._id} className="auction-detail">
-                            <div className="auction-info">
-                                <h3>lote {auction._id}, {auction.title}</h3>
-                                <p>{auction.description}</p>
-                                {auction.Category && (
-                                    <p>Categoría: {auction.Category.title}</p>
-                                )}
+                <div class="auctions-list">
+                    {myAuctions.auctions.map((auction) => (
+                        <div key={auction._id} class="auction-detail">
+                            <div className="auction-image-container">
+                                <img
+                                    src={"/favicon.png"}
+                                    alt={auction.title}
+                                    className="img-my-auctions"
+                                />
                             </div>
-                            <div className="auction-price">
-                                <span className="price-label">PRECIO DE SALIDA</span>
-                                <span className="price">{auction.startingPrice} €</span>
-                                <div className="auction-dates">
-                                    <p>Fecha inicio de la subasta: {new Date(auction.startDate).toLocaleDateString()}</p>
-                                    <p>Fin de la subasta: {new Date(auction.endDate).toLocaleString()}</p>
+                            <div class="auction-info">
+                                <h3>Lot {auction._id.slice(-4)}, {auction.title}</h3>
+                                <p>{auction.description}</p>
+                                <p>Category: {auction.category.name}</p>
+                            </div>
+                            <div class="auction-price">
+                                <span class="price-label">STARTING PRICE</span>
+                                <span class="price">{auction.startingPrice} €</span>
+                                <div class="auction-dates">
+                                    <p>Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
+                                    <p>End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
                                 </div>
                             </div>
-                            <div className="auction-actions">
+                            <div class="auction-actions">
                                 <button
-                                    className="delete-button"
+                                    class="delete-button"
                                     onClick={() => handleDeleteAuction(auction._id)}
                                 >
-                                    BORRAR
+                                    DELETE
                                 </button>
-                                <button className="create-bid-button">CREATE NEW BID</button>
+                                <button
+                                    className="create-auction-button"
+                                    onClick={handleCreateNewAuction}
+                                >
+                                    CREATE NEW BID
+                                </button>
                             </div>
                         </div>
-                    ))
-                )}
-            </section>
-            <section className="auction-history">
-                <h2>Auction History</h2>
-                <div className="history-grid">
-                    <div className="history-item">
-                        <div className="history-image"></div>
-                        <p className="history-title">Tittle 1</p>
-                    </div>
-                    <div className="history-item">
-                        <div className="history-image"></div>
-                        <p className="history-title">Tittle 2</p>
-                    </div>
-                    <div className="history-item">
-                        <div className="history-image"></div>
-                        <p className="history-title">Tittle 3</p>
-                    </div>
+                    ))}
                 </div>
             </section>
+
+            {/* Auction History */}
+
+            <section className="auction-history">
+                <AuctionCarrusel />
+            </section>
+
+            <GenericModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                className="settings-modal"
+            >
+                {modalContent === 'avatar' && <AvatarContent />}
+                {modalContent === 'password' && <PasswordContent />}
+            </GenericModal>
+
+            <GenericModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                className="delete-modal"
+            >
+                <DeleteAuctionContent />
+            </GenericModal>
+
+            <GenericModal
+                isOpen={isCreateAuctionModalOpen}
+                onClose={() => setIsCreateAuctionModalOpen(false)}
+                className="create-auction-modal"
+            >
+                <CreateAuctionContent />
+            </GenericModal>
         </div>
+
     );
 };
 

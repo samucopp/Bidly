@@ -1,10 +1,11 @@
-/* UserProfile.css */
+/* Contenedor principal */
 .profile-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
+/* Header del perfil */
 .profile-header {
     display: flex;
     justify-content: space-between;
@@ -26,201 +27,10 @@
 }
 
 .username {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 500;
 }
 
-.settings-dropdown {
-    text-align: right;
-}
-
-.settings-button {
-    font-size: 14px;
-    color: #666;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.settings-options {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.settings-options button {
-    font-size: 14px;
-    color: #666;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px 0;
-}
-
-/* Auctions Section */
-.auctions-section {
-    margin-bottom: 40px;
-}
-
-h2 {
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 20px;
-}
-
-.auction-category {
-    margin-bottom: 30px;
-}
-
-h3 {
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-.auction-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.auction-card {
-    background: white;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: relative;
-}
-
-.auction-image {
-    width: 100%;
-    height: 200px;
-    background-color: #f0f0f0;
-    border-radius: 4px;
-}
-
-.favorite-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: red;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* My Auctions */
-.my-auctions {
-    margin-bottom: 40px;
-}
-
-.auction-detail {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.auction-info {
-    flex: 1;
-}
-
-.auction-info p {
-    color: #666;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.auction-price {
-    text-align: right;
-    min-width: 200px;
-}
-
-.price-label {
-    font-size: 14px;
-    color: #666;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.price {
-    font-size: 20px;
-    font-weight: 500;
-    display: block;
-    margin-bottom: 20px;
-}
-
-.auction-dates {
-    color: #666;
-    font-size: 14px;
-}
-
-.auction-dates p {
-    margin-bottom: 5px;
-}
-
-.auction-actions {
-    display: flex;
-    gap: 15px;
-}
-
-.delete-button {
-    background: black;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.create-bid-button {
-    background: white;
-    color: black;
-    border: 1px solid black;
-    padding: 10px 30px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-/* UserProfile.css */
-/* (Añadir al final del archivo CSS anterior) */
-
-.auction-history {
-    background: black;
-    padding: 20px;
-    margin-top: 40px;
-    border-radius: 8px;
-}
-
-.auction-history h2 {
-    color: white;
-    margin-bottom: 20px;
-}
-
-.history-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.history-item {
-    text-align: center;
-}
-
-.history-image {
-    width: 100%;
-    height: 150px;
-    background: white;
-    margin-bottom: 10px;
-    border-radius: 4px;
-}
-
-.history-title {
-    color: white;
-    font-size: 16px;
-}
 .settings-dropdown {
     position: relative;
     text-align: right;
@@ -232,7 +42,7 @@ h3 {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 5px 0px;
 }
 
 .settings-options {
@@ -242,6 +52,9 @@ h3 {
     border-radius: 4px;
     z-index: 1000;
     min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .settings-options button {
@@ -254,12 +67,263 @@ h3 {
     border: none;
     cursor: pointer;
     display: block;
+    padding: 5px 0;
 }
 
 .settings-options button:hover {
     background: #f5f5f5;
     text-decoration: underline;
 }
+
+/* Sección de subastas */
+.auctions-section {
+    background-color: #efefef;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding: 40px 0;
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+}
+
+.auctions-section h2,
+.auction-category {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.auction-category h3 {
+    font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: #969394;
+}
+
+.auction-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 columnas por defecto */
+    gap: 2rem;
+    width: 100%;
+}
+
+
+.auction-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 400px;
+    /* Hacemos las tarjetas más altas */
+}
+
+.auction-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+
+.auction-image {
+    width: 100%;
+    height: 250px;
+    /* Aumentamos la altura de la imagen */
+    object-fit: cover;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.auction-card h4 {
+    padding: 1rem;
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.auction-card p {
+    padding: 0 1rem 1rem;
+    margin: 0;
+    color: #4b5563;
+}
+
+.auction-card .upcoming-start-date {
+    padding-bottom: 6px;
+
+}
+
+.img-my-auctions{
+    width: 50%;
+    height: 50%;
+}
+
+.auction-card .upcoming-start-date,
+.auction-card .upcoming-end-date {
+    font-weight: bold;
+
+}
+
+.favorite-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1024px) {
+    .auction-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columnas en tablets */
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .auction-grid {
+        grid-template-columns: 1fr;
+        /* 1 columna en móviles */
+        gap: 1rem;
+    }
+
+    .auction-card {
+        height: 350px;
+        /* Reducimos un poco la altura en móviles */
+    }
+
+    .auction-image {
+        height: 200px;
+        /* Ajustamos la altura de la imagen en móviles */
+    }
+
+}
+
+/* Mis subastas */
+.my-auctions {
+    padding: 0px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 60px;
+}
+
+.my-auctions h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.auctions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auction-detail {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.auction-info {
+    flex: 1;
+}
+
+.auction-info h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.auction-info p {
+    color: #666;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.auction-price {
+    min-width: 200px;
+    text-align: right;
+}
+
+.price-label {
+    color: #000000;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.price {
+    font-size: 1.25rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.auction-dates {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.auction-dates p {
+    margin-bottom: 0.25rem;
+}
+
+.auction-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 150px;
+}
+
+.delete-button {
+    background: black;
+    color: white;
+    padding: 0.5rem 2rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+    background: #333;
+}
+
+.create-bid-button {
+    background: white;
+    color: black;
+    padding: 0.5rem 2rem;
+    border-radius: 0.25rem;
+    border: 1px solid black;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.create-bid-button:hover {
+    background: #f5f5f5;
+}
+
+
+/* Estados de carga y error */
 .loading {
     text-align: center;
     padding: 20px;
@@ -272,4 +336,25 @@ h3 {
     color: #dc3545;
     background: #fee;
     border-radius: 4px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-content input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-content button {
+    padding: 0.5rem 1rem;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
