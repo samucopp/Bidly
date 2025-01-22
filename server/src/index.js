@@ -25,8 +25,6 @@ app.use(express.json()); // configurar body parser para recibir datos en formato
 app.use(cors());
 //app.use(cors(corsOptions)); hay que poner este 
 app.use(cookieParser());
-app.use(cors());
-
 app.use("/", router); // configurar rutas
 
 cron.schedule("* * * * *", async () => {
