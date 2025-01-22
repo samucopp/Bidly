@@ -1,0 +1,34 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+async function apiRequest(route, method = 'GET', data = null) {
+    try {
+        let url = new URL(route, API_BASE_URL);
+        const fetchOptions = {
+            method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: "include",
+        }
+
+        if ((method === 'POST' || method === 'PUT') && data) {
+            fetchOptions.body = JSON.stringify(data);
+        } else if (data) {
+            console.log(data);
+            Object.entries(data).forEach(([key, value]) => {
+                if ((typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') && value !== undefined && value !== null) {
+                    console.log("key value",key,"|", value);
+                    url.searchParams.append(key, value);
+                }
+            });
+        }
+        
+        const response = await fetch(url.toString(), fetchOptions);
+        return response.json();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export { apiRequest };

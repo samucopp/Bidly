@@ -70,6 +70,26 @@ async function editUser(req, res) {
     }
 }
 
+async function deleteUser(req, res) {
+    try {
+        const { userId } = req.params;
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) {
+            return res.status(404).json({
+                message: "Usuario no encontrado",
+            });
+        }
+        return res.status(204).json({
+            message: "Usuario eliminado del servidor correctamente",
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Error interno del servidor",
+        });
+    }
+};
+
 async function handleAddAuctionToFavorites(userId, auctionId) {
     const user = await User.findById(userId);
     if (!user) {
@@ -183,6 +203,7 @@ export default {
     getUser,
     getUserData,
     editUser,
+    deleteUser,
     handleAddAuctionToFavorites,
     addAuctionToFavorites,
     removeAuctionFromFavorites,

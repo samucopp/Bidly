@@ -9,8 +9,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 1000,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 604800000),
+        startTime: new Date(Date.now() + 86400000),
+        endTime: new Date(Date.now() + 605000000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -22,7 +22,7 @@ db.auctions.insertMany([
         startingPrice: 1000,
         minIncrement: 50,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
+        startTime: new Date(Date.now() + 86400000),
         endTime: new Date(),
         status: "inactive",
         createdAt: new Date()
@@ -546,8 +546,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 50,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 180000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -558,8 +558,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 800,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 240000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -631,7 +631,7 @@ db.auctions.insertMany([
         startingPrice: 120,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
         startTime: new Date(),
-        endTime: new Date(),
+        endTime: new Date(Date.now() + 432000000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -643,7 +643,7 @@ db.auctions.insertMany([
         startingPrice: 80,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
         startTime: new Date(),
-        endTime: new Date(), // 24 hours from now
+        endTime: new Date(Date.now() + 432000000), // 24 hours from now
         status: "inactive",
         createdAt: new Date()
     },
@@ -694,8 +694,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 200,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 180000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -754,8 +754,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 180,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 300000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -778,8 +778,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 220,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 360000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -962,8 +962,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Antiquities" })._id,
         startingPrice: 400,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 240000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -1086,8 +1086,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Jewelry" })._id,
         startingPrice: 5000,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 180000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -1270,8 +1270,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 120,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 180000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -1438,8 +1438,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1800,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(), // 1 day
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 360000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -1510,8 +1510,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 2800,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(), // 1 day
+        startTime: new Date(Date.now() + 120000),
+        endTime: new Date(Date.now() + 420000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -1534,8 +1534,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 750,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(), // 1 day
+        startTime: new Date(Date.now() + 60000),
+        endTime: new Date(Date.now() + 180000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -1770,8 +1770,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Music" })._id,
         startingPrice: 1200,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 60000),
+        endTime: new Date(Date.now() + 240000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -1830,8 +1830,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Music" })._id,
         startingPrice: 1400,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(), // 1 day
+        startTime: new Date(Date.now() + 60000),
+        endTime: new Date(Date.now() + 180000),
         status: "inactive",
         createdAt: new Date()
     },
@@ -1954,8 +1954,8 @@ db.auctions.insertMany([
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date(Date.now() + 60000),
+        endTime: new Date(Date.now() + 180000),
         status: "inactive",
         createdAt: new Date()
     },
