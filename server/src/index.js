@@ -22,9 +22,8 @@ const app = express(); // crear servidor
 app.use(express.static("src/public")); // configurar directorio de archivos estáticos
 app.use(express.urlencoded({ extended: true })); // configurar body parser para recibir datos de formularios
 app.use(express.json()); // configurar body parser para recibir datos en formato json
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); 
 app.use(cookieParser());
-
 app.use("/", router); // configurar rutas
 
 cron.schedule("* * * * *", async () => {

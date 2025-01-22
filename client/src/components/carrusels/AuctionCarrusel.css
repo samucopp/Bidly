@@ -1,0 +1,188 @@
+.my-profile-carousel-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.my-profile-carousel-wrapper {
+  position: relative;
+}
+
+.my-profile-carousel-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.my-profile-carousel-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-profile-carousel-content:hover .my-profile-carousel-button {
+  opacity: 1;
+}
+
+.my-profile-carousel-button {
+  position: absolute;
+  z-index: 10;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 10px;
+  color: #333;
+  opacity: 0;
+}
+
+.my-profile-carousel-button:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.1);
+}
+
+.my-profile-carousel-button:active {
+  transform: scale(0.95);
+}
+
+.my-profile-carousel-button-prev {
+  left: -10px;
+}
+
+.my-profile-carousel-button-next {
+  right: -10px;
+}
+
+.my-profile-carousel-items {
+  display: flex;
+  gap: 1rem;
+  overflow: hidden;
+  margin: 0 0.5rem;
+  scroll-behavior: smooth;
+}
+
+.my-profile-carousel-item {
+  flex: none;
+  width: 16rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.my-profile-carousel-item:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.my-profile-carousel-item-image-container {
+  position: relative;
+  height: 12rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.my-profile-carousel-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.my-profile-carousel-item-status {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: white;
+}
+
+.status-badge.active {
+  background-color: #000;
+}
+
+.status-badge.closed {
+    background-color: #dc3545;
+}
+
+.my-profile-carousel-item-content {
+  padding: 1rem;
+}
+
+.my-profile-carousel-item-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.my-profile-carousel-item-description {
+  color: #4b5563;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.my-profile-carousel-item-price {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .my-profile-carousel-button {
+    width: 18px;
+    height: 18px;
+    font-size: 8px;
+  }
+
+  .my-profile-carousel-items {
+    margin: 0 1rem;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .my-profile-carousel-item {
+    width: 100%;
+    max-width: none;
+  }
+
+  .my-profile-carousel-button-prev {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .my-profile-carousel-button-next {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .my-profile-carousel-item-image-container {
+    height: 200px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .my-profile-carousel-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

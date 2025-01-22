@@ -28,21 +28,21 @@ const AboutUs = () => {
             <div className="section">
                 <h2 className="section-title">What Sets Us Apart</h2>
                 <div className="grid-3-cols">
-                    <div className="card">
+                    <div className="about-us-card">
                         <h3 className="card-title">Experience and Professionalism</h3>
                         <p className="text-gray-600">
                             Our team of expert appraisers and specialists brings years of experience in the auction market,
                             ensuring precise evaluations and professional guidance for every piece that passes through our hands.
                         </p>
                     </div>
-                    <div className="card">
+                    <div className="about-us-card">
                         <h3 className="card-title">Technology and Innovation</h3>
                         <p className="text-gray-600">
                             We combine the tradition of the auction world with the latest digital technologies, offering
                             a modern and accessible platform that allows participation in our auctions from anywhere in the world.
                         </p>
                     </div>
-                    <div className="card">
+                    <div className="about-us-card">
                         <h3 className="card-title">Guaranteed Authenticity</h3>
                         <p className="text-gray-600">
                             Every item we auction undergoes a rigorous verification and authentication process,

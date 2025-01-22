@@ -24,10 +24,14 @@ async function apiRequest(route, method = 'GET', data = null) {
         }
         
         const response = await fetch(url.toString(), fetchOptions);
-        return response.json();
+        const responseData = await response.json();
+        if (!response.ok) {
+            throw new Error(responseData.message || 'Error en la petición');
+        }
+        return responseData;
     } catch (error) {
-        console.error(error);
-        return null;
+        console.error('Error en apiRequest:', error);
+        throw error; 
     }
 }
 
