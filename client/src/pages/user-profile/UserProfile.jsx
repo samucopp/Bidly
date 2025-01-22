@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AuctionCarrusel from '../../components/carrusels/AuctionCarrusel';
 import GenericModal from '../../components/modals/GenericModal';
+import ImageWithFallback from '../../components/fallback-image/ImageWithFallback';
 import './UserProfile.css';
 
 const activeBids = {
@@ -404,10 +405,10 @@ const user = {
     name: "Estefania",
     email: "gestefania@gmail.com",
     address: "Calle 123, Ciudad",
-    password: "1234",
-    passwordRepeat: "1234",
     avatar: "https://bidly-products.s3.eu-north-1.amazonaws.com/uploads/users/default-avatar/mujer-cinco.png",
+    password: "1234",
 }
+
 
 
 const UserProfile = () => {
@@ -434,7 +435,7 @@ const UserProfile = () => {
         setIsModalOpen(true);
         setIsSettingsOpen(false);
     };
-    
+
     const handleDeleteAuction = (auctionId) => {
         setSelectedAuctionId(auctionId);
         setIsDeleteModalOpen(true);
@@ -451,7 +452,7 @@ const UserProfile = () => {
     const AvatarContent = () => {
         const [previewImage, setPreviewImage] = useState(null);
         const [selectedFile, setSelectedFile] = useState(null);
-    
+
         const handleImageChange = (e) => {
             const file = e.target.files[0];
             setSelectedFile(file);
@@ -463,7 +464,7 @@ const UserProfile = () => {
                 reader.readAsDataURL(file);
             }
         };
-    
+
         const handleSave = () => {
             if (selectedFile) {
                 // lógica guardar en su sesion con el id de usuario 
@@ -474,27 +475,20 @@ const UserProfile = () => {
             }
             closeModal();
         };
-    
+
         return (
             <div className="modal-content">
                 <h2>Change Avatar</h2>
                 <div className="current-avatar">
-                    <img 
-                        src={userData.avatar} 
-                        alt="Current avatar" 
+                    <img
+                        src={userData.avatar}
+                        alt="Current avatar"
                         className="avatar-preview"
-                        style={{
-                            width: '150px',
-                            height: '150px',
-                            borderRadius: '50%',
-                            objectFit: 'cover',
-                            margin: '1rem 0'
-                        }}
                     />
                 </div>
-                <input 
-                    type="file" 
-                    accept="image/*" 
+                <input
+                    type="file"
+                    accept="image/*"
                     onChange={handleImageChange}
                 />
                 <button onClick={handleSave}>Save</button>
@@ -506,7 +500,8 @@ const UserProfile = () => {
         const [formData, setFormData] = useState({
             name: userData.name,
             email: userData.email,
-            address: userData.address
+            address: userData.address,
+            password: userData.password
         });
 
         const handleChange = (e) => {
@@ -548,6 +543,14 @@ const UserProfile = () => {
                         onChange={handleChange}
                         placeholder="Address"
                     />
+                    <input
+                        type="text"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Password"
+                    />
+
                     <button type="submit">Save Changes</button>
                 </form>
             </div>
@@ -631,7 +634,7 @@ const UserProfile = () => {
             </div>
 
             <section className="auctions-section">
-                <h2>Following Auctions</h2>
+                <h2>Following Auctions</h2> {/*getauctivefollowedauctions*/}
 
                 <div className="auction-category">
                     <h3>Active Bids</h3>
@@ -639,10 +642,12 @@ const UserProfile = () => {
                         {activeBids.auctions.slice(0, 3).map((auction) => (
                             <div key={auction._id} className="auction-card">
                                 <button className="favorite-button">♥</button>
-                                <img
-                                    src="/logo_bidly.png"
+                                <ImageWithFallback
+                                    src={auction.images[0]}
                                     alt={auction.title}
+                                    fallback="/logo_bidly.png"
                                     className="auction-image"
+
                                 />
                                 <h4>{auction.title}</h4>
                                 <p>${auction.startingPrice}</p>
@@ -657,10 +662,12 @@ const UserProfile = () => {
                         {upcomingBids.auctions.slice(0, 3).map((auction) => (
                             <div key={auction._id} className="auction-card">
                                 <button className="favorite-button">♥</button>
-                                <img
-                                    src="logo_bidly.png"
+                                <ImageWithFallback
+                                    src={auction.images[0]}
                                     alt={auction.title}
+                                    fallback="/logo_bidly.png"
                                     className="auction-image"
+
                                 />
                                 <h4>{auction.title}</h4>
                                 <p className="upcoming-start-price">${auction.startingPrice}</p>
@@ -673,7 +680,7 @@ const UserProfile = () => {
             </section>
 
             <section className="my-auctions">
-                <h2>My Auctions</h2>
+                <h2>My Auctions</h2> {/*getauctionsbyOwner*/}
                 <div className="auctions-list">
                     {myAuctions.auctions.map((auction) => (
                         <div key={auction._id} className="auction-detail">
@@ -716,8 +723,8 @@ const UserProfile = () => {
                 </div>
             </section>
 
-            <section className="auction-history">
-                <AuctionCarrusel />
+            <section className="auction-history"> {/*getauctionswherebiddone*/}
+                <AuctionCarrusel /> 
             </section>
 
             <GenericModal
