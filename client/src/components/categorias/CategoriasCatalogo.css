@@ -56,3 +56,75 @@
     font-weight: bold;
     color: #000;
 }
+
+.menu-container {
+    position: relative;
+}
+
+.menu-toggle {
+    display: none; /* Por defecto, el botón está oculto en pantallas grandes */
+    background-color: #020202;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Media query para pantallas de hasta 768px */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* El botón es visible en móviles */
+        width: 100%;
+    }
+
+    .categorias {
+        height: 0; /* Inicialmente, el menú tiene altura 0 */
+        overflow: hidden; /* Oculta cualquier contenido desbordante */
+        padding: 0 10px; /* Añade espacio a los lados, pero no a la parte superior/inferior */
+        text-align: center;
+        transition: height 0.3s ease, padding 0.3s ease; /* Transición para la altura y el padding */
+    }
+
+    .categorias.open {
+        height: auto; /* Al abrir, el menú toma su altura natural */
+        padding: 10px; /* Espaciado visible cuando el menú está abierto */
+    }
+
+    .categorias h2 {
+        display: none;
+    }
+
+    .tarjetas-container {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+
+    .catalog-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .checkbox-container {
+        margin-top: 10px;
+    }
+
+    .categorias h2 {
+        font-size: 1.5rem;
+    }
+
+    .categoria {
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .categoria h3 {
+        font-size: 1rem;
+    }
+}
