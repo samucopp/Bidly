@@ -13,45 +13,37 @@ const LoginModal = ({ isOpen, onClose }) => {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [status, setStatus] = useState({ type: null, message: '' });
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus({ type: null, message: '' });
     
         try {
             const response = await login(formData);
-            console.log('Respuesta del servidor:', response);  // Para debugging
+            console.log('Respuesta del servidor:', response);
     
             if (response && response.userInfo) {
-                // Verificamos que la respuesta tenga la estructura esperada
-                const { userInfo } = response;
-    
-                // Guardamos los datos en cookies de manera más segura
                 try {
-                    if (response.token) {
-                        Cookies.set('token', response.token, { secure: true });
-                    }
+                    // Guardamos el token
+                    Cookies.set('token', response.token);
                     
-                    // Guardamos la información del usuario
-                    if (userInfo.userId) {
-                        Cookies.set('userId', userInfo.userId, { secure: true });
-                    }
-                    if (userInfo.userName) {
-                        Cookies.set('userName', userInfo.userName, { secure: true });
-                    }
-                    if (userInfo.userAvatar) {
-                        Cookies.set('userAvatar', userInfo.userAvatar, { secure: true });
+                    // Guardamos los datos del usuario
+                    Cookies.set('userId', response.userInfo.userId);
+                    Cookies.set('userName', response.userInfo.userName);
+                    if (response.userInfo.userAvatar) {
+                        Cookies.set('userAvatar', response.userInfo.userAvatar);
                     }
     
-                    // Indicamos éxito al usuario
                     setStatus({
                         type: 'success',
                         message: '¡Login exitoso!'
                     });
     
-                    // Cerramos el modal y actualizamos la página
+                    // Notificamos el cambio de auth y cerramos el modal
                     setTimeout(() => {
+                        window.dispatchEvent(new Event('auth-change'));
                         onClose();
-                        window.location.reload();
                     }, 1500);
     
                 } catch (cookieError) {
@@ -59,14 +51,11 @@ const LoginModal = ({ isOpen, onClose }) => {
                     throw new Error('Error al guardar la sesión');
                 }
             } else {
-                // Si no hay userInfo en la respuesta, consideramos que las credenciales son incorrectas
-                console.error('Respuesta sin datos de usuario:', response);
                 setStatus({
                     type: 'error',
                     message: 'Credenciales incorrectas'
                 });
             }
-    
         } catch (error) {
             console.error('Error durante el login:', error);
             setStatus({
@@ -118,10 +107,6 @@ const LoginModal = ({ isOpen, onClose }) => {
                                 onClick={() => setShowPassword(!showPassword)}
                             />
                         </div>
-
-                        {/*  <div className="forgot-password">
-                            <a href="#">Forgot your password?</a>
-                        </div> */}
 
                         <button type="submit" className="signin-button">
                             LOG IN

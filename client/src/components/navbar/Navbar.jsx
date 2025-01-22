@@ -14,31 +14,42 @@ const Navbar = () => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        if (location.state?.openLoginModal) {
-            setIsLoginOpen(true);
-            navigate('/', { replace: true, state: {} });
-        }
-    }, [location, navigate]);
-
-    useEffect(() => {
         const checkAuth = () => {
             const token = Cookies.get('token');
             const userId = Cookies.get('userId');
-    
+            console.log('Verificando auth:', { token, userId }); // Para debugging
+
             if (token && userId) {
+                const userName = Cookies.get('userName');
+                const userAvatar = Cookies.get('userAvatar');
+                console.log('Usuario autenticado:', { userName, userAvatar }); // Para debugging
+
                 setIsAuth(true);
-                setUserData({ 
+                setUserData({
                     id: userId,
-                    avatar: Cookies.get('userAvatar') || '/hombre-cinco.png',
-                    name: Cookies.get('userName')
+                    name: userName,
+                    avatar: userAvatar || '/hombre-cinco.png'
                 });
             } else {
                 setIsAuth(false);
                 setUserData(null);
             }
         };
-    
+
+        // Verificar al montar el componente
         checkAuth();
+
+        // Escuchar eventos de cambio de auth
+        const handleAuthChange = () => {
+            console.log('Evento auth-change recibido'); // Para debugging
+            checkAuth();
+        };
+
+        window.addEventListener('auth-change', handleAuthChange);
+
+        return () => {
+            window.removeEventListener('auth-change', handleAuthChange);
+        };
     }, []);
 
     const toggleMenu = () => {
@@ -55,14 +66,17 @@ const Navbar = () => {
         if (e) {
             e.preventDefault();
         }
-        // Reemplazamos localStorage por Cookies
+
         Cookies.remove('token');
         Cookies.remove('userId');
         Cookies.remove('userAvatar');
         Cookies.remove('userName');
         setIsAuth(false);
         setUserData(null);
-        navigate('/', { replace: true });
+
+        navigate('/');
+
+
     };
 
     const handleRegisterClick = (e) => {
