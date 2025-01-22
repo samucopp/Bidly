@@ -15,8 +15,8 @@ router.put("/activate", auctionController.activateAuctions);
 router.put("/close", auctionController.closeAuctions);
 router.delete("/delete/:auctionId", checkAuthorization, checkAuctionOwnership, auctionController.deleteAuction);
 router.get("/user/:userId/participated", checkAuthorization, auctionController.getAuctionsWhereBidDone);
-router.get("/user/:userId/finished-participated", checkAuthorization, auctionController.getFinishedAuctionsWhereBidDone);
 router.get("/user/:userId/owner", checkAuthorization, auctionController.getAuctionsByOwner);
 router.get("/user/:userId/following", checkAuthorization, auctionController.getActiveFollowedAuctions);
+router.get("/user/:userId/upcoming-following", checkAuthorization, auctionController.getUpcomingFollowedAuctions);
 
 export default router;

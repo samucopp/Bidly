@@ -14,8 +14,8 @@ async function getAllCategories(req, res) {
 
 async function getCategory(req, res) {
     try {
-        const { id } = req.params;
-        const category = await Category.findById(id);
+        const { categoryId } = req.params;
+        const category = await Category.findById(categoryId);
         if (!category) {
             return res.status(404).json({
                 message: "Categoría no encontrada",
@@ -56,8 +56,8 @@ async function addCategory(req, res) {
 }
 async function deleteCategory(req, res) {
     try {
-        const { id } = req.params;
-        const category = await Category.findByIdAndDelete(id);
+        const { categoryId } = req.params;
+        const category = await Category.findByIdAndDelete(categoryId);
         if (!category) {
             return res.status(404).json({
                 message: "Categoría no encontrada",

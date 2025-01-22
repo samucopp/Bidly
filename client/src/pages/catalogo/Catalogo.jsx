@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import "./catalogo.css";
 import { Outlet } from "react-router-dom";
 import AuctionList from "../../components/auction/AuctionList";
 import Categorias from "../../components/categorias/CategoriasCatalogo";
-import { BASE_URL } from "../../const/api";
+import { getAllCategories } from "../../api/category";
+import { getAuctions, getAuctionsByCategory } from "../../api/auction";
 
 const Catalogo = () => {
     const [searchParams] = useSearchParams();
@@ -13,6 +14,8 @@ const Catalogo = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [showActiveBidsOnly, setShowActiveBidsOnly] = useState(false);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     // Obtener la categoría de la URL
     useEffect(() => {
@@ -27,16 +30,13 @@ const Catalogo = () => {
         const fetchData = async () => {
             try {
                 // Cargar categorías
-                const categoriesResponse = await fetch(`${BASE_URL}/category/all`);
-                if (!categoriesResponse.ok) throw new Error("Error al cargar las categorías.");
-                const categoriesData = await categoriesResponse.json();
+                const categoriesData = await getAllCategories();
                 setCategories(categoriesData);
 
                 // Cargar todos los productos inicialmente
-                const productsResponse = await fetch(`${BASE_URL}/auction`);
-                if (!productsResponse.ok) throw new Error("Error al cargar los productos.");
-                const productsData = await productsResponse.json();
-                setProducts(productsData.auctions);
+                const auctionsData = await getAuctions();
+                console.log("auctionsData", auctionsData);
+                setProducts(auctionsData.auctions);
             } catch (err) {
                 setError(err.message);
             }
@@ -45,27 +45,76 @@ const Catalogo = () => {
     }, []);
 
     // Manejar el cambio de categoría
-    const handleCategoryChange = (categoryId) => {
+    const handleCategoryChange = async (categoryId) => {
         setSelectedCategory(categoryId);
-        // Actualizar URL
-        const newSearchParams = new URLSearchParams(window.location.search);
-        if (categoryId) {
-            newSearchParams.set('category', categoryId);
-        } else {
-            newSearchParams.delete('category');
-        }
-        window.history.pushState({}, '', `${window.location.pathname}?${newSearchParams}`);
+        setCurrentPage(1);
+        setHasMore(true);
+        const auctionsData = categoryId
+            ? await getAuctionsByCategory(categoryId, showActiveBidsOnly, 1)
+            : await getAuctions(showActiveBidsOnly, 1);
+        setProducts(auctionsData.auctions);
     };
 
     // Manejar el cambio del checkbox de subastas activas
-    const handleActiveBidsToggle = () => {
-        setShowActiveBidsOnly(!showActiveBidsOnly);
+    const handleActiveBidsToggle = async () => {
+        const newActiveState = !showActiveBidsOnly;
+        let auctionsData;
+        if (!selectedCategory) {
+            auctionsData = await getAuctions(newActiveState);
+        } else {
+            auctionsData = await getAuctionsByCategory(selectedCategory, newActiveState);
+        }
+        setProducts(auctionsData.auctions);
+        setShowActiveBidsOnly(newActiveState);
     };
 
-    // Filtrar productos según la categoría seleccionada y el estado del checkbox
-    const filteredProducts = products
-        .filter(product => !selectedCategory || product.category._id === selectedCategory)
-        .filter(product => !showActiveBidsOnly || product.status === "active");
+    const loadMoreAuctions = async () => {
+        if (!hasMore) {
+            console.log("No more auctions to load.");
+            return;
+        }
+    
+        const nextPage = currentPage + 1; // Calcula la próxima página explícitamente
+        console.log("Fetching page:", nextPage);
+    
+        try {
+            const nextPage = currentPage + 1;
+            const auctionsData = selectedCategory
+                ? await getAuctionsByCategory(selectedCategory, showActiveBidsOnly, nextPage)
+                : await getAuctions(showActiveBidsOnly, nextPage);
+    
+            if (auctionsData.auctions.length === 0 || nextPage > auctionsData.totalPages) {
+                setHasMore(false);
+            } else {
+                setProducts((prevProducts) => [
+                    ...prevProducts,
+                    ...auctionsData.auctions.filter(
+                        (auction) => !prevProducts.some((p) => p._id === auction._id)
+                    ),
+                ]);
+                setCurrentPage(nextPage);
+            }
+        } catch (err) {
+            console.error('Error al cargar más subastas:', err);
+            setError(err.message);
+        }
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const isBottom =
+                window.innerHeight + document.documentElement.scrollTop >=
+                document.documentElement.offsetHeight - 100;
+    
+            if (isBottom && hasMore) {
+                console.log("Loading more auctions...");
+                loadMoreAuctions();
+            }
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [selectedCategory, showActiveBidsOnly, currentPage, hasMore]);
 
     return (
         <div className="catalog-page">
@@ -95,7 +144,7 @@ const Catalogo = () => {
                 {error ? (
                     <div className="error">{error}</div>
                 ) : (
-                    <AuctionList auctions={filteredProducts} />
+                    <AuctionList auctions={products} />
                 )}
                 <Outlet />
             </main>
