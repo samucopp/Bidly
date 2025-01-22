@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../../const/api";
+import { getAuctionById } from "../../api/auction.js";
+import { getBidsByAuction } from "../../api/bid.js";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 import ActiveBids from "../../components/activeBids/ActiveBids";
 import LiveBidding from "../../components/liveBidding/LiveBidding";
@@ -21,7 +23,7 @@ const Subasta = () => {
     const [auction, setAuction] = useState(null);
     const [bidsData, setBids] = useState([]); // Estado para almacenar las pujas dinámicas
     const [error, setError] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(true); // Simula si el usuario está logueado
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Simula si el usuario está logueado
     const [currentUserId, setCurrentUserId] = useState(
         "678fce5049f88b745fdfbec9"
     ); // Simula el ID del usuario logueado
@@ -31,12 +33,7 @@ const Subasta = () => {
     useEffect(() => {
         const fetchAuction = async () => {
             try {
-                const auctionResponse = await fetch(
-                    `${BASE_URL}/auction/${auctionId}`
-                );
-                if (!auctionResponse.ok)
-                    throw new Error("Error al cargar la subasta.");
-                const auctionData = await auctionResponse.json();
+                const auctionData = await getAuctionById(auctionId);
                 setAuction(auctionData.auction);
             } catch (err) {
                 setError(err.message);
@@ -50,12 +47,7 @@ const Subasta = () => {
     useEffect(() => {
         const fetchBids = async () => {
             try {
-                const bidsResponse = await fetch(
-                    `${BASE_URL}/bid/${auctionId}`
-                );
-                if (!bidsResponse.ok)
-                    throw new Error("Error al cargar las pujas.");
-                const bidsData = await bidsResponse.json();
+                const bidsData = await getBidsByAuction(auctionId);
 
                 const newBidsArray = bidsData.bids.map((bid) => ({
                     _id: bid._id,
@@ -73,7 +65,9 @@ const Subasta = () => {
             }
         };
 
-        fetchBids();
+        if (isLoggedIn) {
+            fetchBids();
+        }
     }, [auctionId]);
 
     useEffect(() => {

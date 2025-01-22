@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BASE_URL } from "../../const/api";
+import { getAuctionById } from "../../api/auction";
 
 const Modal = ({ visible }) => {
     const { auctionId } = useParams(); // Obtén el parámetro auctionId de la ruta
@@ -12,10 +13,7 @@ const Modal = ({ visible }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const auctionResponse = await fetch(`${BASE_URL}/auction/${auctionId}`);
-                if (!auctionResponse.ok) throw new Error("Error al cargar los productos.");
-                const auctionData = await auctionResponse.json();
-                console.log(auctionData);
+                const auctionData = await getAuctionById(auctionId);
                 setAuction(auctionData.auction);
             } catch (err) {
                 setError(err.message);
@@ -52,15 +50,28 @@ const Modal = ({ visible }) => {
         <div style={modalStyles.overlay}>
             <div style={modalStyles.modal}>
                 <h2>{auction.title}</h2>
-                <p><strong>Descripción:</strong> {auction.description}</p>
-                <img 
-                    src={`${BASE_URL}/images/${auction.images[0]}`} 
-                    alt={auction.title} 
-                    style={{ maxWidth: "100%", height: "auto", marginBottom: "16px" }} 
+                <p>
+                    <strong>Descripción:</strong> {auction.description}
+                </p>
+                <img
+                    src={`${BASE_URL}/images/${auction.images[0]}`}
+                    alt={auction.title}
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                        marginBottom: "16px",
+                    }}
                 />
-                <p><strong>Precio Inicial:</strong> {auction.startingPrice} €</p>
-                <p><strong>Hora de Inicio:</strong> {new Date(auction.startTime).toLocaleString()}</p>
-                <p><strong>Estado:</strong> {auction.status}</p>
+                <p>
+                    <strong>Precio Inicial:</strong> {auction.startingPrice} €
+                </p>
+                <p>
+                    <strong>Hora de Inicio:</strong>{" "}
+                    {new Date(auction.startTime).toLocaleString()}
+                </p>
+                <p>
+                    <strong>Estado:</strong> {auction.status}
+                </p>
                 <Link to={`/auction/${auctionId}`}>
                     <button style={buttonStyles.bid}>Pujar</button>
                 </Link>
@@ -83,7 +94,7 @@ const modalStyles = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 1000
+        zIndex: 1000,
     },
     modal: {
         background: "#fff",
@@ -92,8 +103,8 @@ const modalStyles = {
         maxWidth: "400px",
         width: "100%",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-        textAlign: "center"
-    }
+        textAlign: "center",
+    },
 };
 
 const buttonStyles = {
@@ -104,7 +115,7 @@ const buttonStyles = {
         color: "#fff",
         border: "none",
         borderRadius: "4px",
-        cursor: "pointer"
+        cursor: "pointer",
     },
     close: {
         marginTop: "8px",
@@ -113,8 +124,8 @@ const buttonStyles = {
         color: "#fff",
         border: "none",
         borderRadius: "4px",
-        cursor: "pointer"
-    }
+        cursor: "pointer",
+    },
 };
 
 export default Modal;

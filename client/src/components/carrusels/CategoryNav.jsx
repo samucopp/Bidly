@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CategoryNav.css";
-import { BASE_URL } from "../../const/api";
+import { getAllCategories } from "../../api/category";
 
 const CATEGORY_ICONS = {
     Furniture: (
@@ -186,10 +186,7 @@ const CategoryNav = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/category/all`);
-                if (!response.ok)
-                    throw new Error("Error al cargar las categorías");
-                const data = await response.json();
+                const data = await getAllCategories();
 
                 // Combinar datos de la API con los iconos
                 const categoriesWithIcons = data.map((category) => ({
