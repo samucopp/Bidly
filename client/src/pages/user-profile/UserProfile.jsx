@@ -403,6 +403,9 @@ const myAuctions = {
 const user = {
     name: "Estefania",
     email: "gestefania@gmail.com",
+    address: "Calle 123, Ciudad",
+    password: "1234",
+    passwordRepeat: "1234",
     avatar: "https://bidly-products.s3.eu-north-1.amazonaws.com/uploads/users/default-avatar/mujer-cinco.png",
 }
 
@@ -414,6 +417,7 @@ const UserProfile = () => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCreateAuctionModalOpen, setIsCreateAuctionModalOpen] = useState(false);
     const [selectedAuctionId, setSelectedAuctionId] = useState(null);
+    const [userData, setUserData] = useState(user);
 
     const handleSettingsClick = () => {
         setIsSettingsOpen(!isSettingsOpen);
@@ -425,12 +429,12 @@ const UserProfile = () => {
         setIsSettingsOpen(false);
     };
 
-    const handleChangePassword = () => {
-        setModalContent('password');
+    const handleMyData = () => {
+        setModalContent('myData');
         setIsModalOpen(true);
         setIsSettingsOpen(false);
     };
-
+    
     const handleDeleteAuction = (auctionId) => {
         setSelectedAuctionId(auctionId);
         setIsDeleteModalOpen(true);
@@ -444,31 +448,111 @@ const UserProfile = () => {
         setIsModalOpen(false);
         setModalContent(null);
     };
+    const AvatarContent = () => {
+        const [previewImage, setPreviewImage] = useState(null);
+        const [selectedFile, setSelectedFile] = useState(null);
+    
+        const handleImageChange = (e) => {
+            const file = e.target.files[0];
+            setSelectedFile(file);
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setPreviewImage(reader.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+    
+        const handleSave = () => {
+            if (selectedFile) {
+                // lógica guardar en su sesion con el id de usuario 
+                setUserData(prev => ({
+                    ...prev,
+                    avatar: previewImage
+                }));
+            }
+            closeModal();
+        };
+    
+        return (
+            <div className="modal-content">
+                <h2>Change Avatar</h2>
+                <div className="current-avatar">
+                    <img 
+                        src={userData.avatar} 
+                        alt="Current avatar" 
+                        className="avatar-preview"
+                        style={{
+                            width: '150px',
+                            height: '150px',
+                            borderRadius: '50%',
+                            objectFit: 'cover',
+                            margin: '1rem 0'
+                        }}
+                    />
+                </div>
+                <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleImageChange}
+                />
+                <button onClick={handleSave}>Save</button>
+            </div>
+        );
+    };
 
-    const AvatarContent = () => (
-        <div className="modal-content">
-            <h2>Change Avatar</h2>
-            <input type="file" accept="image/*" />
-            <button onClick={() => {
-                // hay que meter controllador 
-                closeModal();
-            }}>Save</button>
-        </div>
-    );
+    const MyDataContent = () => {
+        const [formData, setFormData] = useState({
+            name: userData.name,
+            email: userData.email,
+            address: userData.address
+        });
 
-    const PasswordContent = () => (
-        <div className="modal-content">
-            <h2>Change Password</h2>
-            <input type="password" placeholder="Current Password" />
-            <input type="password" placeholder="New Password" />
-            <input type="password" placeholder="Confirm New Password" />
-            <button onClick={() => {
-                // hay que meter el controlador
-                closeModal();
-            }}>Save</button>
-        </div>
-    );
+        const handleChange = (e) => {
+            const { name, value } = e.target;
+            setFormData(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        };
 
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            setUserData(formData);
+            closeModal();
+        };
+
+        return (
+            <div className="modal-content">
+                <h2>My Data</h2>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Name"
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                    />
+                    <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        placeholder="Address"
+                    />
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        );
+    };
 
     const DeleteAuctionContent = () => (
         <div className="modal-content">
@@ -484,7 +568,6 @@ const UserProfile = () => {
                 <button
                     className="delete-button"
                     onClick={() => {
-                        // Aquí iría tu controlador para borrar la subasta
                         console.log('Deleting auction:', selectedAuctionId);
                         setIsDeleteModalOpen(false);
                     }}
@@ -494,7 +577,6 @@ const UserProfile = () => {
             </div>
         </div>
     );
-
 
     const CreateAuctionContent = () => (
         <div className="modal-content">
@@ -507,7 +589,6 @@ const UserProfile = () => {
                 <select>
                     <option value="">Select Category</option>
                     <option value="electronics">Electronics</option>
-                    {/* Más categorías... */}
                 </select>
                 <div className="date-inputs">
                     <input type="datetime-local" placeholder="Start Date" />
@@ -517,7 +598,6 @@ const UserProfile = () => {
                     type="submit"
                     onClick={(e) => {
                         e.preventDefault();
-                        // Aquí iría tu controlador para crear la subasta
                         setIsCreateAuctionModalOpen(false);
                     }}
                 >
@@ -527,32 +607,29 @@ const UserProfile = () => {
         </div>
     );
 
-
-
     return (
         <div className="profile-container">
             <div className="profile-header">
                 <div className="user-info">
-                    <img src={user.avatar} alt="Profile" className="avatar" />
-                    <h1 className="username">{user.name}</h1>
+                    <img src={userData.avatar} alt="Profile" className="avatar" />
+                    <h1 className="username">{userData.name}</h1>
                 </div>
                 <div className="settings-dropdown">
                     <button
                         className="settings-button"
                         onClick={handleSettingsClick}
                     >
-                        Settings {isSettingsOpen ? '-' : '+'}
+                        Edit Profile {isSettingsOpen ? '-' : '+'}
                     </button>
                     {isSettingsOpen && (
                         <div className="settings-options">
                             <button onClick={handleChangeAvatar}>Change Avatar</button>
-                            <button onClick={handleChangePassword}>Change Password</button>
+                            <button onClick={handleMyData}>My Data</button>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* Following Auctions */}
             <section className="auctions-section">
                 <h2>Following Auctions</h2>
 
@@ -586,45 +663,43 @@ const UserProfile = () => {
                                     className="auction-image"
                                 />
                                 <h4>{auction.title}</h4>
-                                <p className='upcoming-start-price'>${auction.startingPrice}</p>
-                                <p className='upcoming-start-date'>Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
-                                <p className='upcoming-end-date'>End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
-
+                                <p className="upcoming-start-price">${auction.startingPrice}</p>
+                                <p className="upcoming-start-date">Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
+                                <p className="upcoming-end-date">End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* My Auctions */}
-            <section class="my-auctions">
+            <section className="my-auctions">
                 <h2>My Auctions</h2>
-                <div class="auctions-list">
+                <div className="auctions-list">
                     {myAuctions.auctions.map((auction) => (
-                        <div key={auction._id} class="auction-detail">
+                        <div key={auction._id} className="auction-detail">
                             <div className="auction-image-container">
                                 <img
-                                    src={"/favicon.png"}
+                                    src="/favicon.png"
                                     alt={auction.title}
                                     className="img-my-auctions"
                                 />
                             </div>
-                            <div class="auction-info">
+                            <div className="auction-info">
                                 <h3>Lot {auction._id.slice(-4)}, {auction.title}</h3>
                                 <p>{auction.description}</p>
                                 <p>Category: {auction.category.name}</p>
                             </div>
-                            <div class="auction-price">
-                                <span class="price-label">STARTING PRICE</span>
-                                <span class="price">{auction.startingPrice} €</span>
-                                <div class="auction-dates">
+                            <div className="auction-price">
+                                <span className="price-label">STARTING PRICE</span>
+                                <span className="price">{auction.startingPrice} €</span>
+                                <div className="auction-dates">
                                     <p>Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
                                     <p>End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
                                 </div>
                             </div>
-                            <div class="auction-actions">
+                            <div className="auction-actions">
                                 <button
-                                    class="delete-button"
+                                    className="delete-button"
                                     onClick={() => handleDeleteAuction(auction._id)}
                                 >
                                     DELETE
@@ -641,8 +716,6 @@ const UserProfile = () => {
                 </div>
             </section>
 
-            {/* Auction History */}
-
             <section className="auction-history">
                 <AuctionCarrusel />
             </section>
@@ -653,7 +726,7 @@ const UserProfile = () => {
                 className="settings-modal"
             >
                 {modalContent === 'avatar' && <AvatarContent />}
-                {modalContent === 'password' && <PasswordContent />}
+                {modalContent === 'myData' && <MyDataContent />}
             </GenericModal>
 
             <GenericModal
@@ -672,7 +745,6 @@ const UserProfile = () => {
                 <CreateAuctionContent />
             </GenericModal>
         </div>
-
     );
 };
 
