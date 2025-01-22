@@ -42,7 +42,7 @@ router.post(
 
 router.delete(
     "/profileAvatar/:userId",
-    fileUploadController.deleteAuctionImage
+    fileUploadController.deleteUserAvatar
 );
 
 export default router;

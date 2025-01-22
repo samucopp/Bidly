@@ -11,6 +11,7 @@ router.post("/logout", authController.logout);
 router.get("/all", checkAuthorization, userController.getAll);
 router.get("/:userId", checkAuthorization, userController.getUser);
 router.put("/:userId", checkAuthorization, userController.editUser);
+router.delete("/:userId", checkAuthorization, userController.deleteUser);
 router.put("/favorites/add", checkAuthorization, userController.addAuctionToFavorites);
 router.put("/favorites/remove", checkAuthorization, userController.removeAuctionFromFavorites);
 
