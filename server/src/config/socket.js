@@ -44,14 +44,17 @@ export function startSocket(server) {
                     `Nueva puja en subasta ${auctionId}: ${bidAmount} por ${userId}`
                 );
 
-                const { bidId, bidTime, minAllowed } =
-                    await bidController.addBid(auctionId, userId, bidAmount);
+                const { _id, bidTime, minAllowed } = await bidController.addBid(
+                    auctionId,
+                    userId,
+                    bidAmount
+                );
                 const { name } = await userController.getUserData(userId);
                 // Emitir el evento a todos los usuarios en la sala de la subasta
                 io.to(auctionId).emit("new-bid", {
-                    userId: userId,
+                    userId,
                     name,
-                    bidId,
+                    bidId: _id,
                     bidAmount: bidAmount,
                     bidTime,
                     minAllowed,

@@ -124,7 +124,7 @@ const addBid = async (auctionId, userId, amount) => {
     const savedBid = await newBid.save();
     auction.currentPrice = savedBid.amount;
     await auction.save();
-
+    console.log(savedBid);
     return savedBid;
 };
 

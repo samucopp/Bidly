@@ -186,9 +186,7 @@ const CategoryNav = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/category/all`, {
-                    credentials: "include", // Incluir credenciales en la solicitud
-                });
+                const response = await fetch(`${BASE_URL}/category/all`);
                 if (!response.ok)
                     throw new Error("Error al cargar las categorías");
                 const data = await response.json();

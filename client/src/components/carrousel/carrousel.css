@@ -1,20 +1,23 @@
 .image-carousel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-  }
-  
-  .carousel-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  .carousel-image {
-    max-width: 300px;
-    height: auto;
-    margin: 0 10px;
-  }
-  
+  display: flex;
+  height: 90%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.carousel-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  width: 10px;
+  cursor: pointer;
+}
+
+.carousel-image {
+  width: calc(100% - 40px);
+  height: 100%;
+  margin: 0 10px;
+  object-fit: cover;
+}
