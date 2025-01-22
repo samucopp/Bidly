@@ -48,21 +48,20 @@ const createAuction = async (req, res) => {
 
 const searchAuctions = async (req, res) => {
     try {
-        const { query } = req.query;
-        const {page = 1, limit } = req.body;
+        const { query, page = 1, limit, active } = req.query;
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
         if (!query || query.trim() === "") {
             return res.status(400).json({ success: false, message: "Por favor, ingrese una consulta de búsqueda válida" });
         }
-        const auctions = await Auction.find({ title: { $regex: query, $options: 'i' } })
+        const auctions = await Auction.find((active && active == "true") ? { title: { $regex: query, $options: 'i' }, status: "active" } : { title: { $regex: query, $options: 'i' }, status: {$ne: "closed"} })
             .populate("category", "name")
             .populate("sellerId", "name")
             .skip(skip)
             .limit(resultsPerPage);
 
-        const total = await Auction.countDocuments({ title: { $regex: query, $options: 'i' } });
+        const total = await Auction.countDocuments((active && active == "true") ? { title: { $regex: query, $options: 'i' }, status: "active" } : { title: { $regex: query, $options: 'i' }, status: {$ne: "closed"} });
 
         if (auctions.length === 0) {
             return res.status(404).json({ success: false, message: "No se encontraron subastas que coincidan con la consulta de búsqueda" });
@@ -80,17 +79,17 @@ const searchAuctions = async (req, res) => {
 
 const getAuctions = async (req, res) => {
     try {
-        const {page = 1, limit } = req.body;
+        const { page = 1, limit, active } = req.query;
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
-        const auctions = await Auction.find()
+        const auctions = await Auction.find((active && active == "true") ? { status: "active" } : {status: {$ne: "closed"}})
             .populate("category", "name")
             .populate("sellerId", "name")
             .skip(skip)
             .limit(resultsPerPage);
 
-        const total = await Auction.countDocuments();
+        const total = await Auction.countDocuments((active && active == "true") ? { status: "active" } : {status: {$ne: "closed"}});
 
         res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
     } catch (error) {
@@ -105,17 +104,17 @@ const getAuctions = async (req, res) => {
 const getAuctionsByCategory = async (req, res) => {
     try {
         const { categoryId } = req.params;
-        const {page = 1, limit } = req.body;
+        const { page = 1, limit, active } = req.query;
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
-        const auctions = await Auction.find({ category: categoryId })
+        const auctions = await Auction.find((active && active == "true") ? { category: categoryId, status: "active" } : { category: categoryId, status: {$ne: "closed"} })
             .populate("category", "name")
             .populate("sellerId", "name")
             .skip(skip)
             .limit(resultsPerPage);
 
-        const total = await Auction.countDocuments({ category: categoryId });
+        const total = await Auction.countDocuments((active && active == "true") ? { category: categoryId, status: "active" } : { category: categoryId, status: {$ne: "closed"} });
 
         res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
     } catch (error) {
@@ -129,7 +128,7 @@ const getAuctionsByCategory = async (req, res) => {
 
 const getActiveAuctions = async (req, res) => {
     try {
-        const {page = 1, limit } = req.body;
+        const { page = 1, limit } = req.query;
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
@@ -344,7 +343,7 @@ const closeAuctions = async (req, res) => {
 const getAuctionsWhereBidDone = async (req, res) => {
     try {
         const { userId } = req.params;
-        const {page = 1, limit } = req.body;
+        const { page = 1, limit } = req.query;
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
@@ -375,50 +374,10 @@ const getAuctionsWhereBidDone = async (req, res) => {
     }
 };
 
-const getFinishedAuctionsWhereBidDone = async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const {page = 1, limit } = req.body;
-        const resultsPerPage = parseInt(limit) || 10;
-        const skip = (page - 1) * resultsPerPage;
-
-        const bids = await Bid.find({ userId });
-        if (bids.length > 0) {
-            const auctionIds = bids.map((bid) => bid.auctionId);
-            const auctions = await Auction.find({
-                _id: { $in: auctionIds },
-                status: "closed",
-            })
-                .populate("category", "name")
-                .populate("sellerId", "name")
-                .skip(skip)
-                .limit(resultsPerPage);
-
-            const total = await Auction.countDocuments({
-                _id: { $in: auctionIds },
-                status: "closed",
-            });
-
-            return res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage),  auctions });
-        } else {
-            return res.status(404).json({
-                success: true,
-                message: "No se han realizado pujas en ninguna subasta",
-            });
-        }
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Error al obtener las subastas donde se hizo un bid",
-            error,
-        });
-    }
-};
-
 const getAuctionsByOwner = async (req, res) => {
     try {
         const { userId } = req.params;
-        const {page = 1, limit } = req.body;
+        const { page = 1, limit } = req.query;
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
@@ -443,7 +402,7 @@ const getAuctionsByOwner = async (req, res) => {
 const getActiveFollowedAuctions = async (req, res) => {
     try {
         const { userId } = req.params;
-        const {page = 1, limit } = req.body;
+        const { page = 1, limit } = req.query;
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
@@ -479,6 +438,45 @@ const getActiveFollowedAuctions = async (req, res) => {
     }
 };
 
+const getUpcomingFollowedAuctions = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { page = 1, limit } = req.query;
+        const resultsPerPage = parseInt(limit) || 10;
+        const skip = (page - 1) * resultsPerPage;
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, message: "Usuario no encontrado" });
+        }
+
+        const favoriteAuctionsIds = user.favoriteAuctions;
+        const auctions = await Auction.find({
+            _id: { $in: favoriteAuctionsIds },
+            status: "inactive",
+        })
+            .populate("category", "name")
+            .populate("sellerId", "name")
+            .skip(skip)
+            .limit(resultsPerPage);
+
+        const total = await Auction.countDocuments({
+            _id: { $in: favoriteAuctionsIds },
+            status: "inactive",
+        });
+
+        res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener las subastas activas seguidas",
+            error,
+        });
+    }
+};
+
 export default {
     createAuction,
     searchAuctions,
@@ -491,7 +489,7 @@ export default {
     activateAuctions,
     closeAuctions,
     getAuctionsWhereBidDone,
-    getFinishedAuctionsWhereBidDone,
     getAuctionsByOwner,
     getActiveFollowedAuctions,
+    getUpcomingFollowedAuctions
 };
