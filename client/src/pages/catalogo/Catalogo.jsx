@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import "./catalogo.css";
 import { Outlet } from "react-router-dom";
 import AuctionList from "../../components/auction/AuctionList";
 import Categorias from "../../components/categorias/CategoriasCatalogo";
 import { getAllCategories } from "../../api/category";
-import { getAuctions, getAuctionsByCategory } from "../../api/auction";
+import { getAuctions, getAuctionsByCategory, searchAuctions } from "../../api/auction";
 
 const Catalogo = () => {
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation();
+    const [query, setQuery] = useState('');
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -16,27 +18,23 @@ const Catalogo = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const timerRef = useRef(null);
 
     // Obtener la categoría de la URL
     useEffect(() => {
         const categoryFromUrl = searchParams.get('category');
+        console.log('searchparams', searchParams);
         if (categoryFromUrl) {
-            setSelectedCategory(categoryFromUrl);
+            handleCategoryChange(categoryFromUrl);
         }
     }, [searchParams]);
 
-    // Cargar categorías y productos iniciales
+    // Cargar categorías
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Cargar categorías
                 const categoriesData = await getAllCategories();
                 setCategories(categoriesData);
-
-                // Cargar todos los productos inicialmente
-                const auctionsData = await getAuctions();
-                console.log("auctionsData", auctionsData);
-                setProducts(auctionsData.auctions);
             } catch (err) {
                 setError(err.message);
             }
@@ -44,15 +42,36 @@ const Catalogo = () => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        if (location.state?.hasMore !== undefined) {
+            setHasMore(location.state.hasMore);
+        }
+        if (location.state?.query) {
+            console.log("query", "|", location.state.query, "|", query);
+            setQuery(location.state.query);
+        }
+        if (location.state?.searchResults) {
+            setProducts(location.state.searchResults);
+        }
+
+    }, [location.state]);
+
+
     // Manejar el cambio de categoría
     const handleCategoryChange = async (categoryId) => {
         setSelectedCategory(categoryId);
+        setQuery('');
         setCurrentPage(1);
         setHasMore(true);
+
         const auctionsData = categoryId
             ? await getAuctionsByCategory(categoryId, showActiveBidsOnly, 1)
             : await getAuctions(showActiveBidsOnly, 1);
         setProducts(auctionsData.auctions);
+
+        if (auctionsData.totalPages <= 1) {
+            setHasMore(false);
+        }
     };
 
     // Manejar el cambio del checkbox de subastas activas
@@ -73,25 +92,34 @@ const Catalogo = () => {
             console.log("No more auctions to load.");
             return;
         }
-    
-        const nextPage = currentPage + 1; // Calcula la próxima página explícitamente
-        console.log("Fetching page:", nextPage);
-    
+
         try {
             const nextPage = currentPage + 1;
-            const auctionsData = selectedCategory
-                ? await getAuctionsByCategory(selectedCategory, showActiveBidsOnly, nextPage)
-                : await getAuctions(showActiveBidsOnly, nextPage);
-    
-            if (auctionsData.auctions.length === 0 || nextPage > auctionsData.totalPages) {
-                setHasMore(false);
+            console.log("Fetching page:", nextPage);
+            let auctionsData;
+            if (query !== '') {
+                console.log("query", query);
+                auctionsData = await searchAuctions(query, showActiveBidsOnly, nextPage);
+            } else if (selectedCategory) {
+                console.log("selectedCategory", selectedCategory);
+                auctionsData = await getAuctionsByCategory(selectedCategory, showActiveBidsOnly, nextPage);
             } else {
+                console.log("else");
+                auctionsData = await getAuctions(showActiveBidsOnly, nextPage);
+            };
+            console.log("auctionsData", auctionsData);
+
+            if (auctionsData.auctions.length > 0) {
                 setProducts((prevProducts) => [
                     ...prevProducts,
                     ...auctionsData.auctions.filter(
                         (auction) => !prevProducts.some((p) => p._id === auction._id)
                     ),
                 ]);
+            }
+            if (nextPage >= auctionsData.totalPages) {
+                setHasMore(false);
+            } else {
                 setCurrentPage(nextPage);
             }
         } catch (err) {
@@ -105,16 +133,19 @@ const Catalogo = () => {
             const isBottom =
                 window.innerHeight + document.documentElement.scrollTop >=
                 document.documentElement.offsetHeight - 100;
-    
-            if (isBottom && hasMore) {
+
+            if (isBottom && hasMore && !timerRef.current) {
                 console.log("Loading more auctions...");
                 loadMoreAuctions();
+                timerRef.current = setTimeout(() => {
+                    timerRef.current = null;
+                }, 1000);
             }
         };
-    
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [selectedCategory, showActiveBidsOnly, currentPage, hasMore]);
+    }, [selectedCategory, showActiveBidsOnly, currentPage, hasMore, query]);
 
     return (
         <div className="catalog-page">
