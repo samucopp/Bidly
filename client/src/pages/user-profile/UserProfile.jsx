@@ -1,424 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuctionCarrusel from '../../components/carrusels/AuctionCarrusel';
 import GenericModal from '../../components/modals/GenericModal';
 import ImageWithFallback from '../../components/fallback-image/ImageWithFallback';
+import { getActiveFollowedAuctions, getAuctionsByOwner } from '../../api/auction.js';
+import { getUser } from '../../api/user.js';
+import Cookies from "js-cookie";
 import './UserProfile.css';
 
-const activeBids = {
-    "total": 170,
-    "page": 1,
-    "totalPages": 17,
-    "auctions": [
-        {
-            "_id": "678fd5c621f2309c37fe4951",
-            "title": "Apple iPhone 14",
-            "description": "Latest model of the Apple iPhone with 128GB storage.",
-            "images": [
-                "iphone14.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1000,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24f9",
-                "name": "Alice Johnson"
-            },
-            "startTime": "2025-01-21T17:13:42.474Z",
-            "endTime": "2025-01-28T17:13:42.474Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.474Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:00.996Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4952",
-            "title": "Apple iPhone 14 Max",
-            "description": "Latest model of the Apple iPhone with 128GB storage.",
-            "images": [
-                "iphone14Max.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1000,
-            "minIncrement": 50,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24f9",
-                "name": "Alice Johnson"
-            },
-            "startTime": "2025-01-21T17:13:42.475Z",
-            "endTime": "2025-01-21T17:13:42.475Z",
-            "status": "closed",
-            "createdAt": "2025-01-21T17:13:42.475Z",
-            "__v": 1,
-            "followers": [],
-            "updatedAt": "2025-01-21T17:15:00.871Z",
-            "winnerId": "678fd5c6e8764660b14a24fa"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4953",
-            "title": "Samsung Galaxy S23",
-            "description": "High-performance smartphone with 256GB storage.",
-            "images": [
-                "galaxy_s23.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 900,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fa",
-                "name": "Bob Smith"
-            },
-            "startTime": "2025-01-21T17:13:42.476Z",
-            "endTime": "2025-01-23T17:13:42.476Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.476Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.039Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4954",
-            "title": "Sony WH-1000XM5",
-            "description": "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
-            "images": [
-                "sony_headphones.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 400,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fb",
-                "name": "Carol Williams"
-            },
-            "startTime": "2025-01-21T17:13:42.478Z",
-            "endTime": "2025-01-24T17:13:42.478Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.478Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.050Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4955",
-            "title": "Dell XPS 13",
-            "description": "Ultra-slim laptop with Intel i7 processor.",
-            "images": [
-                "dell_xps13.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1200,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fc",
-                "name": "Dave Brown"
-            },
-            "startTime": "2025-01-21T17:13:42.479Z",
-            "endTime": "2025-01-26T17:13:42.479Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.479Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.061Z"
-        }]
-};
-const upcomingBids = {
-    "total": 170,
-    "page": 1,
-    "totalPages": 17,
-    "auctions": [
-        {
-            "_id": "678fd5c621f2309c37fe4951",
-            "title": "Apple iPhone 14",
-            "description": "Latest model of the Apple iPhone with 128GB storage.",
-            "images": [
-                "iphone14.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1000,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24f9",
-                "name": "Alice Johnson"
-            },
-            "startTime": "2025-01-21T17:13:42.474Z",
-            "endTime": "2025-01-28T17:13:42.474Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.474Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:00.996Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4952",
-            "title": "Apple iPhone 14 Max",
-            "description": "Latest model of the Apple iPhone with 128GB storage.",
-            "images": [
-                "iphone14Max.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1000,
-            "minIncrement": 50,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24f9",
-                "name": "Alice Johnson"
-            },
-            "startTime": "2025-01-21T17:13:42.475Z",
-            "endTime": "2025-01-21T17:13:42.475Z",
-            "status": "closed",
-            "createdAt": "2025-01-21T17:13:42.475Z",
-            "__v": 1,
-            "followers": [],
-            "updatedAt": "2025-01-21T17:15:00.871Z",
-            "winnerId": "678fd5c6e8764660b14a24fa"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4953",
-            "title": "Samsung Galaxy S23",
-            "description": "High-performance smartphone with 256GB storage.",
-            "images": [
-                "galaxy_s23.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 900,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fa",
-                "name": "Bob Smith"
-            },
-            "startTime": "2025-01-21T17:13:42.476Z",
-            "endTime": "2025-01-23T17:13:42.476Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.476Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.039Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4954",
-            "title": "Sony WH-1000XM5",
-            "description": "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
-            "images": [
-                "sony_headphones.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 400,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fb",
-                "name": "Carol Williams"
-            },
-            "startTime": "2025-01-21T17:13:42.478Z",
-            "endTime": "2025-01-24T17:13:42.478Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.478Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.050Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4955",
-            "title": "Dell XPS 13",
-            "description": "Ultra-slim laptop with Intel i7 processor.",
-            "images": [
-                "dell_xps13.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1200,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fc",
-                "name": "Dave Brown"
-            },
-            "startTime": "2025-01-21T17:13:42.479Z",
-            "endTime": "2025-01-26T17:13:42.479Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.479Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.061Z"
-        }]
-};
-const myAuctions = {
-    "total": 170,
-    "page": 1,
-    "totalPages": 17,
-    "auctions": [
-        {
-            "_id": "678fd5c621f2309c37fe4951",
-            "title": "Apple iPhone 14",
-            "description": "Latest model of the Apple iPhone with 128GB storage.",
-            "images": [
-                "iphone14.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1000,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24f9",
-                "name": "Alice Johnson"
-            },
-            "startTime": "2025-01-21T17:13:42.474Z",
-            "endTime": "2025-01-28T17:13:42.474Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.474Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:00.996Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4952",
-            "title": "Apple iPhone 14 Max",
-            "description": "Latest model of the Apple iPhone with 128GB storage.",
-            "images": [
-                "iphone14Max.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1000,
-            "minIncrement": 50,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24f9",
-                "name": "Alice Johnson"
-            },
-            "startTime": "2025-01-21T17:13:42.475Z",
-            "endTime": "2025-01-21T17:13:42.475Z",
-            "status": "closed",
-            "createdAt": "2025-01-21T17:13:42.475Z",
-            "__v": 1,
-            "followers": [],
-            "updatedAt": "2025-01-21T17:15:00.871Z",
-            "winnerId": "678fd5c6e8764660b14a24fa"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4953",
-            "title": "Samsung Galaxy S23",
-            "description": "High-performance smartphone with 256GB storage.",
-            "images": [
-                "galaxy_s23.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 900,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fa",
-                "name": "Bob Smith"
-            },
-            "startTime": "2025-01-21T17:13:42.476Z",
-            "endTime": "2025-01-23T17:13:42.476Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.476Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.039Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4954",
-            "title": "Sony WH-1000XM5",
-            "description": "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
-            "images": [
-                "sony_headphones.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 400,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fb",
-                "name": "Carol Williams"
-            },
-            "startTime": "2025-01-21T17:13:42.478Z",
-            "endTime": "2025-01-24T17:13:42.478Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.478Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.050Z"
-        },
-        {
-            "_id": "678fd5c621f2309c37fe4955",
-            "title": "Dell XPS 13",
-            "description": "Ultra-slim laptop with Intel i7 processor.",
-            "images": [
-                "dell_xps13.jpg"
-            ],
-            "category": {
-                "_id": "678fd5c6d89f46faf69a295b",
-                "name": "Electronics"
-            },
-            "startingPrice": 1200,
-            "sellerId": {
-                "_id": "678fd5c6e8764660b14a24fc",
-                "name": "Dave Brown"
-            },
-            "startTime": "2025-01-21T17:13:42.479Z",
-            "endTime": "2025-01-26T17:13:42.479Z",
-            "status": "active",
-            "createdAt": "2025-01-21T17:13:42.479Z",
-            "__v": 1,
-            "followers": [],
-            "minIncrement": 1,
-            "updatedAt": "2025-01-21T17:14:01.061Z"
-        }]
-};
 
-const user = {
-    name: "Estefania",
-    email: "gestefania@gmail.com",
-    address: "Calle 123, Ciudad",
-    avatar: "https://bidly-products.s3.eu-north-1.amazonaws.com/uploads/users/default-avatar/mujer-cinco.png",
-    password: "1234",
-}
-
-
-
-const UserProfile = () => {
+const UserProfile = ({ }) => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCreateAuctionModalOpen, setIsCreateAuctionModalOpen] = useState(false);
     const [selectedAuctionId, setSelectedAuctionId] = useState(null);
-    const [userData, setUserData] = useState(user);
+    const [activeBids, setActiveBids] = useState({ auctions: [] });
+    const [upcomingBids, setUpcomingBids] = useState({ auctions: [] });
+    const [auctionsHistory, setAuctionsHistory] = useState({ auctions: [] });
+    const [myAuctions, setMyAuctions] = useState({ auctions: [] });
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const userId = Cookies.get('userId');
+                if (!userId) {
+                    // redirigir a login
+                    throw new Error('No user ID found');
+                }
+
+                // Fetch user data
+                const userResponse = await getUser(userId);
+                setUserData(userResponse);
+
+                // Fetch active followed auctions
+                const activeAuctions = await getActiveFollowedAuctions(userId, true);
+                console.log("activeAuctions", activeAuctions);
+                if (activeAuctions?.success) {
+                    setActiveBids(activeAuctions);
+                }
+                // Fetch user's auctions
+                const userAuctions = await getAuctionsByOwner(userId);
+                if (userAuctions?.success) {
+                    setMyAuctions(userAuctions);
+                }
+                
+                const auctionsHistory = await getAuctionsByOwner(userId, false, 1, 300);
+                if (auctionsHistory?.success) {
+                    setAuctionsHistory(auctionsHistory);
+                }
+
+            } catch (err) {
+                setError(err.message);
+                console.error('Error fetching data:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []); // Array vacío significa que solo se ejecuta al montar el componente
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (!userData) {
+        return <div>No user data available</div>;
+    }
+
 
     const handleSettingsClick = () => {
         setIsSettingsOpen(!isSettingsOpen);
@@ -637,7 +295,7 @@ const UserProfile = () => {
                 <h2>Following Auctions</h2> {/*getauctivefollowedauctions*/}
 
                 <div className="auction-category">
-                    <h3>Active Bids</h3>
+                    <h3>Active Auctions</h3>
                     <div className="auction-grid">
                         {activeBids.auctions.slice(0, 3).map((auction) => (
                             <div key={auction._id} className="auction-card">
@@ -657,7 +315,7 @@ const UserProfile = () => {
                 </div>
 
                 <div className="auction-category">
-                    <h3>Upcoming Bids</h3>
+                    <h3>Upcoming Auctions</h3>
                     <div className="auction-grid">
                         {upcomingBids.auctions.slice(0, 3).map((auction) => (
                             <div key={auction._id} className="auction-card">
@@ -724,7 +382,7 @@ const UserProfile = () => {
             </section>
 
             <section className="auction-history"> {/*getauctionswherebiddone*/}
-                <AuctionCarrusel /> 
+                <AuctionCarrusel auctions={auctionsHistory.auctions} />
             </section>
 
             <GenericModal
