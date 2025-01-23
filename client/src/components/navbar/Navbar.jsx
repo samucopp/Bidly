@@ -106,15 +106,26 @@ const Navbar = () => {
 
                         {/* Main Navigation */}
                         <div className="navbar-links">
-                            <Link to="/about-us" className="menu-item">
+                            <Link
+                                to="/about-us"
+                                className={`menu-item ${location.pathname === '/about-us' ? 'active' : ''}`}
+                            >
                                 ABOUT US
                             </Link>
-                            <Link to="/catalog" className="menu-item">
+
+                            <Link
+                                to="/catalog"
+                                className={`menu-item ${location.pathname === '/catalog' ? 'active' : ''}`}
+                            >
                                 CATALOG
                             </Link>
-                            <Link to="/contact" className="menu-item">
+                            <Link
+                                to="/contact"
+                                className={`menu-item ${location.pathname === '/contact' ? 'active' : ''}`}
+                            >
                                 CONTACT
                             </Link>
+
                         </div>
 
                         {/* Right side - Search and Auth */}
@@ -133,9 +144,8 @@ const Navbar = () => {
                                         >
                                             <img
                                                 src={getAvatarUrl()}
-                                                alt={`${
-                                                    userData?.name || "User"
-                                                }'s avatar`}
+                                                alt={`${userData?.name || "User"
+                                                    }'s avatar`}
                                                 className="avatar-img"
                                             />
                                         </Link>
@@ -175,27 +185,26 @@ const Navbar = () => {
 
                 {/* Mobile Menu */}
                 <div
-                    className={`mobile-menu ${
-                        isMobileMenuOpen ? "active" : ""
-                    }`}
+                    className={`mobile-menu ${isMobileMenuOpen ? "active" : ""
+                        }`}
                 >
                     <Link
                         to="/about-us"
-                        className="menu-item"
+                        className={`menu-item ${location.pathname === '/about-us' ? 'active' : ''}`}
                         onClick={toggleMenu}
                     >
                         ABOUT US
                     </Link>
                     <Link
                         to="/catalog"
-                        className="menu-item"
+                        className={`menu-item ${location.pathname === '/catalog' ? 'active' : ''}`}
                         onClick={toggleMenu}
                     >
                         CATALOG
                     </Link>
                     <Link
                         to="/contact"
-                        className="menu-item"
+                        className={`menu-item ${location.pathname === '/contact' ? 'active' : ''}`}
                         onClick={toggleMenu}
                     >
                         CONTACT
@@ -206,9 +215,8 @@ const Navbar = () => {
                                 <Link to="/my-profile" className="user-avatar">
                                     <img
                                         src={getAvatarUrl()}
-                                        alt={`${
-                                            userData?.name || "User"
-                                        }'s avatar`}
+                                        alt={`${userData?.name || "User"
+                                            }'s avatar`}
                                         className="avatar-img"
                                     />
                                 </Link>

@@ -139,6 +139,15 @@
 .menu-item-logout {
   font-weight: bold;
 }
+.menu-item:hover {
+  color:#a6a6a6;
+  
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
 
 .mobile-menu a {
   color: #4a4a4a;
