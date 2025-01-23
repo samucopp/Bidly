@@ -3,7 +3,7 @@ import "./activeBids.css";
 import socket from "../../socket";
 
 const ActiveBids = ({ auctionId, userId, endTime, minBid }) => {
-    const [bidAmount, setBidAmount] = useState("");
+    const [bidAmount, setBidAmount] = useState(minBid);
     const [timeRemaining, setTimeRemaining] = useState("");
 
     useEffect(() => {
@@ -50,12 +50,14 @@ const ActiveBids = ({ auctionId, userId, endTime, minBid }) => {
         return () => clearInterval(timer);
     }, [endTime]);
 
+    useEffect(() => {
+        setBidAmount(minBid);
+    }, [minBid]);
     const handleBid = () => {
         if (!bidAmount || isNaN(bidAmount) || bidAmount <= 0) {
             alert("Por favor, introduce un monto válido.");
             return;
         }
-
         // Emitir el evento de puja al servidor
         socket.emit(
             "place-bid",
@@ -80,9 +82,10 @@ const ActiveBids = ({ auctionId, userId, endTime, minBid }) => {
             <h4 className="min-bid">Min Bid {minBid}€</h4>
             <input
                 type="number"
-                placeholder="Introduce tu puja"
+                placeholder={minBid}
                 value={bidAmount}
                 onChange={(e) => setBidAmount(e.target.value)}
+                min={minBid}
             />
             <button onClick={handleBid}>Pujar</button>
             <h3>Tiempo Restante</h3>

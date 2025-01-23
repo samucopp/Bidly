@@ -9,15 +9,25 @@
     height: 100%;
     overflow-y: scroll;
     scrollbar-color: black transparent;
+    flex-direction: column-reverse;
+    display: flex;
 }
 
-.bid-container ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.bid-container li {
+.bid-container .bid-slide {
     padding: 5px 0;
     border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bid-container .bid-slide p {
+    width: 100%;
+}
+
+.bid-container .bid-slide p.bid-amount {
+    text-align: center;
+}
+
+.bid-container .bid-slide p.datetime {
+    text-align: right;
 }

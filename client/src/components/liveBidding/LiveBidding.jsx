@@ -8,17 +8,19 @@ const LiveBidding = ({ bids }) => {
                 {bids.length === 0 ? (
                     <p>Aún no hay pujas.</p>
                 ) : (
-                    <ul>
+                    <>
                         {bids.map((bid) => (
-                            <li key={bid._id}>
-                                {bid.userId
-                                    ? bid.userId.name
-                                    : "Usuario Anónimo"}{" "}
-                                - {new Date(bid.createdAt).toLocaleString()} -{" "}
-                                {bid.amount} €
-                            </li>
+                            <div key={bid._id} className="bid-slide">
+                                <p className="name">
+                                    {bid.name ? bid.name : "Usuario Anónimo"}
+                                </p>
+                                <p className="bid-amount">{bid.amount} €</p>
+                                <p className="datetime">
+                                    {new Date(bid.createdAt).toLocaleString()}
+                                </p>
+                            </div>
                         ))}
-                    </ul>
+                    </>
                 )}
             </div>
         </div>

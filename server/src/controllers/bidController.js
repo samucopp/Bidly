@@ -5,7 +5,7 @@ import userController from "./userController.js";
 const createBid = async (req, res) => {
     try {
         const { auctionId, userId, amount } = req.body;
-        const savedBid = await addBid(auctionId, userId, amount);
+        const { savedBid } = await addBid(auctionId, userId, amount);
         res.status(201).json({ success: true, savedBid });
     } catch (error) {
         console.error(error);
@@ -124,8 +124,11 @@ const addBid = async (auctionId, userId, amount) => {
     const savedBid = await newBid.save();
     auction.currentPrice = savedBid.amount;
     await auction.save();
-    console.log(savedBid);
-    return savedBid;
+    const newMinIncrement = Math.ceil(
+        auction.currentPrice * (auction.minIncrement / 100)
+    );
+    const newMinAllowed = auction.currentPrice + newMinIncrement;
+    return { savedBid, minAllowed: newMinAllowed };
 };
 
 export default {

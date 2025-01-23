@@ -1,32 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { BASE_URL } from '../../const/api';
+import { register } from '../../api/user';
 import './RegisterForm.css';
 
 
 const RegisterForm = () => {
     const navigate = useNavigate();
+    const avatarOptions = [
+        { id: 1, path: 'https://bidly-products.s3.eu-north-1.amazonaws.com/uploads/users/default-avatar/hombre-cinco.png', alt: 'Avatar 1', title: 'Mr.' },
+        { id: 2, path: 'https://bidly-products.s3.eu-north-1.amazonaws.com/uploads/users/default-avatar/mujer-cinco.png', alt: 'Avatar 2', title: 'Mrs.' },
+    ];
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         passwordRepeat: '',
         address: '',
-        avatar: '/avatars/hombre-uno.png'
+        avatar: avatarOptions[0].path // el primero avatar por defecto 
     });
 
-    // Predefined avatar options
-    const avatarOptions = [
-        { id: 1, path: '/avatars/hombre-uno.png', alt: 'Avatar 1' },
-        { id: 2, path: '/avatars/mujer-uno.png', alt: 'Avatar 2' },
-        { id: 3, path: '/avatars/hombre-dos.png', alt: 'Avatar 3' },
-        { id: 4, path: '/avatars/mujer-dos.png', alt: 'Avatar 4' },
-        { id: 5, path: '/avatars/hombre-tres.png', alt: 'Avatar 5' },
-        { id: 6, path: '/avatars/mujer-tres.png', alt: 'Avatar 6' },
-        { id: 7, path: '/avatars/hombre-cuatro.png', alt: 'Avatar 7' },
-        { id: 8, path: '/avatars/mujer-cuatro.png', alt: 'Avatar 8' },
-        { id: 9, path: '/avatars/hombre-cinco.png', alt: 'Avatar 9' }
-    ];
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -73,7 +67,7 @@ const RegisterForm = () => {
             return;
         }
 
-        
+
         try {
             const response = await fetch(`${BASE_URL}/user/register`, {
                 method: 'POST',
@@ -96,9 +90,9 @@ const RegisterForm = () => {
             if (!response.ok) {
                 throw new Error(data.message);
             }
-            navigate('/', { 
+            navigate('/', {
                 state: { openLoginModal: true }
-              });
+            });
 
         } catch (error) {
             if (error.message === 'El correo ya esta registrado') {
@@ -126,19 +120,21 @@ const RegisterForm = () => {
                         {avatarOptions.map((avatar) => (
                             <div
                                 key={avatar.id}
-                                className={`avatar-option ${formData.avatar === avatar.path ? 'selected' : ''}`}
+                                className="avatar-option"
                                 onClick={() => handleAvatarSelect(avatar.path)}
                             >
-                                <img
-                                    src={avatar.path}
-                                    alt={avatar.alt}
-                                    className="avatar-image"
-                                />
+                                <span className="avatar-title-text">{avatar.title}</span>
+                                <div className={`avatar-image-container ${formData.avatar === avatar.path ? 'selected' : ''}`}>
+                                    <img
+                                        src={avatar.path}
+                                        alt={avatar.alt}
+                                        className="avatar-image"
+                                    />
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
-
                 <input
                     type="text"
                     name="name"

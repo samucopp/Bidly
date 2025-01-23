@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { BASE_URL } from "../../const/api";
 import { getAuctionById } from "../../api/auction.js";
 import { getBidsByAuction } from "../../api/bid.js";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 import ActiveBids from "../../components/activeBids/ActiveBids";
 import LiveBidding from "../../components/liveBidding/LiveBidding";
 import LoginModal from "../../components/modals/LoginModal"; // Importa el modal de login
+//import { getBidsByAuctionId } from "../../api/bid.js";
 import "./subasta.css";
 import socket from "../../socket";
 
@@ -24,9 +24,7 @@ const Subasta = () => {
     const [bidsData, setBids] = useState([]); // Estado para almacenar las pujas dinámicas
     const [error, setError] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Simula si el usuario está logueado
-    const [currentUserId, setCurrentUserId] = useState(
-        "678fce5049f88b745fdfbec9"
-    ); // Simula el ID del usuario logueado
+    const [currentUserId, setCurrentUserId] = useState(null); // Simula el ID del usuario logueado
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para el modal de login
 
     // Fetch para obtener la subasta
@@ -48,7 +46,6 @@ const Subasta = () => {
         const fetchBids = async () => {
             try {
                 const bidsData = await getBidsByAuction(auctionId);
-
                 const newBidsArray = bidsData.bids.map((bid) => ({
                     _id: bid._id,
                     name: bid.userId.name,
@@ -64,15 +61,23 @@ const Subasta = () => {
                 setError(err.message);
             }
         };
-
-        if (isLoggedIn) {
+        function getCookie(name) {
+            const cookies = document.cookie.split("; ");
+            const cookie = cookies.find((c) => c.startsWith(`${name}=`));
+            return cookie ? cookie.split("=")[1] : null;
+        }
+        setCurrentUserId(getCookie("userId"));
+        if (getCookie("userId")) {
             fetchBids();
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
         }
     }, [auctionId]);
 
     useEffect(() => {
         // Registrar al usuario en la sala al cargar la página
-        if (auctionId && currentUserId) {
+        if (auctionId && currentUserId != null) {
             socket.emit("join-auction", auctionId);
             console.log(
                 `Usuario ${currentUserId} registrado en la sala ${auctionId}`
@@ -146,6 +151,7 @@ const Subasta = () => {
                             <strong>Categoría:</strong> {auction.category.name}
                         </p> */}
                         <p className="description">{auction.description}</p>
+                        <p>SellerID: {auction.sellerId._id}</p>
                         <p>
                             <strong>Precio de salida:</strong>{" "}
                             {auction.startingPrice} €
@@ -182,7 +188,7 @@ const Subasta = () => {
                         )}
                     </div>
                 </section>
-                {isLoggedIn && (
+                {isLoggedIn && bidsData.bids && (
                     <section className="live-auction-section">
                         {/* Puja en directo */}
                         <LiveBidding bids={bidsData.bids} />

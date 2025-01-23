@@ -3,7 +3,6 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 async function apiRequest(route, method = "GET", data = null) {
     try {
         let url = new URL(route, API_BASE_URL);
-        console.log(url.toString());
         const fetchOptions = {
             method,
             headers: {
@@ -15,7 +14,6 @@ async function apiRequest(route, method = "GET", data = null) {
         if ((method === "POST" || method === "PUT") && data) {
             fetchOptions.body = JSON.stringify(data);
         } else if (data) {
-            console.log(data);
             Object.entries(data).forEach(([key, value]) => {
                 if (
                     (typeof value === "string" ||

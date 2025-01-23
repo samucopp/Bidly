@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { BASE_URL } from "../../const/api";
-import { getAuctionById } from "../../api/auction";
+import { getAuctionById } from "../../api/auction.js";
 
 const Modal = ({ visible }) => {
     const { auctionId } = useParams(); // Obtén el parámetro auctionId de la ruta
@@ -48,37 +47,31 @@ const Modal = ({ visible }) => {
 
     return (
         <div style={modalStyles.overlay}>
-            <div style={modalStyles.modal}>
+            {/*  <div style={modalStyles.modal}>
                 <h2>{auction.title}</h2>
-                <p>
-                    <strong>Descripción:</strong> {auction.description}
-                </p>
-                <img
-                    src={`${BASE_URL}/images/${auction.images[0]}`}
-                    alt={auction.title}
-                    style={{
-                        maxWidth: "100%",
-                        height: "auto",
-                        marginBottom: "16px",
-                    }}
-                />
-                <p>
-                    <strong>Precio Inicial:</strong> {auction.startingPrice} €
-                </p>
-                <p>
-                    <strong>Hora de Inicio:</strong>{" "}
-                    {new Date(auction.startTime).toLocaleString()}
-                </p>
-                <p>
-                    <strong>Estado:</strong> {auction.status}
-                </p>
-                <Link to={`/auction/${auctionId}`}>
-                    <button style={buttonStyles.bid}>Pujar</button>
-                </Link>
-                <Link to="/catalog">
-                    <button style={buttonStyles.close}>Cerrar</button>
-                </Link>
-            </div>
+                <p><strong>Descripción:</strong> {auction.description}</p>
+                <img 
+                    src={`${BASE_URL}/images/${auction.images[0]}`} 
+                    alt={auction.title} 
+                    style={{ maxWidth: "100%", height: "auto", marginBottom: "16px" }} 
+                /> */}
+            <p>
+                <strong>Precio Inicial:</strong> {auction.startingPrice} €
+            </p>
+            <p>
+                <strong>Hora de Inicio:</strong>{" "}
+                {new Date(auction.startTime).toLocaleString()}
+            </p>
+            <p>
+                <strong>Estado:</strong> {auction.status}
+            </p>
+            <Link to={`/auction/${auctionId}`}>
+                <button style={buttonStyles.bid}>Pujar</button>
+            </Link>
+            <Link to="/catalog">
+                <button style={buttonStyles.close}>Cerrar</button>
+            </Link>
+            {/* </div> */}
         </div>
     );
 };

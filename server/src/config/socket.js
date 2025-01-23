@@ -44,7 +44,7 @@ export function startSocket(server) {
                     `Nueva puja en subasta ${auctionId}: ${bidAmount} por ${userId}`
                 );
 
-                const { _id, bidTime, minAllowed } = await bidController.addBid(
+                const { savedBid, minAllowed } = await bidController.addBid(
                     auctionId,
                     userId,
                     bidAmount
@@ -53,11 +53,12 @@ export function startSocket(server) {
                 // Emitir el evento a todos los usuarios en la sala de la subasta
                 io.to(auctionId).emit("new-bid", {
                     userId,
-                    name,
-                    bidId: _id,
-                    bidAmount: bidAmount,
-                    bidTime,
+                    userName: name,
+                    bidId: savedBid._id,
+                    bidAmount: savedBid.amount,
+                    bidTime: savedBid.createdAt,
                     minAllowed,
+                    createdAt: savedBid.createdAt,
                 });
             } catch (error) {
                 console.error("Error al procesar la puja:", error);
