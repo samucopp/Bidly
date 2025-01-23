@@ -1,34 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Añadimos esta importación
-import LoginModal from '../modals/LoginModal';
-import './Navbar.css';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import Cookies from "js-cookie"; // Añadimos esta importación
+import LoginModal from "../modals/LoginModal";
+import { logout } from "../../api/user";
+import "./Navbar.css";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState("");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isAuth, setIsAuth] = useState(false);
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
+        if (location.state?.openLoginModal) {
+            setIsLoginOpen(true);
+            navigate("/", { replace: true, state: {} });
+        }
+    }, [location, navigate]);
+
+    useEffect(() => {
         const checkAuth = () => {
-            const token = Cookies.get('token');
-            const userId = Cookies.get('userId');
-            console.log('Verificando auth:', { token, userId }); // Para debugging
-
-            if (token && userId) {
-                const userName = Cookies.get('userName');
-                const userAvatar = Cookies.get('userAvatar');
-                console.log('Usuario autenticado:', { userName, userAvatar }); // Para debugging
-
+            const userId = Cookies.get("userId");
+            console.log(userId);
+            if (userId) {
                 setIsAuth(true);
                 setUserData({
                     id: userId,
-                    name: userName,
-                    avatar: userAvatar || '/hombre-cinco.png'
+                    avatar: Cookies.get("userAvatar") || "/hombre-cinco.png",
+                    name: Cookies.get("userName"),
                 });
             } else {
                 setIsAuth(false);
@@ -36,7 +38,6 @@ const Navbar = () => {
             }
         };
 
-        // Verificar al montar el componente
         checkAuth();
 
         // Escuchar eventos de cambio de auth
@@ -62,31 +63,28 @@ const Navbar = () => {
         setIsMobileMenuOpen(false);
     };
 
-    const handleLogout = (e) => {
+    const handleLogout = async (e) => {
         if (e) {
             e.preventDefault();
         }
-
-        Cookies.remove('token');
-        Cookies.remove('userId');
-        Cookies.remove('userAvatar');
-        Cookies.remove('userName');
+        // Reemplazamos localStorage por Cookies
+        await logout();
+        Cookies.remove("userId");
+        Cookies.remove("userAvatar");
+        Cookies.remove("userName");
         setIsAuth(false);
         setUserData(null);
-
-        navigate('/');
-
-
+        navigate("/", { replace: true });
     };
 
     const handleRegisterClick = (e) => {
         e.preventDefault();
-        navigate('/register');
+        navigate("/register");
         setIsMobileMenuOpen(false);
     };
 
     const getAvatarUrl = () => {
-        return userData?.avatar || '/hombre-cinco.png';
+        return userData?.avatar || "/hombre-cinco.png";
     };
 
     return (
@@ -96,9 +94,9 @@ const Navbar = () => {
                     <div className="navbar-content">
                         {/* Logo */}
                         <div className="navbar-logo">
-                            <Link to="/" >
+                            <Link to="/">
                                 <img
-                                    className='logo'
+                                    className="logo"
                                     src="/logo_bidly.png"
                                     alt="bidly"
                                 />
@@ -107,9 +105,15 @@ const Navbar = () => {
 
                         {/* Main Navigation */}
                         <div className="navbar-links">
-                            <Link to="/about-us" className="menu-item">ABOUT US</Link>
-                            <Link to="/catalog" className="menu-item">CATALOG</Link>
-                            <Link to="/contact" className="menu-item">CONTACT</Link>
+                            <Link to="/about-us" className="menu-item">
+                                ABOUT US
+                            </Link>
+                            <Link to="/catalog" className="menu-item">
+                                CATALOG
+                            </Link>
+                            <Link to="/contact" className="menu-item">
+                                CONTACT
+                            </Link>
                         </div>
 
                         {/* Right side - Search and Auth */}
@@ -120,7 +124,9 @@ const Navbar = () => {
                                     type="text"
                                     placeholder="Search product..."
                                     value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onChange={(e) =>
+                                        setSearchQuery(e.target.value)
+                                    }
                                 />
                                 <button className="search-button">
                                     <svg
@@ -149,19 +155,33 @@ const Navbar = () => {
                             <div className="auth-links">
                                 {isAuth ? (
                                     <>
-                                        <Link to="/my-profile" className="user-avatar">
+                                        <Link
+                                            to="/my-profile"
+                                            className="user-avatar"
+                                        >
                                             <img
                                                 src={getAvatarUrl()}
-                                                alt={`${userData?.name || 'User'}'s avatar`}
+                                                alt={`${
+                                                    userData?.name || "User"
+                                                }'s avatar`}
                                                 className="avatar-img"
                                             />
                                         </Link>
-                                        <a href="/" onClick={handleLogout}>Log Out</a>
+                                        <a href="/" onClick={handleLogout}>
+                                            Log Out
+                                        </a>
                                     </>
                                 ) : (
                                     <>
-                                        <a href="/" onClick={handleLoginClick}>Log In</a>
-                                        <a href="/register" onClick={handleRegisterClick}>Create Account</a>
+                                        <a href="/" onClick={handleLoginClick}>
+                                            Log In
+                                        </a>
+                                        <a
+                                            href="/register"
+                                            onClick={handleRegisterClick}
+                                        >
+                                            Create Account
+                                        </a>
                                     </>
                                 )}
                             </div>
@@ -170,7 +190,9 @@ const Navbar = () => {
                         {/* Mobile Menu Button */}
                         <button
                             className="mobile-menu-button"
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            onClick={() =>
+                                setIsMobileMenuOpen(!isMobileMenuOpen)
+                            }
                         >
                             <div className="hamburger-line"></div>
                             <div className="hamburger-line"></div>
@@ -179,28 +201,69 @@ const Navbar = () => {
                     </div>
                 </div>
 
-
                 {/* Mobile Menu */}
-                <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-                    <Link to="/about-us" className="menu-item" onClick={toggleMenu}>ABOUT US</Link>
-                    <Link to="/catalog" className="menu-item" onClick={toggleMenu}>CATALOG</Link>
-                    <Link to="/contact" className="menu-item" onClick={toggleMenu}>CONTACT</Link>
+                <div
+                    className={`mobile-menu ${
+                        isMobileMenuOpen ? "active" : ""
+                    }`}
+                >
+                    <Link
+                        to="/about-us"
+                        className="menu-item"
+                        onClick={toggleMenu}
+                    >
+                        ABOUT US
+                    </Link>
+                    <Link
+                        to="/catalog"
+                        className="menu-item"
+                        onClick={toggleMenu}
+                    >
+                        CATALOG
+                    </Link>
+                    <Link
+                        to="/contact"
+                        className="menu-item"
+                        onClick={toggleMenu}
+                    >
+                        CONTACT
+                    </Link>
                     <div className="auth-mobile-links">
                         {isAuth ? (
                             <>
                                 <Link to="/my-profile" className="user-avatar">
                                     <img
                                         src={getAvatarUrl()}
-                                        alt={`${userData?.name || 'User'}'s avatar`}
+                                        alt={`${
+                                            userData?.name || "User"
+                                        }'s avatar`}
                                         className="avatar-img"
                                     />
                                 </Link>
-                                <a href="/" className="menu-item-logout" onClick={handleLogout}>Log Out</a>
+                                <a
+                                    href="/"
+                                    className="menu-item-logout"
+                                    onClick={handleLogout}
+                                >
+                                    Log Out
+                                </a>
                             </>
                         ) : (
                             <>
-                                <a href="/" className="menu-item-login" onClick={handleLoginClick}>Log In</a>
-                                <a href="/register" className="menu-item-register" onClick={handleRegisterClick}>Create Account</a>
+                                <a
+                                    href="/"
+                                    className="menu-item-login"
+                                    onClick={handleLoginClick}
+                                >
+                                    Log In
+                                </a>
+                                <a
+                                    href="/register"
+                                    className="menu-item-register"
+                                    onClick={handleRegisterClick}
+                                >
+                                    Create Account
+                                </a>
                             </>
                         )}
                     </div>
