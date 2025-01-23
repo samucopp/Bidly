@@ -373,7 +373,7 @@ const UserProfile = ({ }) => {
                                     className="create-auction-button"
                                     onClick={handleCreateNewAuction}
                                 >
-                                    CREATE NEW BID
+                                    CREATE AUCTION
                                 </button>
                             </div>
                         </div>

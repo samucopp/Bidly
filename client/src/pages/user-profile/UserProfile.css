@@ -29,6 +29,8 @@
 .username {
     font-size: 26px;
     font-weight: 500;
+    font-weight: bold;
+    
 }
 
 .settings-dropdown {
@@ -304,11 +306,22 @@
     transition: background-color 0.2s;
 }
 
+.cancel-button:hover {
+    background: #a6a6a6;
+
+}
 .delete-button:hover {
-    background: #333;
+    background: #a6a6a6;
+   
 }
 
-.create-bid-button {
+.modal-actions .delete-button {
+    background-color:#ff0019;
+    margin-left: 10px;
+    
+}
+
+.create-auction-button {
     background: white;
     color: black;
     padding: 0.5rem 2rem;
