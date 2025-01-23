@@ -31,10 +31,10 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
-    console.log('Recibida petición de login:', {
+    console.log("Recibida petición de login:", {
         method: req.method,
         body: req.body,
-        path: req.path
+        path: req.path,
     });
     try {
         const { email, password } = req.body;
@@ -55,38 +55,49 @@ async function login(req, res) {
                 message: "La contraseña es incorrecta",
             });
         }
-        const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        res.cookie('auth-cookie', token, {
+        const token = jwt.sign(
+            { userId: user._id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+        res.cookie("auth-cookie", token, {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24,
         });
-        return res.status(200).json({ message: "El token se ha creado satisfactoriamente en una cookie", userInfo: { userId: user._id, userName: user.name, userEmail: user.email } });
+        return res.status(200).json({
+            message: "El token se ha creado satisfactoriamente en una cookie",
+            userInfo: {
+                userId: user._id,
+                userName: user.name,
+                userEmail: user.email,
+            },
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({
             message: "Error interno del servidor",
         });
     }
-};
+}
 
-async function logout(req,res){
+async function logout(req, res) {
     try {
-        console.log("logout")
-        res.clearCookie("token");
-        return res.status(200).json({
-            message:"Sesion cerrada"
-        })
+        res.clearCookie("auth-token", {
+            httpOnly: true,
+            // secure: true, // Solo si usas HTTPS
+            sameSite: "strict",
+        });
+        return res.status(200).json({ message: "Logout exitoso" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({
-            message:"Error interno del servidor"
-        })
+            message: "Error interno del servidor",
+        });
     }
 }
-
 
 export default {
     register,
     login,
-    logout
+    logout,
 };

@@ -37,7 +37,7 @@ const RegisterForm = () => {
         }));
     };
     const showError = (message) => {
-        // Puedes implementar tu propia lógica de mostrar errores
+    
         alert(message); // O usar un sistema de notificaciones más sofisticado
     };
 

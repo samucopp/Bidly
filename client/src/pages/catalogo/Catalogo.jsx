@@ -23,7 +23,6 @@ const Catalogo = () => {
     // Obtener la categoría de la URL
     useEffect(() => {
         const categoryFromUrl = searchParams.get('category');
-        console.log('searchparams', searchParams);
         if (categoryFromUrl) {
             handleCategoryChange(categoryFromUrl);
         }
@@ -81,7 +80,10 @@ const Catalogo = () => {
         if (!selectedCategory) {
             auctionsData = await getAuctions(newActiveState);
         } else {
-            auctionsData = await getAuctionsByCategory(selectedCategory, newActiveState);
+            auctionsData = await getAuctionsByCategory(
+                selectedCategory,
+                newActiveState
+            );
         }
         setProducts(auctionsData.auctions);
         setShowActiveBidsOnly(newActiveState);
@@ -113,7 +115,8 @@ const Catalogo = () => {
                 setProducts((prevProducts) => [
                     ...prevProducts,
                     ...auctionsData.auctions.filter(
-                        (auction) => !prevProducts.some((p) => p._id === auction._id)
+                        (auction) =>
+                            !prevProducts.some((p) => p._id === auction._id)
                     ),
                 ]);
             }
@@ -123,7 +126,7 @@ const Catalogo = () => {
                 setCurrentPage(nextPage);
             }
         } catch (err) {
-            console.error('Error al cargar más subastas:', err);
+            console.error("Error al cargar más subastas:", err);
             setError(err.message);
         }
     };
@@ -143,6 +146,7 @@ const Catalogo = () => {
             }
         };
 
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, [selectedCategory, showActiveBidsOnly, currentPage, hasMore, query]);
@@ -150,11 +154,13 @@ const Catalogo = () => {
     return (
         <div className="catalog-page">
             <aside className="categories-sidebar">
-                <Categorias
-                    categoriasData={categories}
-                    selectedCategory={selectedCategory}
-                    onCategoryChange={handleCategoryChange}
-                />
+                {categories.length > 0 && (
+                    <Categorias
+                        categoriasData={categories}
+                        selectedCategory={selectedCategory}
+                        onCategoryChange={handleCategoryChange}
+                    />
+                )}
             </aside>
 
             <main className="main-content">
