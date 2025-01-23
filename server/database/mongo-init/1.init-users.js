@@ -4,7 +4,7 @@ db = db.getSiblingDB("bidly");
 db.users.insertMany([
     {
         name: "Alice Johnson",
-        email: "≥",
+        email: "alice@example.com",
         password:
             "$2a$10$rjRkcfzvQRUL9L2j5BHyeupfjuprWHwtI4rO5oDHrkw2qensLGUFK",
         address: "123 Main St",

@@ -142,15 +142,15 @@
   flex-direction: column;
   background-color: white;
   padding: 1rem;
-  position: fixed;
+  position: absolute; /* Cambiado para evitar que el menú quede fijo */
   width: 100%;
   box-sizing: border-box;
   top: 64px;
   left: 0;
   z-index: 999;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-height: calc(100vh - 64px);
-  overflow-y: auto;
+  max-height: none; /* Permitir que el menú crezca según el contenido */
+  overflow-y: auto; /* Opcional, mantiene el scroll interno si es necesario */
 }
 
 .mobile-menu.active {

@@ -12,7 +12,7 @@ const ActiveAuctionsSection = () => {
     useEffect(() => {
         const fetchActiveAuctions = async () => {
             try {
-                const data = await getAuctions();
+                const data = await getAuctions(true);
                 setAuctions(data.auctions.slice(0, 4)); // Solo mostramos 4 subastas
             } catch (err) {
                 setError(err.message);
@@ -105,15 +105,7 @@ const ActiveAuctionsSection = () => {
                     </div>
                 </div>
             </section>
-            <section className="upcoming-auctions-section">
-                <div className="upcoming-auctions-container">
-                    <div className="upcoming-auctions-header">
-                        <h2 className="upcoming-auctions-title">
-                            Upcoming auctions
-                        </h2>
-                    </div>
-                </div>
-            </section>
+            
         </>
     );
     return (
