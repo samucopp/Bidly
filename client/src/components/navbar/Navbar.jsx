@@ -39,6 +39,18 @@ const Navbar = () => {
         };
 
         checkAuth();
+
+        // Escuchar eventos de cambio de auth
+        const handleAuthChange = () => {
+            console.log('Evento auth-change recibido'); // Para debugging
+            checkAuth();
+        };
+
+        window.addEventListener('auth-change', handleAuthChange);
+
+        return () => {
+            window.removeEventListener('auth-change', handleAuthChange);
+        };
     }, []);
 
     const toggleMenu = () => {
