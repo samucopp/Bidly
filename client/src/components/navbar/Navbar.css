@@ -17,9 +17,6 @@
 .menu-item {
   letter-spacing: 1px;
 }
-.menu-item.active {
-  font-weight: bold;
-}
 
 .navbar-content {
   display: flex;

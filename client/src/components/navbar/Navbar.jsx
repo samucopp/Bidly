@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie'; // Añadimos esta importación
 import LoginModal from '../modals/LoginModal';
-import { BASE_URL } from '../../const/api';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -14,45 +14,30 @@ const Navbar = () => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        // Check if we should open the login modal based on navigation state
         if (location.state?.openLoginModal) {
             setIsLoginOpen(true);
-            // Clean up the state so the modal doesn't reopen on refresh
             navigate('/', { replace: true, state: {} });
         }
     }, [location, navigate]);
 
     useEffect(() => {
-        const checkAuth = async () => {
-            const token = localStorage.getItem('token');
-            const userId = localStorage.getItem('userId'); // luego quitarlo para pruebas
-
-            if (token) {
-                try {
-                    const response = await fetch(`${BASE_URL}/user/${userId}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        setUserData(data);
-                        setIsAuth(true);
-                    } else {
-                        handleLogout();
-                    }
-                } catch (error) {
-                    console.error('Error al obtener datos del usuario:', error);
-                    handleLogout();
-                }
+        const checkAuth = () => {
+            const token = Cookies.get('token');
+            const userId = Cookies.get('userId');
+    
+            if (token && userId) {
+                setIsAuth(true);
+                setUserData({ 
+                    id: userId,
+                    avatar: Cookies.get('userAvatar') || '/hombre-cinco.png',
+                    name: Cookies.get('userName')
+                });
             } else {
                 setIsAuth(false);
                 setUserData(null);
             }
         };
-
+    
         checkAuth();
     }, []);
 
@@ -70,8 +55,11 @@ const Navbar = () => {
         if (e) {
             e.preventDefault();
         }
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
+        // Reemplazamos localStorage por Cookies
+        Cookies.remove('token');
+        Cookies.remove('userId');
+        Cookies.remove('userAvatar');
+        Cookies.remove('userName');
         setIsAuth(false);
         setUserData(null);
         navigate('/', { replace: true });
@@ -86,8 +74,6 @@ const Navbar = () => {
     const getAvatarUrl = () => {
         return userData?.avatar || '/hombre-cinco.png';
     };
-
-    const isActive = (path) => location.pathname === path;
 
     return (
         <>
@@ -107,24 +93,9 @@ const Navbar = () => {
 
                         {/* Main Navigation */}
                         <div className="navbar-links">
-                            <Link 
-                                to="/about-us" 
-                                className={`menu-item ${isActive('/about-us') ? 'active' : ''}`}
-                            >
-                                ABOUT US
-                            </Link>
-                            <Link 
-                                to="/catalog" 
-                                className={`menu-item ${isActive('/catalog') ? 'active' : ''}`}
-                            >
-                                CATALOG
-                            </Link>
-                            <Link 
-                                to="/contact" 
-                                className={`menu-item ${isActive('/contact') ? 'active' : ''}`}
-                            >
-                                CONTACT
-                            </Link>
+                            <Link to="/about-us" className="menu-item">ABOUT US</Link>
+                            <Link to="/catalog" className="menu-item">CATALOG</Link>
+                            <Link to="/contact" className="menu-item">CONTACT</Link>
                         </div>
 
                         {/* Right side - Search and Auth */}
@@ -164,13 +135,13 @@ const Navbar = () => {
                             <div className="auth-links">
                                 {isAuth ? (
                                     <>
-                                        <div className="user-avatar">
+                                        <Link to="/my-profile" className="user-avatar">
                                             <img
                                                 src={getAvatarUrl()}
                                                 alt={`${userData?.name || 'User'}'s avatar`}
                                                 className="avatar-img"
                                             />
-                                        </div>
+                                        </Link>
                                         <a href="/" onClick={handleLogout}>Log Out</a>
                                     </>
                                 ) : (
@@ -181,9 +152,48 @@ const Navbar = () => {
                                 )}
                             </div>
                         </div>
+
+                        {/* Mobile Menu Button */}
+                        <button
+                            className="mobile-menu-button"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        >
+                            <div className="hamburger-line"></div>
+                            <div className="hamburger-line"></div>
+                            <div className="hamburger-line"></div>
+                        </button>
+                    </div>
+                </div>
+
+
+                {/* Mobile Menu */}
+                <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+                    <Link to="/about-us" className="menu-item" onClick={toggleMenu}>ABOUT US</Link>
+                    <Link to="/catalog" className="menu-item" onClick={toggleMenu}>CATALOG</Link>
+                    <Link to="/contact" className="menu-item" onClick={toggleMenu}>CONTACT</Link>
+                    <div className="auth-mobile-links">
+                        {isAuth ? (
+                            <>
+                                <Link to="/my-profile" className="user-avatar">
+                                    <img
+                                        src={getAvatarUrl()}
+                                        alt={`${userData?.name || 'User'}'s avatar`}
+                                        className="avatar-img"
+                                    />
+                                </Link>
+                                <a href="/" className="menu-item-logout" onClick={handleLogout}>Log Out</a>
+                            </>
+                        ) : (
+                            <>
+                                <a href="/" className="menu-item-login" onClick={handleLoginClick}>Log In</a>
+                                <a href="/register" className="menu-item-register" onClick={handleRegisterClick}>Create Account</a>
+                            </>
+                        )}
                     </div>
                 </div>
             </nav>
+
+            {/* Modal de Login */}
             <LoginModal
                 isOpen={isLoginOpen}
                 onClose={() => setIsLoginOpen(false)}
