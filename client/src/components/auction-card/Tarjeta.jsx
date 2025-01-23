@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import { addAuctionToFavorites, removeAuctionFromFavorites } from "../../api/user";
 import "./Tarjeta.css";
+import ImageCarousel from "../../components/carrousel/Carrousel";
 
 const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -38,10 +39,12 @@ const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
 
     return (
         <div className="catalogo-auction-card">
-            <img className="catalogo-auction-image"
-                src={datosPuja.images[0]}
-                alt={datosPuja.title}
-            />
+            <div className="catalogo-auction-carousel">
+                <ImageCarousel
+                    images={datosPuja.images.map((image) => image)}
+                    initialIndex={0}
+                />
+            </div>
             <div className="catalogo-auction-content">
                 <h3 className="catalogo-auction-title">{datosPuja.title}</h3>
                 <p className="catalogo-auction-description">{datosPuja.description}</p>

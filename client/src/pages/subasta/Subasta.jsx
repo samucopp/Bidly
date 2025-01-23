@@ -10,14 +10,6 @@ import Cookies from "js-cookie";
 import "./subasta.css";
 import socket from "../../socket";
 
-//Falseo
-const auctionImages = [
-    "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/HQWT2?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1681150922686",
-    "https://canarias.worten.es/i/d159bf45745c1bd60e1da42656adadfabcee3406",
-    "https://static.k-tuin.com/media/wysiwyg/blog/apple-watch-series-8-vs-apple-watch-series-10-todas-sus-diferencias.png",
-    "https://www.apple.com/newsroom/images/product/watch/standard/Apple-Watch-S8-Nike-7up-hero-220907_big.jpg.large.jpg",
-];
-
 const Subasta = () => {
     const { auctionId } = useParams();
     const [auction, setAuction] = useState(null);
@@ -137,10 +129,7 @@ const Subasta = () => {
                     <div className="product-image">
                         <a href="">{`Catalog/${auction.category.name}`}</a>
                         <ImageCarousel
-                            // images={auction.images.map(
-                            //     (image) => `${BASE_URL}/images/${image}`
-                            // )}
-                            images={auctionImages}
+                            images={auction.images.map((image) => image)}
                             initialIndex={0}
                         />
                     </div>
