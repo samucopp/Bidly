@@ -127,20 +127,17 @@ const Subasta = () => {
                 {/* Detalles del producto */}
                 <section className="product-details">
                     <div className="product-image">
-                        <a href="">{`Catalog/${auction.category.name}`}</a>
                         <ImageCarousel
                             images={auction.images.map((image) => image)}
                             initialIndex={0}
                         />
                     </div>
-
                     <div className="product-info">
                         <h2>{auction.title}</h2>
-                        {/* <p>
-                            <strong>Categoría:</strong> {auction.category.name}
-                        </p> */}
                         <p className="description">{auction.description}</p>
-                        <p>SellerID: {auction.sellerId._id}</p>
+                        <p>
+                            <strong>Seller:</strong>
+                            {auction.sellerId.name}</p>
                         <p>
                             <strong>Precio de salida:</strong>{" "}
                             {auction.startingPrice} €

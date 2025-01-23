@@ -1012,7 +1012,6 @@ db.auctions.insertMany([
     {
         title: "Viking Bronze Brooch",
         description: "Authentic oval brooch used by Viking women for fastening garments.",
-        images: ["https://i.etsystatic.com/8676750/r/il/bd67c5/921624465/il_570xN.921624465_kuns.jpg"],
         category: db.categories.findOne({ name: "Antiquities" })._id,
         startingPrice: 200,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
