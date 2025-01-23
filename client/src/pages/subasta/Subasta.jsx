@@ -6,7 +6,7 @@ import ImageCarousel from "../../components/carrousel/Carrousel";
 import ActiveBids from "../../components/activeBids/ActiveBids";
 import LiveBidding from "../../components/liveBidding/LiveBidding";
 import LoginModal from "../../components/modals/LoginModal"; // Importa el modal de login
-//import { getBidsByAuctionId } from "../../api/bid.js";
+import Cookies from "js-cookie";
 import "./subasta.css";
 import socket from "../../socket";
 
@@ -66,7 +66,7 @@ const Subasta = () => {
             const cookie = cookies.find((c) => c.startsWith(`${name}=`));
             return cookie ? cookie.split("=")[1] : null;
         }
-        setCurrentUserId(getCookie("userId"));
+        const userId = Cookies.get("token");
         if (getCookie("userId")) {
             fetchBids();
             setIsLoggedIn(true);
