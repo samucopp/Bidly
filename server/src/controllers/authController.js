@@ -82,7 +82,7 @@ async function login(req, res) {
 
 async function logout(req, res) {
     try {
-        res.clearCookie("auth-token", {
+        res.clearCookie("auth-cookie", {
             httpOnly: true,
             // secure: true, // Solo si usas HTTPS
             sameSite: "strict",

@@ -24,7 +24,6 @@ const Navbar = () => {
     useEffect(() => {
         const checkAuth = () => {
             const userId = Cookies.get("userId");
-            console.log(userId);
             if (userId) {
                 setIsAuth(true);
                 setUserData({
@@ -42,14 +41,14 @@ const Navbar = () => {
 
         // Escuchar eventos de cambio de auth
         const handleAuthChange = () => {
-            console.log('Evento auth-change recibido'); // Para debugging
+            console.log("Evento auth-change recibido"); // Para debugging
             checkAuth();
         };
 
-        window.addEventListener('auth-change', handleAuthChange);
+        window.addEventListener("auth-change", handleAuthChange);
 
         return () => {
-            window.removeEventListener('auth-change', handleAuthChange);
+            window.removeEventListener("auth-change", handleAuthChange);
         };
     }, []);
 
@@ -72,6 +71,7 @@ const Navbar = () => {
         Cookies.remove("userId");
         Cookies.remove("userAvatar");
         Cookies.remove("userName");
+        // Cookies.remove("auth-cookie");
         setIsAuth(false);
         setUserData(null);
         navigate("/", { replace: true });
