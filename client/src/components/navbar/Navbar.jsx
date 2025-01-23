@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import Cookies from "js-cookie"; // Añadimos esta importación
+import Cookies from "js-cookie";
 import LoginModal from "../modals/LoginModal";
 import { logout } from "../../api/user";
 import "./Navbar.css";
+import SearchBar from '../search-bar/SearchBar';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -120,37 +121,8 @@ const Navbar = () => {
                         <div className="navbar-right">
                             {/* Search Bar */}
                             <div className="search-container">
-                                <input
-                                    type="text"
-                                    placeholder="Search product..."
-                                    value={searchQuery}
-                                    onChange={(e) =>
-                                        setSearchQuery(e.target.value)
-                                    }
-                                />
-                                <button className="search-button">
-                                    <svg
-                                        fill="none"
-                                        viewBox="0 0 20 20"
-                                        width="20"
-                                        height="20"
-                                    >
-                                        <path
-                                            d="M11.856 11.856l4.3 4.3"
-                                            stroke="#222"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                        <path
-                                            d="M12.693 8.155a4.538 4.538 0 11-9.077 0 4.538 4.538 0 019.077 0z"
-                                            stroke="#222"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                </button>
+                                <SearchBar />
                             </div>
-
                             {/* Auth Links */}
                             <div className="auth-links">
                                 {isAuth ? (
