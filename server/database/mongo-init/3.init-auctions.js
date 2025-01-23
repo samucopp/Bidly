@@ -1950,7 +1950,7 @@ db.auctions.insertMany([
     {
         title: "Star Wars: The Original Trilogy Blu-ray",
         description: "Box set of the original Star Wars trilogy.",
-        images: ["star_wars_trilogy.jpg"],
+        images: ["https://m.media-amazon.com/images/I/81jhhFHhk9L._AC_UF894,1000_QL80_.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -1962,7 +1962,7 @@ db.auctions.insertMany([
     {
         title: "The Godfather Collection DVD",
         description: "Complete collection of The Godfather films.",
-        images: ["godfather_collection.jpg"],
+        images: ["https://m.media-amazon.com/images/I/71PrTWvZA4L._AC_UF894,1000_QL80_.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 50,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1974,7 +1974,7 @@ db.auctions.insertMany([
     {
         title: "Marvel Cinematic Universe Phase 1 Blu-ray",
         description: "Box set of the first phase of the MCU.",
-        images: ["mcu_phase1.jpg"],
+        images: ["https://m.media-amazon.com/images/I/71NQUUwtzSS._AC_UF894,1000_QL80_.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 80,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -1986,7 +1986,7 @@ db.auctions.insertMany([
     {
         title: "Harry Potter Complete Series DVD",
         description: "All eight Harry Potter movies in one collection.",
-        images: ["harry_potter_movies.jpg"],
+        images: ["https://i.ebayimg.com/images/g/zjIAAOSwBQZlexs9/s-l1200.png"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 70,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -1998,7 +1998,7 @@ db.auctions.insertMany([
     {
         title: "Criterion Collection: Parasite",
         description: "Special edition of the Academy Award-winning film.",
-        images: ["parasite_criterion.jpg"],
+        images: ["https://ih1.redbubble.net/image.1760247108.6743/sn,x1000-pad,750x1000,f8f8f8.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 40,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2010,7 +2010,7 @@ db.auctions.insertMany([
     {
         title: "The Lord of the Rings Trilogy Extended Edition",
         description: "All three films in extended form, filled with bonus materials.",
-        images: ["lotr_extended.jpg"],
+        images: ["https://images.justwatch.com/poster/659676/s718/the-lord-of-the-rings-the-fellowship-of-the-ring-extended-edition-2002.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 90,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -2022,7 +2022,7 @@ db.auctions.insertMany([
     {
         title: "Back to the Future Trilogy Blu-ray",
         description: "Follow Marty McFly's adventures through time in this three-movie set.",
-        images: ["bttf_trilogy.jpg"],
+        images: ["https://m.media-amazon.com/images/I/71ERRbjU+jL._AC_UF894,1000_QL80_.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 45,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -2034,7 +2034,7 @@ db.auctions.insertMany([
     {
         title: "Indiana Jones: The Complete Adventures",
         description: "Join Indy on his quest for the Ark, the Sankara Stones, the Holy Grail, and the Crystal Skull.",
-        images: ["indiana_jones_collection.jpg"],
+        images: ["https://m.media-amazon.com/images/I/91qMTNi0HuL._AC_UF1000,1000_QL80_.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -2046,7 +2046,7 @@ db.auctions.insertMany([
     {
         title: "Studio Ghibli Collection",
         description: "A set of beloved animated films from Hayao Miyazaki and Studio Ghibli.",
-        images: ["studio_ghibli_collection.jpg"],
+        images: ["https://i.ebayimg.com/images/g/gkIAAOSwNmVfpHZM/s-l1200.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 100,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -2058,7 +2058,7 @@ db.auctions.insertMany([
     {
         title: "James Bond: Daniel Craig Collection",
         description: "All Daniel Craig Bond films: Casino Royale, Quantum of Solace, Skyfall, Spectre, and No Time to Die.",
-        images: ["bond_daniel_craig.jpg"],
+        images: ["https://i.redd.it/1jk2jg9isph31.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 85,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2082,7 +2082,7 @@ db.auctions.insertMany([
     {
         title: "Fast & Furious 8-Movie Collection",
         description: "Experience the high-octane action from the first eight Fast & Furious films.",
-        images: ["fast_and_furious_8_collection.jpg"],
+        images: ["https://static.thcdn.com/images/large/original//productimg/1600/1600/14266250-9285026319122146.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 65,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -2094,7 +2094,7 @@ db.auctions.insertMany([
     {
         title: "Avatar 2-Movie Collection (Avatar & The Way of Water)",
         description: "The groundbreaking original film plus its sequel in a special 2-movie set.",
-        images: ["avatar_2movie_collection.jpg"],
+        images: ["https://m.media-amazon.com/images/I/61zpVlucmgL._AC_UF894,1000_QL80_.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 75,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -2116,7 +2116,7 @@ db.auctions.insertMany([
         createdAt: new Date()
     },
     {
-        title: "Alien Quadrilogy Blu-ray",
+        title: "https://i.ebayimg.com/images/g/FSoAAOSwCtxkzVAi/s-l1200.jpg",
         description: "Four classic sci-fi horror films featuring Ellen Ripley against the terrifying Xenomorph.",
         images: ["alien_quadrilogy.jpg"],
         category: db.categories.findOne({ name: "Movies" })._id,
@@ -2134,7 +2134,7 @@ db.auctions.insertMany([
     {
         title: "The Legend of Zelda: Tears of the Kingdom",
         description: "Highly anticipated sequel in the Zelda series.",
-        images: ["zelda_totk.jpg"],
+        images: ["https://m.media-amazon.com/images/I/81Ge3v6ro8L._AC_UF1000,1000_QL80_.jpg"],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 70,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -2146,7 +2146,7 @@ db.auctions.insertMany([
     {
         title: "Elden Ring",
         description: "Acclaimed action RPG by FromSoftware.",
-        images: ["elden_ring.jpg"],
+        images: ["https://m.media-amazon.com/images/I/71GPiuyNtkL._AC_UF894,1000_QL80_.jpg"],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2158,7 +2158,7 @@ db.auctions.insertMany([
     {
         title: "God of War: Ragnarök",
         description: "Epic action-adventure game continuing Kratos and Atreus's saga.",
-        images: ["god_of_war_ragnarok.jpg"],
+        images: ["https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/aqZdSwWyy9JcQ66BxHDKrky6.jpg"],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -2170,7 +2170,7 @@ db.auctions.insertMany([
     {
         title: "Horizon Forbidden West",
         description: "Open-world action RPG set in a post-apocalyptic world filled with robotic creatures.",
-        images: ["horizon_forbidden_west.jpg"],
+        images: ["https://m.media-amazon.com/images/I/91BTDEbDxbL.jpg"],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2182,7 +2182,7 @@ db.auctions.insertMany([
     {
         title: "Final Fantasy XVI",
         description: "Latest installment in the legendary JRPG series, featuring a new world and characters.",
-        images: ["final_fantasy_xvi.jpg"],
+        images: ["https://win.gg/wp-content/uploads/2023/05/ff-xvi.webp"],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 70,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -2194,7 +2194,7 @@ db.auctions.insertMany([
     {
         title: "Super Mario Odyssey",
         description: "3D platformer featuring Mario traveling across various worlds to save Princess Peach.",
-        images: ["super_mario_odyssey.jpg"],
+        images: ["https://gamecenterperu.com/wp-content/uploads/2023/11/GC00006.jpg"],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 50,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
