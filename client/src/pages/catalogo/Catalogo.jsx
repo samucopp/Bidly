@@ -33,6 +33,8 @@ const Catalogo = () => {
         const fetchData = async () => {
             try {
                 const categoriesData = await getAllCategories();
+                const auctionsData = await getAuctions(showActiveBidsOnly, 1);
+                setProducts(auctionsData.auctions);
                 setCategories(categoriesData);
             } catch (err) {
                 setError(err.message);
