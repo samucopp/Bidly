@@ -119,6 +119,20 @@ const Subasta = () => {
     }
 
     const isSeller = auction.sellerId._id === currentUserId; // Verifica si el usuario es el vendedor
+    const formatDate = (date) => {
+        const options = { weekday: "long" };
+        const weekday = new Intl.DateTimeFormat("en-US", options).format(date);
+    
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear().toString().slice(-2);
+    
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+    
+        return `${weekday}, ${month}/${day}/${year} - ${hours}:${minutes}`;
+    };
+
 
     return (
         <div className="subasta-page">
@@ -136,19 +150,19 @@ const Subasta = () => {
                         <h2>{auction.title}</h2>
                         <p className="description">{auction.description}</p>
                         <p>
-                            <strong>Seller:</strong>
+                            <strong>Seller:</strong>{" "}
                             {auction.sellerId.name}</p>
                         <p>
-                            <strong>Precio de salida:</strong>{" "}
+                            <strong>Starting Price:</strong>{" "}
                             {auction.startingPrice} €
                         </p>
                         <p>
-                            <strong>Fecha inicio de la subasta:</strong>{" "}
-                            {new Date(auction.startTime).toLocaleString()}
+                            <strong>Start Date:</strong>{" "}
+                            {formatDate(new Date(auction.startTime))}
                         </p>
                         <p>
-                            <strong>Fecha fin de la subasta:</strong>{" "}
-                            {new Date(auction.endTime).toLocaleString()}
+                            <strong>End Date:</strong>{" "}
+                            {formatDate(new Date(auction.startTime))}
                         </p>
 
                         {/* Botón condicional para loguearse */}
