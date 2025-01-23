@@ -25,8 +25,6 @@ const LoginModal = ({ isOpen, onClose }) => {
 
             if (response && response.userInfo) {
                 try {
-                    // Guardamos el token
-                    Cookies.set('token', response.token);
 
                     // Guardamos los datos del usuario
                     Cookies.set('userId', response.userInfo.userId);
