@@ -19,7 +19,7 @@ const Catalogo = () => {
 
     // Obtener la categoría de la URL
     useEffect(() => {
-        const categoryFromUrl = searchParams.get('category');
+        const categoryFromUrl = searchParams.get("category");
         if (categoryFromUrl) {
             setSelectedCategory(categoryFromUrl);
         }
@@ -62,7 +62,10 @@ const Catalogo = () => {
         if (!selectedCategory) {
             auctionsData = await getAuctions(newActiveState);
         } else {
-            auctionsData = await getAuctionsByCategory(selectedCategory, newActiveState);
+            auctionsData = await getAuctionsByCategory(
+                selectedCategory,
+                newActiveState
+            );
         }
         setProducts(auctionsData.auctions);
         setShowActiveBidsOnly(newActiveState);
@@ -73,29 +76,37 @@ const Catalogo = () => {
             console.log("No more auctions to load.");
             return;
         }
-    
+
         const nextPage = currentPage + 1; // Calcula la próxima página explícitamente
         console.log("Fetching page:", nextPage);
-    
+
         try {
             const nextPage = currentPage + 1;
             const auctionsData = selectedCategory
-                ? await getAuctionsByCategory(selectedCategory, showActiveBidsOnly, nextPage)
+                ? await getAuctionsByCategory(
+                      selectedCategory,
+                      showActiveBidsOnly,
+                      nextPage
+                  )
                 : await getAuctions(showActiveBidsOnly, nextPage);
-    
-            if (auctionsData.auctions.length === 0 || nextPage > auctionsData.totalPages) {
+
+            if (
+                auctionsData.auctions.length === 0 ||
+                nextPage > auctionsData.totalPages
+            ) {
                 setHasMore(false);
             } else {
                 setProducts((prevProducts) => [
                     ...prevProducts,
                     ...auctionsData.auctions.filter(
-                        (auction) => !prevProducts.some((p) => p._id === auction._id)
+                        (auction) =>
+                            !prevProducts.some((p) => p._id === auction._id)
                     ),
                 ]);
                 setCurrentPage(nextPage);
             }
         } catch (err) {
-            console.error('Error al cargar más subastas:', err);
+            console.error("Error al cargar más subastas:", err);
             setError(err.message);
         }
     };
@@ -105,13 +116,13 @@ const Catalogo = () => {
             const isBottom =
                 window.innerHeight + document.documentElement.scrollTop >=
                 document.documentElement.offsetHeight - 100;
-    
+
             if (isBottom && hasMore) {
                 console.log("Loading more auctions...");
                 loadMoreAuctions();
             }
         };
-    
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, [selectedCategory, showActiveBidsOnly, currentPage, hasMore]);
@@ -119,11 +130,13 @@ const Catalogo = () => {
     return (
         <div className="catalog-page">
             <aside className="categories-sidebar">
-                <Categorias
-                    categoriasData={categories}
-                    selectedCategory={selectedCategory}
-                    onCategoryChange={handleCategoryChange}
-                />
+                {categories.length > 0 && (
+                    <Categorias
+                        categoriasData={categories}
+                        selectedCategory={selectedCategory}
+                        onCategoryChange={handleCategoryChange}
+                    />
+                )}
             </aside>
 
             <main className="main-content">
