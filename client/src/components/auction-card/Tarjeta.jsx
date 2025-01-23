@@ -41,8 +41,8 @@ const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
         <div className="catalogo-auction-card">
             <div className="catalogo-auction-carousel">
                 <ImageCarousel
-                    images={datosPuja.images.map((image) => image)}
-                    initialIndex={0}
+                    images={datosPuja.images}
+                    defaultImage={"logo_bidly.png"}
                 />
             </div>
             <div className="catalogo-auction-content">
