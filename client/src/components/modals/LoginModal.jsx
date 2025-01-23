@@ -18,34 +18,39 @@ const LoginModal = ({ isOpen, onClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus({ type: null, message: '' });
-    
+
         try {
             const response = await login(formData);
             console.log('Respuesta del servidor:', response);
-    
+
             if (response && response.userInfo) {
                 try {
                     // Guardamos el token
                     Cookies.set('token', response.token);
-                    
+
                     // Guardamos los datos del usuario
                     Cookies.set('userId', response.userInfo.userId);
                     Cookies.set('userName', response.userInfo.userName);
                     if (response.userInfo.userAvatar) {
                         Cookies.set('userAvatar', response.userInfo.userAvatar);
                     }
-    
+
                     setStatus({
                         type: 'success',
                         message: '¡Login exitoso!'
                     });
-    
-                    // Notificamos el cambio de auth y cerramos el modal
+
                     setTimeout(() => {
                         window.dispatchEvent(new Event('auth-change'));
+                        // Limpiamos los datos del formulario
+                        setFormData({
+                            email: '',
+                            password: ''
+                        });
+                        // Cerramos el modal
                         onClose();
                     }, 1500);
-    
+                    
                 } catch (cookieError) {
                     console.error('Error al guardar cookies:', cookieError);
                     throw new Error('Error al guardar la sesión');
