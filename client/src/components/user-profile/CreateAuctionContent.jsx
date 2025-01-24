@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { getAllCategories } from '../../api/category.js';
 import './CreateAuctionContent.css';
-
 const CreateAuctionContent = ({ onClose, updateAuctions }) => {
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState('');
@@ -21,7 +20,6 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
         startTime: '',
         endTime: ''
     });
-
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -34,10 +32,8 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
                 console.error('Error al obtener categorías:', error);
             }
         };
-
         fetchCategories();
     }, []);
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setAuctionFormData(prev => ({
@@ -45,35 +41,29 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
             [name]: value
         }));
     };
-
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
         setSelectedImages(files);
     };
-
     const handleAuctionSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
-
         try {
             const sellerId = Cookies.get('userId');
             if (!sellerId) {
                 throw new Error('No user ID found');
             }
-
             // Validar fechas
             const start = new Date(auctionFormData.startTime);
             const end = new Date(auctionFormData.endTime);
             const now = new Date();
-
             if (start < now) {
                 throw new Error('Start time must be in the future');
             }
             if (end <= start) {
                 throw new Error('End time must be after start time');
             }
-
             const auctionDataForApi = {
                 ...auctionFormData,
                 startingPrice: parseFloat(auctionFormData.startingPrice),
@@ -81,10 +71,8 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
                 sellerId: sellerId,
                 images: [] // Array vacío inicialmente
             };
-
             const response = await createAuction(auctionDataForApi);
             console.log('Response from createAuction:', response);
-
             // Verificar tanto 'success' como 'succes' para manejar el error de ortografía
             if (response && (response.success || response.succes) && response.savedAuction) {
                 console.log('Auction created successfully:', response.savedAuction);
@@ -93,7 +81,6 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
             } else {
                 throw new Error(response?.message || 'Error creating auction');
             }
-
         } catch (error) {
             setError(error.message || 'Error creating auction');
             console.error('Error creating auction:', error);
@@ -101,24 +88,20 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
             setLoading(false);
         }
     };
-
     const handleImageUpload = async () => {
         if (selectedImages.length === 0) {
             await updateAuctionsList();
             onClose();
             return;
         }
-
         setLoading(true);
         try {
             const formData = new FormData();
             selectedImages.forEach(image => {
                 formData.append('images', image);
             });
-
             const uploadResponse = await uploadAuctionImages(createdAuctionId, formData);
             console.log('Upload response:', uploadResponse);
-
             if (uploadResponse && (uploadResponse.success || uploadResponse.succes)) {
                 await updateAuctionsList();
                 onClose();
@@ -132,7 +115,6 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
             setLoading(false);
         }
     };
-
     const updateAuctionsList = async () => {
         try {
             const sellerId = Cookies.get('userId');
@@ -144,12 +126,10 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
             console.error('Error updating auctions list:', error);
         }
     };
-
     const skipImageUpload = async () => {
         await updateAuctionsList();
         onClose();
     };
-
     // Renderizado condicional basado en el paso actual
     if (currentStep === 'images') {
         return (
@@ -190,7 +170,6 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
             </div>
         );
     }
-
     // Formulario inicial de creación de subasta
     return (
         <div className="modal-content">
@@ -277,5 +256,4 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
         </div>
     );
 };
-
 export default CreateAuctionContent;

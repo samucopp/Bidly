@@ -122,7 +122,9 @@
     border-radius: 0.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    height: 400px;
+    height: 480px;
+    padding-top: 20px;
+
     /* Hacemos las tarjetas más altas */
 }
 
@@ -444,6 +446,7 @@
     width: 100%;
     max-width: 400px;
     position: relative;
+    padding: 0px;
 }
 
 /* Estilos específicos para el botón de cierre */
@@ -464,6 +467,9 @@
     padding: 0;
 }
 
+.modal-close-button {
+    z-index:100;
+}
 
 
 /* Estilos específicos para el contenido del modal de creación de subastas */

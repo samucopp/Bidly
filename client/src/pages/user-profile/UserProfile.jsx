@@ -15,7 +15,7 @@ const UserProfile = ({ }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCreateAuctionModalOpen, setIsCreateAuctionModalOpen] = useState(false);
-    const [selectedAuctionId, setSelectedAuctionId] = useState(null);
+    const [selectedAuction, setSelectedAuction] = useState(null);
     const [activeBids, setActiveBids] = useState({ auctions: [] });
     const [upcomingBids, setUpcomingBids] = useState({ auctions: [] });
     const [auctionsHistory, setAuctionsHistory] = useState({ auctions: [] });
@@ -94,11 +94,6 @@ const UserProfile = ({ }) => {
         setModalContent('myData');
         setIsModalOpen(true);
         setIsSettingsOpen(false);
-    };
-
-    const handleDeleteAuction = (auctionId) => {
-        setSelectedAuctionId(auctionId);
-        setIsDeleteModalOpen(true);
     };
 
     const handleCreateNewAuction = () => {
@@ -217,31 +212,56 @@ const UserProfile = ({ }) => {
         );
     };
 
-    const DeleteAuctionContent = () => (
-        <div className="modal-content">
-            <h2>Delete Auction</h2>
-            <p>Are you sure you want to delete this auction?</p>
-            <div className="modal-actions">
-                <button
-                    className="cancel-button"
-                    onClick={() => setIsDeleteModalOpen(false)}
-                >
-                    Cancel
-                </button>
-                <button
-                    className="delete-button"
-                    onClick={() => {
-                        console.log('Deleting auction:', selectedAuctionId);
-                        setIsDeleteModalOpen(false);
-                    }}
-                >
-                    Delete
-                </button>
+    const DeleteAuctionContent = ({ onClose, auctionId, updateAuctions }) => {
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState('');
+    
+        const handleConfirmDelete = async () => {
+            setLoading(true);
+            try {
+                const response = await deleteAuction(auctionId);
+                if (response && (response.success || response.succes)) {
+                    const userId = Cookies.get('userId');
+                    const userAuctions = await getAuctionsByOwner(userId);
+                    if (userAuctions?.success) {
+                        updateAuctions(userAuctions);
+                    }
+                    onClose();
+                } else {
+                    throw new Error(response?.message || 'Error al eliminar la subasta');
+                }
+            } catch (error) {
+                setError(error.message || 'Error al eliminar la subasta');
+                console.error('Error al eliminar la subasta:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        return (
+            <div className="modal-content">
+                <h2>Delete Auction</h2>
+                {error && <div className="error-message">{error}</div>}
+                <p>Are you sure you want to delete this auction?</p>
+                <div className="modal-actions">
+                    <button
+                        className="cancel-button"
+                        onClick={onClose}
+                        disabled={loading}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="delete-button"
+                        onClick={handleConfirmDelete}
+                        disabled={loading}
+                    >
+                        {loading ? 'Deleting...' : 'DELETE'}
+                    </button>
+                </div>
             </div>
-        </div>
-    );
-
-
+        );
+    };
     return (
         <div className="profile-container">
             <div className="profile-header">
@@ -367,13 +387,19 @@ const UserProfile = ({ }) => {
                 {modalContent === 'myData' && <MyDataContent />}
             </GenericModal>
 
-            <GenericModal
-                isOpen={isDeleteModalOpen}
-                onClose={() => setIsDeleteModalOpen(false)}
-                className="delete-modal"
-            >
-                <DeleteAuctionContent />
-            </GenericModal>
+         <GenericModal
+    isOpen={isDeleteModalOpen}
+    onClose={() => setIsDeleteModalOpen(false)}
+    className="delete-modal"
+>
+    {selectedAuction && (
+        <DeleteAuctionContent
+            onClose={() => setIsDeleteModalOpen(false)}
+            auctionId={selectedAuction}
+            updateAuctions={setMyAuctions}
+        />
+    )}
+</GenericModal>
 
             <GenericModal
                 isOpen={isCreateAuctionModalOpen}
