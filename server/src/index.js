@@ -22,24 +22,24 @@ const app = express(); // crear servidor
 app.use(express.static("src/public")); // configurar directorio de archivos estáticos
 app.use(express.urlencoded({ extended: true })); // configurar body parser para recibir datos de formularios
 app.use(express.json()); // configurar body parser para recibir datos en formato json
-app.use(cors(corsOptions)); 
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use("/", router); // configurar rutas
+const httpServer = createServer(app);
+const { io, emitToUser } = startSocket(httpServer);
+
 app.use((req, res, next) => {
     req.io = io;
     req.emitToUser = emitToUser;
     next();
 });
-const httpServer = createServer(app);
-const { io, emitToUser } = startSocket(httpServer);
-
-cron.schedule("* * * * *", async () => {
-    console.log("Ejecutando tareas automatizadas...");
+cron.schedule("* * * * * *", async () => {
+    console.log("Comprobando subastas para activar");
     await auctionController.activateAuctions({});
 });
 
-cron.schedule("* * * * *", async () => {
-    console.log("Ejecutando tareas automatizadas...");
+cron.schedule("* * * * * *", async () => {
+    console.log("Comprobando subastas para cerrar");
     await auctionController.closeAuctions({});
 });
 
