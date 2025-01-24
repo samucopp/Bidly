@@ -34,7 +34,8 @@ const Catalogo = () => {
             try {
                 const categoriesData = await getAllCategories();
                 const auctionsData = await getAuctions(showActiveBidsOnly, 1);
-                setProducts(auctionsData.auctions);
+                const shuffledAuctions = auctionsData.auctions.sort(() => Math.random() - 0.5);
+                setProducts(shuffledAuctions);
                 setCategories(categoriesData);
             } catch (err) {
                 setError(err.message);
@@ -68,7 +69,8 @@ const Catalogo = () => {
         const auctionsData = categoryId
             ? await getAuctionsByCategory(categoryId, showActiveBidsOnly, 1)
             : await getAuctions(showActiveBidsOnly, 1);
-        setProducts(auctionsData.auctions);
+        const shuffledAuctions = auctionsData.auctions.sort(() => Math.random() - 0.5);
+        setProducts(shuffledAuctions);
 
         if (auctionsData.totalPages <= 1) {
             setHasMore(false);

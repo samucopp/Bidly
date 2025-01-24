@@ -123,6 +123,21 @@ const Subasta = () => {
     }
 
     const isSeller = auction.sellerId._id === currentUserId; // Verifica si el usuario es el vendedor
+    const formatDate = (date) => {
+        const options = { weekday: "long" };
+        const weekday = new Intl.DateTimeFormat("en-US", options).format(date);
+    
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear().toString().slice(-2);
+    
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+    
+        return `${weekday}, ${month}/${day}/${year} - ${hours}:${minutes}`;
+    };
+
+
     return (
         <div className="subasta-page">
             {/* Contenido principal */}
@@ -130,37 +145,28 @@ const Subasta = () => {
                 {/* Detalles del producto */}
                 <section className="product-details">
                     <div className="product-image">
-                        <a href="">{`Catalog/${auction.category.name}`}</a>
                         <ImageCarousel
-                            // images={auction.images.map(
-                            //     (image) => `${BASE_URL}/images/${image}`
-                            // )}
-                            images={auction.images}
+                            images={auction.images.map((image) => image)}
                             initialIndex={0}
                         />
                     </div>
-
                     <div className="product-info">
                         <h2>{auction.title}</h2>
-                        {/* <p>
-                            <strong>Categoría:</strong> {auction.category.name}
-                        </p> */}
                         <p className="description">{auction.description}</p>
                         <p>
-                            {" "}
-                            <strong>Seller:</strong> {auction.sellerId.name}
-                        </p>
+                            <strong>Seller:</strong>{" "}
+                            {auction.sellerId.name}</p>
                         <p>
-                            <strong>Starting price:</strong>{" "}
+                            <strong>Starting Price:</strong>{" "}
                             {auction.startingPrice} €
                         </p>
                         <p>
-                            <strong>Start date:</strong>{" "}
-                            {new Date(auction.startTime).toLocaleString()}
+                            <strong>Start Date:</strong>{" "}
+                            {formatDate(new Date(auction.startTime))}
                         </p>
                         <p>
-                            <strong>End date:</strong>{" "}
-                            {new Date(auction.endTime).toLocaleString()}
+                            <strong>End Date:</strong>{" "}
+                            {formatDate(new Date(auction.startTime))}
                         </p>
 
                         {/* Botón condicional para loguearse */}
