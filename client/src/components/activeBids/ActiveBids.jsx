@@ -2,15 +2,24 @@ import React, { useState, useEffect } from "react";
 import "./activeBids.css";
 import socket from "../../socket";
 
-const ActiveBids = ({ auctionId, userId, endTime, minBid }) => {
+const ActiveBids = ({
+    auctionId,
+    userId,
+    startTime,
+    endTime,
+    minBid,
+    enabled,
+    winnerName,
+}) => {
     const [bidAmount, setBidAmount] = useState(minBid);
     const [timeRemaining, setTimeRemaining] = useState("");
 
     useEffect(() => {
         const calculateTimeRemaining = () => {
             const now = new Date();
+            const start = new Date(startTime);
             const end = new Date(endTime);
-            const difference = end - now;
+            const difference = now > start ? end - now : start - now;
 
             if (difference <= 0) {
                 setTimeRemaining({
@@ -19,7 +28,9 @@ const ActiveBids = ({ auctionId, userId, endTime, minBid }) => {
                     minutes: (0).toString().padStart(2, "0"),
                     seconds: (0).toString().padStart(2, "0"),
                 });
+
                 clearInterval(timer); // Detener el temporizador si ya terminó
+
                 return;
             }
 
@@ -39,12 +50,11 @@ const ActiveBids = ({ auctionId, userId, endTime, minBid }) => {
                 seconds: seconds.toString().padStart(2, "0"),
             });
         };
+        // Actualizar cada segundo
+        const timer = setInterval(calculateTimeRemaining, 1000);
 
         // Ejecutar inmediatamente para mostrar la cuenta regresiva al cargar
         calculateTimeRemaining();
-
-        // Actualizar cada segundo
-        const timer = setInterval(calculateTimeRemaining, 1000);
 
         // Limpiar el temporizador al desmontar
         return () => clearInterval(timer);
@@ -78,7 +88,7 @@ const ActiveBids = ({ auctionId, userId, endTime, minBid }) => {
     };
     return (
         <div className="my-bid">
-            <h3>Mi Puja</h3>
+            <h3>My bid</h3>
             <h4 className="min-bid">Min Bid {minBid}€</h4>
             <input
                 type="number"
@@ -86,30 +96,47 @@ const ActiveBids = ({ auctionId, userId, endTime, minBid }) => {
                 value={bidAmount}
                 onChange={(e) => setBidAmount(e.target.value)}
                 min={minBid}
+                disabled={!enabled}
             />
-            <button onClick={handleBid}>Pujar</button>
-            <h3>Tiempo Restante</h3>
-            <div className="timer">
-                <div className="days">
-                    <p className="number">{timeRemaining.days}</p>
-                    <p className="label">days</p>
-                </div>
-                <p>:</p>
-                <div className="hours">
-                    <p className="number">{timeRemaining.hours}</p>
-                    <p className="label">hours</p>
-                </div>
-                <p>:</p>
-                <div className="mins">
-                    <p className="number">{timeRemaining.minutes}</p>
-                    <p className="label">mins</p>
-                </div>
-                <p>:</p>
-                <div className="seconds">
-                    <p className="number">{timeRemaining.seconds}</p>
-                    <p className="label">seconds</p>
-                </div>
-            </div>
+            <button onClick={handleBid} disabled={!enabled}>
+                Bid
+            </button>
+            {!winnerName && (
+                <>
+                    <h3>
+                        {new Date() > new Date(startTime)
+                            ? "Finish In"
+                            : "Starting Soon"}
+                    </h3>
+                    <div className="timer">
+                        <div className="days">
+                            <p className="number">{timeRemaining.days}</p>
+                            <p className="label">days</p>
+                        </div>
+                        <p>:</p>
+                        <div className="hours">
+                            <p className="number">{timeRemaining.hours}</p>
+                            <p className="label">hours</p>
+                        </div>
+                        <p>:</p>
+                        <div className="mins">
+                            <p className="number">{timeRemaining.minutes}</p>
+                            <p className="label">mins</p>
+                        </div>
+                        <p>:</p>
+                        <div className="seconds">
+                            <p className="number">{timeRemaining.seconds}</p>
+                            <p className="label">seconds</p>
+                        </div>
+                    </div>
+                </>
+            )}
+            {winnerName && (
+                <>
+                    <h3>Winner</h3>
+                    <p>{winnerName}</p>
+                </>
+            )}
         </div>
     );
 };

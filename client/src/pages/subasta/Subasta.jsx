@@ -10,14 +10,6 @@ import Cookies from "js-cookie";
 import "./subasta.css";
 import socket from "../../socket";
 
-//Falseo
-const auctionImages = [
-    "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/HQWT2?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1681150922686",
-    "https://canarias.worten.es/i/d159bf45745c1bd60e1da42656adadfabcee3406",
-    "https://static.k-tuin.com/media/wysiwyg/blog/apple-watch-series-8-vs-apple-watch-series-10-todas-sus-diferencias.png",
-    "https://www.apple.com/newsroom/images/product/watch/standard/Apple-Watch-S8-Nike-7up-hero-220907_big.jpg.large.jpg",
-];
-
 const Subasta = () => {
     const { auctionId } = useParams();
     const [auction, setAuction] = useState(null);
@@ -26,18 +18,16 @@ const Subasta = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Simula si el usuario está logueado
     const [currentUserId, setCurrentUserId] = useState(null); // Simula el ID del usuario logueado
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para el modal de login
-
+    const fetchAuction = async () => {
+        try {
+            const auctionData = await getAuctionById(auctionId);
+            setAuction(auctionData.auction);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
     // Fetch para obtener la subasta
     useEffect(() => {
-        const fetchAuction = async () => {
-            try {
-                const auctionData = await getAuctionById(auctionId);
-                setAuction(auctionData.auction);
-            } catch (err) {
-                setError(err.message);
-            }
-        };
-
         fetchAuction();
     }, [auctionId]);
 
@@ -50,7 +40,7 @@ const Subasta = () => {
                     _id: bid._id,
                     name: bid.userId.name,
                     amount: bid.amount,
-                    time: bid.cretedAt,
+                    time: bid.createdAt,
                 }));
 
                 setBids({
@@ -61,15 +51,11 @@ const Subasta = () => {
                 setError(err.message);
             }
         };
-        function getCookie(name) {
-            const cookies = document.cookie.split("; ");
-            const cookie = cookies.find((c) => c.startsWith(`${name}=`));
-            return cookie ? cookie.split("=")[1] : null;
-        }
-        const userId = Cookies.get("token");
-        if (getCookie("userId")) {
+        const userId = Cookies.get("userId");
+        if (userId) {
             fetchBids();
             setIsLoggedIn(true);
+            setCurrentUserId(userId);
         } else {
             setIsLoggedIn(false);
         }
@@ -101,20 +87,30 @@ const Subasta = () => {
             setBids((prevBids) => ({
                 ...prevBids, // Copia el estado actual
                 bids: [
-                    ...prevBids.bids,
                     {
                         _id: bid.bidId,
-                        name: bid.name,
+                        name: bid.userName,
                         amount: bid.bidAmount,
                         time: new Date(), // Asume que quieres usar la fecha actual para el tiempo
                     },
+                    ...prevBids.bids,
                 ],
                 minAllowed: bid.minAllowed, // Añade la nueva puja al array bids
             }));
         });
 
+        socket.on("start-auction", (data) => {
+            console.log(`Subasta iniciada: ${data.auctionId}`);
+            fetchAuction();
+        });
+        socket.on("end-auction", (data) => {
+            console.log(`Subasta terminada: ${data.auctionId}`);
+            fetchAuction();
+        });
         return () => {
             socket.off("new-bid");
+            socket.off("start-auction");
+            socket.off("end-auction");
         };
     }, []);
 
@@ -127,7 +123,6 @@ const Subasta = () => {
     }
 
     const isSeller = auction.sellerId._id === currentUserId; // Verifica si el usuario es el vendedor
-
     return (
         <div className="subasta-page">
             {/* Contenido principal */}
@@ -140,7 +135,7 @@ const Subasta = () => {
                             // images={auction.images.map(
                             //     (image) => `${BASE_URL}/images/${image}`
                             // )}
-                            images={auctionImages}
+                            images={auction.images}
                             initialIndex={0}
                         />
                     </div>
@@ -151,17 +146,20 @@ const Subasta = () => {
                             <strong>Categoría:</strong> {auction.category.name}
                         </p> */}
                         <p className="description">{auction.description}</p>
-                        <p>SellerID: {auction.sellerId._id}</p>
                         <p>
-                            <strong>Precio de salida:</strong>{" "}
+                            {" "}
+                            <strong>Seller:</strong> {auction.sellerId.name}
+                        </p>
+                        <p>
+                            <strong>Starting price:</strong>{" "}
                             {auction.startingPrice} €
                         </p>
                         <p>
-                            <strong>Fecha inicio de la subasta:</strong>{" "}
+                            <strong>Start date:</strong>{" "}
                             {new Date(auction.startTime).toLocaleString()}
                         </p>
                         <p>
-                            <strong>Fecha fin de la subasta:</strong>{" "}
+                            <strong>End date:</strong>{" "}
                             {new Date(auction.endTime).toLocaleString()}
                         </p>
 
@@ -194,14 +192,17 @@ const Subasta = () => {
                         <LiveBidding bids={bidsData.bids} />
 
                         {/* Condiciones bajo las cuales se visualizan (o no) componentes */}
-                        {!isSeller && (
-                            <ActiveBids
-                                auctionId={auctionId}
-                                userId={currentUserId}
-                                endTime={auction.endTime}
-                                minBid={bidsData.minAllowed}
-                            />
-                        )}
+
+                        <ActiveBids
+                            auctionId={auctionId}
+                            userId={currentUserId}
+                            startTime={auction.startTime}
+                            endTime={auction.endTime}
+                            minBid={bidsData.minAllowed || 0}
+                            enabled={!isSeller && auction.status == "active"}
+                            winnerName={auction.winnerId?.name}
+                            finalPrice={auction.finalPrice}
+                        />
                     </section>
                 )}
 
