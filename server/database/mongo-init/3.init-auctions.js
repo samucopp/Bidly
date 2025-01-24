@@ -6,7 +6,11 @@ db.auctions.insertMany([
         title: "Apple iPhone 14",
         description: "Latest model of the Apple iPhone with 128GB storage.",
         images: [
-            "https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_UF1000,1000_QL80_.jpg",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202210/06/00194612200769____8__1200x1200.jpg?impolicy=Resize&width=900",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202303/09/00194612201007____3__1200x1200.jpg?impolicy=Resize&width=900",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202304/05/00194612200751____10__1200x1200.jpg?impolicy=Resize&width=900",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202304/05/00194612200751____12__1200x1200.jpg?impolicy=Resize&width=900",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202304/05/00194612200751____13__1200x1200.jpg?impolicy=Resize&width=900",
         ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 1000,
@@ -20,7 +24,11 @@ db.auctions.insertMany([
         title: "Apple iPhone 14 Max",
         description: "Latest model of the Apple iPhone with 128GB storage.",
         images: [
-            "https://m.media-amazon.com/images/I/512U6LTGUfL._AC_UF894,1000_QL80_.jpg",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202210/06/00194612300510____8__1200x1200.jpg?impolicy=Resize&width=900",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202304/05/00194612400443____11__1200x1200.jpg?impolicy=Resize&width=900",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202304/05/00194612300544____11__1200x1200.jpg?impolicy=Resize&width=900",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202304/05/00194612300544____12__1200x1200.jpg?impolicy=Resize&width=900",
+            "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202304/05/00194612200751____13__1200x1200.jpg?impolicy=Resize&width=900",
         ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 1000,
@@ -36,6 +44,9 @@ db.auctions.insertMany([
         description: "High-performance smartphone with 256GB storage.",
         images: [
             "https://www.arpotelecomunicaciones.es/35535-large_default/samsung-galaxy-s23-256gb.jpg",
+            "https://images.samsung.com/is/image/samsung/p6pim/es/2302/gallery/es-galaxy-s23-s911-sm-s911bzegeub-534731845?$684_547_JPG$",
+            "https://images.samsung.com/is/image/samsung/p6pim/es/2302/gallery/es-galaxy-s23-s911-sm-s911bzggeub-534731882?$684_547_JPG$",
+            "https://images.samsung.com/is/image/samsung/p6pim/es/2302/gallery/es-galaxy-s23-s911-sm-s911bzggeub-534731886?$684_547_JPG$"
         ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 900,
@@ -47,10 +58,11 @@ db.auctions.insertMany([
     },
     {
         title: "Sony WH-1000XM5",
-        description:
-            "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
-        images: [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOux4xPx67B3OnDxjDlNlRkvE8msB70vjl7Q&s",
+        description: "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
+        images: ["https://store.sony.com.au/dw/image/v2/ABBC_PRD/on/demandware.static/-/Sites-sony-master-catalog/default/dwee3d734b/images/WH1000XM5P/WH1000XM5P.png?sw=442&sh=442&sm=fit", 
+        "https://www.sony.com/is/image/gwtprod/b9ce64ada78bc521b683032558ff5a02?fmt=png-alpha&wid=515&hei=515&trf=trim", 
+        "https://assets.entrepreneur.com/content/3x2/2000/1717744762-Sonyheadphonescolors.jpg", 
+        "https://www.sony.com/is/image/gwtprod/1beacece4ee012f9b1e78b7f6bc8ef39?fmt=png-alpha&wid=515&hei=515&trf=trim"
         ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 400,
@@ -63,9 +75,7 @@ db.auctions.insertMany([
     {
         title: "Dell XPS 13",
         description: "Ultra-slim laptop with Intel i7 processor.",
-        images: [
-            "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/9345/media-gallery/touch/silver/notebook-xps-13-9345-t-silver-gallery-2.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=679&qlt=100,1&resMode=sharp2&size=679,402&chrss=full",
-        ],
+        images: ["https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/9345/media-gallery/touch/silver/notebook-xps-13-9345-t-silver-gallery-2.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=679&qlt=100,1&resMode=sharp2&size=679,402&chrss=full", "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/9345/media-gallery/touch/silver/notebook-xps-13-9345-t-silver-gallery-5.psd?fmt=png-alpha&scl=1&hei=55&wid=92&qlt=100,1&resMode=sharp2&size=92,55&chrss=full", "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/9345/media-gallery/touch/silver/notebook-xps-13-9345-t-silver-gallery-6.psd?fmt=png-alpha&scl=1&hei=55&wid=92&qlt=100,1&resMode=sharp2&size=92,55&chrss=full"],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 1200,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -77,9 +87,7 @@ db.auctions.insertMany([
     {
         title: "Apple Watch Series 8",
         description: "Smartwatch with advanced health tracking features.",
-        images: [
-            "https://m.media-amazon.com/images/I/71ulah9iIwL._AC_UF894,1000_QL80_.jpg",
-        ],
+        images: ["https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202211/25/00194611302384____8__1200x1200.jpg?impolicy=Resize&width=900", "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202209/08/00194611302384____2__1200x1200.jpg?impolicy=Resize&width=900", "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202209/08/00194611302384____5__1200x1200.jpg?impolicy=Resize&width=900"],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 500,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -89,12 +97,9 @@ db.auctions.insertMany([
         createdAt: new Date(),
     },
     {
-        title: "PlayStation 5 Console",
-        description:
-            "Next-generation gaming console with 4K support and ultra-fast SSD.",
-        images: [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLU2pZI3r2LcX9csDN-hlSbgnx5TA_QoUtQ3yif9NUJLAO_xkynNF2SHvnzlAzFpnUnEU&usqp=CAU",
-        ],
+        title: "PlayStation 5 Slim",
+        description: "Next-generation gaming console with 4K support and ultra-fast SSD.",
+        images: ["https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202311/30/00194481001017____18__1200x1200.jpg?impolicy=Resize&width=900", "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202311/16/00194481001017____1__1200x1200.jpg?impolicy=Resize&width=900", "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202311/16/00194481001017____3__1200x1200.jpg?impolicy=Resize&width=900" ],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 500,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -105,9 +110,12 @@ db.auctions.insertMany([
     },
     {
         title: "Nintendo Switch OLED Model",
-        description:
-            "New version of Nintendo’s hybrid console with a 7-inch OLED display.",
-        images: ["https://m.media-amazon.com/images/I/61nqNujSF2L.jpg"],
+        description: "New version of Nintendo’s hybrid console with a 7-inch OLED display.",
+        images: [
+            "https://media2.allzone.es/3757488-large_default/consola-nintendo-switch-oled-blanco-mario-kart-8-12-meses-nso.jpg",
+            "https://media3.allzone.es/3757490-large_default/consola-nintendo-switch-oled-blanco-mario-kart-8-12-meses-nso.jpg",
+            "https://media3.allzone.es/3757489-large_default/consola-nintendo-switch-oled-blanco-mario-kart-8-12-meses-nso.jpg"
+        ],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 350,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -291,9 +299,7 @@ db.auctions.insertMany([
     },
     {
         title: "Apple MacBook Pro (M1)",
-        description:
-            "High-performance laptop featuring Apple’s M1 chip and 8GB of RAM.",
-        images: ["macbook_pro_m1.jpg"],
+        description: "High-performance laptop featuring Apple’s M1 chip and 8GB of RAM.",
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 1200,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -304,9 +310,7 @@ db.auctions.insertMany([
     },
     {
         title: "Samsung 55-inch 4K Smart TV",
-        description:
-            "55-inch 4K UHD Smart TV with HDR and built-in streaming apps.",
-        images: ["samsung_55_4k_tv.jpg"],
+        description: "55-inch 4K UHD Smart TV with HDR and built-in streaming apps.",
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 600,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -317,9 +321,7 @@ db.auctions.insertMany([
     },
     {
         title: "Bose QuietComfort 35 II",
-        description:
-            "Wireless headphones with noise cancellation and up to 20 hours of battery life.",
-        images: ["bose_qc35_ii.jpg"],
+        description: "Wireless headphones with noise cancellation and up to 20 hours of battery life.",
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 250,
         sellerId: db.users.findOne({ email: "henry@example.com" })._id,
@@ -330,9 +332,7 @@ db.auctions.insertMany([
     },
     {
         title: "Canon EOS R5",
-        description:
-            "High-end mirrorless camera with a 45MP full-frame sensor and 8K video recording.",
-        images: ["canon_eos_r5.jpg"],
+        description: "High-end mirrorless camera with a 45MP full-frame sensor and 8K video recording.",
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 3000,
         sellerId: db.users.findOne({ email: "henry@example.com" })._id,
@@ -343,9 +343,7 @@ db.auctions.insertMany([
     },
     {
         title: "Apple AirPods Pro (2nd Generation)",
-        description:
-            "Wireless earbuds with active noise cancellation and improved battery life.",
-        images: ["apple_airpods_pro_2.jpg"],
+        description: "Wireless earbuds with active noise cancellation and improved battery life.",
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 200,
         sellerId: db.users.findOne({ email: "henry@example.com" })._id,
@@ -356,9 +354,7 @@ db.auctions.insertMany([
     },
     {
         title: "Microsoft Surface Pro 9",
-        description:
-            "Versatile 2-in-1 laptop with a 13-inch touchscreen and optional keyboard attachment.",
-        images: ["microsoft_surface_pro_9.jpg"],
+        description: "Versatile 2-in-1 laptop with a 13-inch touchscreen and optional keyboard attachment.",
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 900,
         sellerId: db.users.findOne({ email: "henry@example.com" })._id,
@@ -369,9 +365,7 @@ db.auctions.insertMany([
     },
     {
         title: "GoPro Hero 11 Black",
-        description:
-            "Action camera with 5.3K video recording, improved stabilization, and waterproof design.",
-        images: ["gopro_hero_11_black.jpg"],
+        description: "Action camera with 5.3K video recording, improved stabilization, and waterproof design.",
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 400,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -474,9 +468,7 @@ db.auctions.insertMany([
     },
     {
         title: "Jane Eyre",
-        description:
-            "Charlotte Brontë's pioneering novel in first-person, charting the life and struggles of the independent-minded Jane Eyre.",
-        images: ["jane_eyre.jpg"],
+        description: "Charlotte Brontë's pioneering novel in first-person, charting the life and struggles of the independent-minded Jane Eyre.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 13,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -487,9 +479,7 @@ db.auctions.insertMany([
     },
     {
         title: "Crime and Punishment",
-        description:
-            "Fyodor Dostoevsky's psychological masterpiece examining guilt, morality, and redemption in 19th-century Russia.",
-        images: ["crime_and_punishment.jpg"],
+        description: "Fyodor Dostoevsky's psychological masterpiece examining guilt, morality, and redemption in 19th-century Russia.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 20,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -500,9 +490,7 @@ db.auctions.insertMany([
     },
     {
         title: "Little Women",
-        description:
-            "Louisa May Alcott's classic following the lives of the March sisters as they navigate love, family, and growing up.",
-        images: ["little_women.jpg"],
+        description: "Louisa May Alcott's classic following the lives of the March sisters as they navigate love, family, and growing up.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 12,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -514,7 +502,6 @@ db.auctions.insertMany([
     {
         title: "The Catcher in the Rye",
         description: "J.D. Salinger's classic novel.",
-        images: ["https://m.media-amazon.com/images/I/91fQEUwFMyL.jpg"],
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 18,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -525,9 +512,7 @@ db.auctions.insertMany([
     },
     {
         title: "Harry Potter and the Philosopher's Stone",
-        description:
-            "The first book in the Harry Potter series by J.K. Rowling, introducing Harry's life at Hogwarts and the wizarding world.",
-        images: ["harry_potter_1.jpg"],
+        description: "The first book in the Harry Potter series by J.K. Rowling, introducing Harry's life at Hogwarts and the wizarding world.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 10,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -538,9 +523,7 @@ db.auctions.insertMany([
     },
     {
         title: "Harry Potter and the Chamber of Secrets",
-        description:
-            "The second installment of the series, where Harry returns to Hogwarts and encounters the mysteries of the Chamber of Secrets.",
-        images: ["harry_potter_2.jpg"],
+        description: "The second installment of the series, where Harry returns to Hogwarts and encounters the mysteries of the Chamber of Secrets.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 11,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -551,9 +534,7 @@ db.auctions.insertMany([
     },
     {
         title: "Harry Potter and the Prisoner of Azkaban",
-        description:
-            "Harry’s third year at Hogwarts brings the threat of escaped prisoner Sirius Black—and reveals more about Harry’s past.",
-        images: ["harry_potter_3.jpg"],
+        description: "Harry’s third year at Hogwarts brings the threat of escaped prisoner Sirius Black—and reveals more about Harry’s past.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 12,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -564,9 +545,7 @@ db.auctions.insertMany([
     },
     {
         title: "Harry Potter and the Goblet of Fire",
-        description:
-            "Harry's fourth year features the Triwizard Tournament, new challenges, and the alarming return of dark forces.",
-        images: ["harry_potter_4.jpg"],
+        description: "Harry's fourth year features the Triwizard Tournament, new challenges, and the alarming return of dark forces.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 13,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -577,9 +556,7 @@ db.auctions.insertMany([
     },
     {
         title: "Harry Potter and the Order of the Phoenix",
-        description:
-            "In his fifth year, Harry battles skepticism about Lord Voldemort’s return and faces O.W.L. exams amid a growing rebellion.",
-        images: ["harry_potter_5.jpg"],
+        description: "In his fifth year, Harry battles skepticism about Lord Voldemort’s return and faces O.W.L. exams amid a growing rebellion.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 14,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -590,9 +567,7 @@ db.auctions.insertMany([
     },
     {
         title: "Harry Potter and the Half-Blood Prince",
-        description:
-            "Harry delves into Voldemort's dark past with Dumbledore, while secrets from an old potions book spark new suspicions.",
-        images: ["harry_potter_6.jpg"],
+        description: "Harry delves into Voldemort's dark past with Dumbledore, while secrets from an old potions book spark new suspicions.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 15,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -603,9 +578,7 @@ db.auctions.insertMany([
     },
     {
         title: "Harry Potter and the Deathly Hallows",
-        description:
-            "The final book in the series follows Harry, Ron, and Hermione on a perilous quest to defeat Voldemort once and for all.",
-        images: ["harry_potter_7.jpg"],
+        description: "The final book in the series follows Harry, Ron, and Hermione on a perilous quest to defeat Voldemort once and for all.",
         category: db.categories.findOne({ name: "Books" })._id,
         startingPrice: 16,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -635,11 +608,7 @@ db.auctions.insertMany([
     },
     {
         title: "Herman Miller Aeron Chair",
-        description:
-            "Ergonomic office chair with adjustable features and breathable mesh material.",
-        images: [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsHKbt0mDK4CscQYgi3iD4Jq4w1Dgqm0tFvA&s",
-        ],
+        description: "Ergonomic office chair with adjustable features and breathable mesh material.",
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 800,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -650,11 +619,7 @@ db.auctions.insertMany([
     },
     {
         title: "West Elm Mid-Century Desk",
-        description:
-            "Stylish wooden desk with a clean silhouette and ample storage for home offices.",
-        images: [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrQBPObHraZjGN8LGJpRegmVqjC2D40NoqlA&s",
-        ],
+        description: "Stylish wooden desk with a clean silhouette and ample storage for home offices.",
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 350,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -665,11 +630,7 @@ db.auctions.insertMany([
     },
     {
         title: "Pottery Barn Dining Table",
-        description:
-            "Farmhouse-style dining table made of reclaimed wood, perfect for family gatherings.",
-        images: [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxnwvQ2zt8KqDrTPrp2s8FzNC2VuKFctrILw&s",
-        ],
+        description: "Farmhouse-style dining table made of reclaimed wood, perfect for family gatherings.",
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 700,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -680,11 +641,7 @@ db.auctions.insertMany([
     },
     {
         title: "Ashley Furniture Signature Sofa",
-        description:
-            "Traditional-style sofa with plush cushions and a sturdy hardwood frame.",
-        images: [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv69SHC30WxDRzF3bsz5798KgTahy5un02kg&s",
-        ],
+        description: "Traditional-style sofa with plush cushions and a sturdy hardwood frame.",
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 450,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -710,9 +667,7 @@ db.auctions.insertMany([
     },
     {
         title: "CB2 Connoisseur Bar Cabinet",
-        description:
-            "Sleek and modern bar cabinet with wine racks and storage for barware.",
-        images: ["cb2_connoisseur_bar_cabinet.jpg"],
+        description: "Sleek and modern bar cabinet with wine racks and storage for barware.",
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 600,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -723,11 +678,7 @@ db.auctions.insertMany([
     },
     {
         title: "Wayfair Cross-Leg Vanity Table",
-        description:
-            "Modern vanity table with a sleek cross-leg design and built-in drawer for storage.",
-        images: [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDQQUfW0vsiVrj-Yzsgw6qEVQLLFS6Xwf5UQ&s",
-        ],
+        description: "Modern vanity table with a sleek cross-leg design and built-in drawer for storage.",
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 120,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -768,9 +719,7 @@ db.auctions.insertMany([
     },
     {
         title: "Room & Board Parsons Desk",
-        description:
-            "Minimalistic desk with clean lines, perfect for any home office setup.",
-        images: ["room_and_board_parsons_desk.jpg"],
+        description: "Minimalistic desk with clean lines, perfect for any home office setup.",
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 400,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -781,9 +730,7 @@ db.auctions.insertMany([
     },
     {
         title: "Safavieh Vintage Hamadan Rug",
-        description:
-            "Distressed vintage-style rug made with durable materials for long-lasting beauty.",
-        images: ["safavieh_vintage_rug.jpg"],
+        description: "Distressed vintage-style rug made with durable materials for long-lasting beauty.",
         category: db.categories.findOne({ name: "Furniture" })._id,
         startingPrice: 100,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -892,9 +839,7 @@ db.auctions.insertMany([
     },
     {
         title: "Klimt Print: The Kiss",
-        description:
-            "Gold-hued print of Gustav Klimt's celebrated work from his Golden Phase.",
-        images: ["klimt_the_kiss.jpg"],
+        description: "Gold-hued print of Gustav Klimt's celebrated work from his Golden Phase.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 220,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -905,9 +850,7 @@ db.auctions.insertMany([
     },
     {
         title: "Warhol Print: Marilyn Monroe",
-        description:
-            "Vibrant pop art print of Andy Warhol's iconic Marilyn series.",
-        images: ["warhol_marilyn_monroe.jpg"],
+        description: "Vibrant pop art print of Andy Warhol's iconic Marilyn series.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 300,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -918,9 +861,7 @@ db.auctions.insertMany([
     },
     {
         title: "Munch Print: The Scream",
-        description:
-            "High-resolution reproduction of Edvard Munch's famous expressionist painting.",
-        images: ["munch_the_scream.jpg"],
+        description: "High-resolution reproduction of Edvard Munch's famous expressionist painting.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 200,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -931,9 +872,7 @@ db.auctions.insertMany([
     },
     {
         title: "Michelangelo Print: Creation of Adam",
-        description:
-            "High-definition print of the iconic fresco from the Sistine Chapel.",
-        images: ["michelangelo_creation_of_adam.jpg"],
+        description: "High-definition print of the iconic fresco from the Sistine Chapel.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 320,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -944,9 +883,7 @@ db.auctions.insertMany([
     },
     {
         title: "Frida Kahlo Print: Self-Portrait with Thorn Necklace",
-        description:
-            "Striking print of one of Frida Kahlo's most famous self-portraits, showcasing her surreal and introspective style.",
-        images: ["frida_kahlo_self_portrait_thorn_necklace.jpg"],
+        description: "Striking print of one of Frida Kahlo's most famous self-portraits, showcasing her surreal and introspective style.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 250,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -957,9 +894,7 @@ db.auctions.insertMany([
     },
     {
         title: "Hand-Blown Glass Vase by Murano Artisan",
-        description:
-            "Unique, vibrant glass vase crafted by a skilled Murano glassblower in Venice, Italy.",
-        images: ["murano_glass_vase.jpg"],
+        description: "Unique, vibrant glass vase crafted by a skilled Murano glassblower in Venice, Italy.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 350,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -970,9 +905,7 @@ db.auctions.insertMany([
     },
     {
         title: "Bronze Sculpture: The Embrace",
-        description:
-            "A limited-edition bronze sculpture depicting two figures in an embrace, signed by the sculptor.",
-        images: ["bronze_sculpture_embrace.jpg"],
+        description: "A limited-edition bronze sculpture depicting two figures in an embrace, signed by the sculptor.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 900,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -983,9 +916,7 @@ db.auctions.insertMany([
     },
     {
         title: "Ceramic Vase by Soo-Jin Kim",
-        description:
-            "Hand-thrown ceramic vase with a layered glaze technique, blending traditional and modern aesthetics.",
-        images: ["soo_jin_kim_ceramic_vase.jpg"],
+        description: "Hand-thrown ceramic vase with a layered glaze technique, blending traditional and modern aesthetics.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 220,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -996,9 +927,7 @@ db.auctions.insertMany([
     },
     {
         title: "Stone Inlay Mosaic Tabletop",
-        description:
-            "Exquisite mosaic table surface crafted with semi-precious stones set in marble.",
-        images: ["stone_inlay_mosaic.jpg"],
+        description: "Exquisite mosaic table surface crafted with semi-precious stones set in marble.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 1200,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -1009,9 +938,7 @@ db.auctions.insertMany([
     },
     {
         title: "Contemporary Mixed Media Piece: Urban Layers",
-        description:
-            "Collage of newspaper clippings, acrylic paint, and found objects that reflect modern city life.",
-        images: ["mixed_media_urban_layers.jpg"],
+        description: "Collage of newspaper clippings, acrylic paint, and found objects that reflect modern city life.",
         category: db.categories.findOne({ name: "Art" })._id,
         startingPrice: 400,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -1094,9 +1021,7 @@ db.auctions.insertMany([
     },
     {
         title: "Sumerian Clay Tablet",
-        description:
-            "An ancient cuneiform tablet from Mesopotamia, detailing trade records.",
-        images: ["sumerian_clay_tablet.jpg"],
+        description: "An ancient cuneiform tablet from Mesopotamia, detailing trade records.",
         category: db.categories.findOne({ name: "Antiquities" })._id,
         startingPrice: 400,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -1197,11 +1122,7 @@ db.auctions.insertMany([
     },
     {
         title: "Viking Bronze Brooch",
-        description:
-            "Authentic oval brooch used by Viking women for fastening garments.",
-        images: [
-            "https://i.etsystatic.com/8676750/r/il/bd67c5/921624465/il_570xN.921624465_kuns.jpg",
-        ],
+        description: "Authentic oval brooch used by Viking women for fastening garments.",
         category: db.categories.findOne({ name: "Antiquities" })._id,
         startingPrice: 200,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -1227,9 +1148,7 @@ db.auctions.insertMany([
     },
     {
         title: "Byzantine Icon",
-        description:
-            "Religious icon from the Byzantine Empire, featuring traditional gold leaf accents.",
-        images: ["byzantine_icon.jpg"],
+        description: "Religious icon from the Byzantine Empire, featuring traditional gold leaf accents.",
         category: db.categories.findOne({ name: "Antiquities" })._id,
         startingPrice: 1200,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -1383,9 +1302,7 @@ db.auctions.insertMany([
     },
     {
         title: "Cartier Juste un Clou Bracelet",
-        description:
-            "A modern nail-inspired bracelet crafted in 18K rose gold by Cartier.",
-        images: ["cartier_juste_un_clou.jpg"],
+        description: "A modern nail-inspired bracelet crafted in 18K rose gold by Cartier.",
         category: db.categories.findOne({ name: "Jewelry" })._id,
         startingPrice: 4000,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -1441,9 +1358,7 @@ db.auctions.insertMany([
     },
     {
         title: "Swarovski Crystal Set",
-        description:
-            "Matching necklace and earrings set featuring sparkling Swarovski crystals.",
-        images: ["swarovski_crystal_set.jpg"],
+        description: "Matching necklace and earrings set featuring sparkling Swarovski crystals.",
         category: db.categories.findOne({ name: "Jewelry" })._id,
         startingPrice: 200,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -1473,9 +1388,6 @@ db.auctions.insertMany([
     {
         title: "Levi's 501 Jeans",
         description: "Iconic denim jeans with a timeless fit.",
-        images: [
-            "https://media.sivasdescalzo.com/media/catalog/product/9/0/90501-0019_sivasdescalzo-Levi_s_Vintage-1890_XX501_JEANS_Z7827_LVC_TWI-1674566498-1.jpg",
-        ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 80,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1488,7 +1400,8 @@ db.auctions.insertMany([
         title: "Gucci GG Marmont Belt",
         description: "Luxury belt with signature GG logo.",
         images: [
-            "https://media.gucci.com/style/DarkGray_Center_0_0_490x490/1634145319/659416_92TIC_9769_001_100_0000_Light.jpg",
+            "https://media.gucci.com/style/DarkGray_Center_0_0_1200x1200/1634145319/659416_92TIC_9769_001_100_0000_Light-Cinturn-GG-Marmont-reversible.jpg",
+            "https://media.gucci.com/style/DarkGray_Center_0_0_2400x2400_40/1678147218/659416_92TIC_9769_003_100_0000_Light-Cinturn-GG-Marmont-reversible.jpg"
         ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 400,
@@ -1502,7 +1415,9 @@ db.auctions.insertMany([
         title: "The North Face Puffer Jacket",
         description: "Warm and stylish puffer jacket for winter.",
         images: [
-            "https://media.footdistrict.com/width/840/src/catalog/product/1/4/141_196573615762/--/chaquetas-abrigos-the-north-face-himalayan-womens-puffer-jacket-nf0a4r2wlgo1.jpg",
+            "https://assets.thenorthface.eu/images/t_img/f_auto,h_462,w_462/e_sharpen:60/dpr_2.0/v1720635083/NF0A3C8D4G3-ALT12/Mens-1996-Retro-Nuptse-Jacket.png",
+            "https://assets.thenorthface.eu/images/t_img/f_auto,h_462,w_462/e_sharpen:60/dpr_2.0/v1720635082/NF0A3C8D4G3-ALT13/Mens-1996-Retro-Nuptse-Jacket.png",
+            "https://assets.thenorthface.eu/images/t_img/f_auto,h_462,w_462/e_sharpen:60/dpr_2.0/v1720635082/NF0A3C8D4G3-ALT11/Mens-1996-Retro-Nuptse-Jacket.png"
         ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 250,
@@ -1515,9 +1430,6 @@ db.auctions.insertMany([
     {
         title: "Adidas Originals Hoodie",
         description: "Comfortable hoodie with the Adidas Originals logo.",
-        images: [
-            "https://media.footdistrict.com/width/840/src/catalog/product/4/3/43_4067903725467/--/sudaderas-adidas-originals-x-korn-mens-hoodie-jg1337-5.jpg",
-        ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 90,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -1531,7 +1443,10 @@ db.auctions.insertMany([
         description:
             "Iconic LV tote with a monogram pattern and spacious interior.",
         images: [
-            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-damier-eb%C3%A8ne-bolsos--N40598_PM2_Front%20view.jpg",
+            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-monogram-bolsos--M46987_PM2_Front%20view.png?wid=1440&hei=1440",
+            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-monogram-bolsos--M46987_PM1_Interior%20view.png?wid=1440&hei=1440",
+            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-monogram-bolsos--M46987_PM1_Detail%20view.png?wid=1440&hei=1440",
+            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-monogram-bolsos--M46987_PM1_Back%20view.png?wid=1440&hei=1440"
         ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1500,
@@ -1546,7 +1461,9 @@ db.auctions.insertMany([
         description:
             "Timeless quilted flap bag with the signature CC turn-lock and gold-tone hardware.",
         images: [
-            "https://cdn-images.farfetch-contents.com/18/90/80/43/18908043_41281877_600.jpg",
+            "https://www.chanel.com/images///f_auto,q_auto:good,dpr_1.1/w_1600/-9547701288990.jpg",
+            "https://www.chanel.com/images///f_auto,q_auto:good,dpr_1.1/w_1600/-9547701190686.jpg",
+            "https://www.chanel.com/images///f_auto,q_auto:good,dpr_1.1/w_1600/-9547701223454.jpg"
         ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 5000,
@@ -1573,8 +1490,12 @@ db.auctions.insertMany([
     },
     {
         title: "Dior J'Adior Slingback Pumps",
+        images: [
+            "https://assets.christiandior.com/is/image/diorprod/KCC201VNRS900_E03?$default_GHC$&crop=321,429,1167,1113&bfc=on&qlt=85",
+            "https://assets.christiandior.com/is/image/diorprod/KCC201VNRS900_E05-1?$default_GHC$&crop=310,410,1099,1123&bfc=on&qlt=85",
+            "https://assets.christiandior.com/is/image/diorprod/KCC201VNRS900_E06?$default_GHC$&crop=279,149,1173,1488&bfc=on&qlt=85"
+        ],
         description: "Elegant slingback heels with the J'Adior ribbon detail.",
-        images: ["dior_jadior_pumps.jpg"],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 950,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -1585,9 +1506,12 @@ db.auctions.insertMany([
     },
     {
         title: "Prada Re-Edition 2005 Nylon Bag",
-        description:
-            "Modern re-edition of Prada's iconic nylon bag with metal logo plaque.",
-        images: ["prada_re_edition_2005.jpg"],
+        description: "Modern re-edition of Prada's iconic nylon bag with metal logo plaque.",
+        images: [
+            "https://www.prada.com/content/dam/pradabkg_products/1/1BH/1BH204/R064F0002/1BH204_R064_F0002_V_V9L_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.2000.2000.jpg",
+            "https://www.prada.com/content/dam/pradabkg_products/1/1BH/1BH204/R064F0002/1BH204_R064_F0002_V_V9L_SLR.jpg/_jcr_content/renditions/cq5dam.web.hebebed.2000.2000.jpg",
+            "https://www.prada.com/content/dam/pradabkg_products/1/1BH/1BH204/R064F0002/1BH204_R064_F0002_V_V9L_SLD.jpg/_jcr_content/renditions/cq5dam.web.hebebed.2000.2000.jpg"
+        ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1200,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -1598,9 +1522,7 @@ db.auctions.insertMany([
     },
     {
         title: "Versace Baroque Print Robe",
-        description:
-            "Luxurious silk robe with the iconic Versace baroque pattern and bold branding.",
-        images: ["versace_baroque_robe.jpg"],
+        description: "Luxurious silk robe with the iconic Versace baroque pattern and bold branding.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 800,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -1611,9 +1533,11 @@ db.auctions.insertMany([
     },
     {
         title: "Burberry Trench Coat",
-        description:
-            "Classic Burberry trench with the iconic check lining and belted silhouette.",
-        images: ["burberry_trench.jpg"],
+        description: "Classic Burberry trench with the iconic check lining and belted silhouette.",
+        images: [
+            "https://www.net-a-porter.com/variants/images/1647597325109270/in/w920_q60.jpg",
+            "https://www.net-a-porter.com/variants/images/1647597325109270/cu/w920_q60.jpg"
+            ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1300,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1624,9 +1548,7 @@ db.auctions.insertMany([
     },
     {
         title: "Fendi Baguette Bag",
-        description:
-            "Signature Fendi baguette crafted in premium leather with the iconic FF clasp.",
-        images: ["fendi_baguette.jpg"],
+        description: "Signature Fendi baguette crafted in premium leather with the iconic FF clasp.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 2200,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -1637,9 +1559,7 @@ db.auctions.insertMany([
     },
     {
         title: "Off-White Arrows Hoodie",
-        description:
-            "Streetwear staple with the signature Off-White arrow graphic on the back.",
-        images: ["off_white_arrows_hoodie.jpg"],
+        description: "Streetwear staple with the signature Off-White arrow graphic on the back.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 600,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -1650,9 +1570,11 @@ db.auctions.insertMany([
     },
     {
         title: "Balmain Double-Breasted Blazer",
-        description:
-            "Fitted blazer with padded shoulders and gold-tone embossed buttons.",
-        images: ["balmain_double_breasted_blazer.jpg"],
+        description: "Fitted blazer with padded shoulders and gold-tone embossed buttons.",
+        images: [
+            "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSaYkGdw0pnOLgp_E4NnWZcCl7n974qUt93l7Xd43VfhnAADg6JjeikylAX_s9SIz3Qu5DdL_nd8ndPrO_N8HgOflfzORaulGA6wi-YG3ytWAiArToG6AlS",
+            "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR2XxaqcUVs-04OzzVGNyA0tRYIDEXDsK8mcyjHXz5FOqMlBiMd9lrOZ5o1UZardnLSBw0HXgALP_DqRTU8ZOp0UUAtRbWoIThbXKHWWaQDTC28a46jX3sz2Q"
+        ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1800,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -1663,9 +1585,7 @@ db.auctions.insertMany([
     },
     {
         title: "Hermès Birkin Bag 30",
-        description:
-            "Iconic handcrafted Hermès Birkin made of premium Togo leather, featuring palladium hardware.",
-        images: ["hermes_birkin_30.jpg"],
+        description: "Iconic handcrafted Hermès Birkin made of premium Togo leather, featuring palladium hardware.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 10000,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -1676,9 +1596,7 @@ db.auctions.insertMany([
     },
     {
         title: "Moncler Maya Down Jacket",
-        description:
-            "Stylish quilted down jacket offering warmth and comfort, featuring the signature Moncler logo patch.",
-        images: ["moncler_maya_jacket.jpg"],
+        description: "Stylish quilted down jacket offering warmth and comfort, featuring the signature Moncler logo patch.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1250,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1689,9 +1607,7 @@ db.auctions.insertMany([
     },
     {
         title: "Valentino Rockstud Pumps",
-        description:
-            "Luxury pointed-toe pumps adorned with the signature Valentino Rockstud detailing.",
-        images: ["valentino_rockstud_pumps.jpg"],
+        description: "Luxury pointed-toe pumps adorned with the signature Valentino Rockstud detailing.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 900,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -1702,9 +1618,7 @@ db.auctions.insertMany([
     },
     {
         title: "Alexander McQueen Oversized Sneakers",
-        description:
-            "Chunky statement sneakers featuring a thick sole and minimalist design.",
-        images: ["alexander_mcqueen_oversized_sneakers.jpg"],
+        description: "Chunky statement sneakers featuring a thick sole and minimalist design.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 600,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -1715,9 +1629,7 @@ db.auctions.insertMany([
     },
     {
         title: "Saint Laurent Sac de Jour",
-        description:
-            "Structured tote in smooth leather with clean lines and metal feet for durability.",
-        images: ["saint_laurent_sac_de_jour.jpg"],
+        description: "Structured tote in smooth leather with clean lines and metal feet for durability.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 2200,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -1728,9 +1640,7 @@ db.auctions.insertMany([
     },
     {
         title: "Bottega Veneta Padded Cassette Bag",
-        description:
-            "Signature intrecciato woven leather in a modern, puffy design with a magnetic closure.",
-        images: ["bottega_veneta_padded_cassette.jpg"],
+        description: "Signature intrecciato woven leather in a modern, puffy design with a magnetic closure.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 2800,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -1741,9 +1651,7 @@ db.auctions.insertMany([
     },
     {
         title: "Tom Ford Two-Piece Suit",
-        description:
-            "Exquisitely tailored suit in wool with peak lapels and a sharp silhouette.",
-        images: ["tom_ford_two_piece_suit.jpg"],
+        description: "Exquisitely tailored suit in wool with peak lapels and a sharp silhouette.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 3000,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1754,9 +1662,7 @@ db.auctions.insertMany([
     },
     {
         title: "Christian Louboutin So Kate 120",
-        description:
-            "Iconic stiletto pumps with a pointed toe and the signature red sole.",
-        images: ["christian_louboutin_so_kate_120.jpg"],
+        description: "Iconic stiletto pumps with a pointed toe and the signature red sole.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 750,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -1767,9 +1673,7 @@ db.auctions.insertMany([
     },
     {
         title: "Givenchy Antigona Bag",
-        description:
-            "Structured, geometric shape with top handles and a detachable shoulder strap.",
-        images: ["givenchy_antigona.jpg"],
+        description: "Structured, geometric shape with top handles and a detachable shoulder strap.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1900,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -1780,17 +1684,15 @@ db.auctions.insertMany([
     },
     {
         title: "Cartier Silk Scarf",
-        description:
-            "Luxurious silk scarf adorned with a delicate Cartier motif, perfect as a neckerchief or hair accessory.",
-        images: ["cartier_silk_scarf.jpg"],
+        description: "Luxurious silk scarf adorned with a delicate Cartier motif, perfect as a neckerchief or hair accessory.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 450,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
         startTime: new Date(),
         endTime: new Date(Date.now() + 604800000), // 7 days
         status: "inactive",
-        createdAt: new Date(),
-    },
+        createdAt: new Date()
+    }
 ]);
 
 //SUBASTAS CATEGORIA "MUSIC"
@@ -1824,7 +1726,6 @@ db.auctions.insertMany([
     {
         title: "Shure SM7B Microphone",
         description: "Professional-grade microphone for studio recording.",
-        images: ["https://i.ebayimg.com/images/g/FaAAAOSwfZljxdnw/s-l1200.jpg"],
         category: db.categories.findOne({ name: "Music" })._id,
         startingPrice: 400,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -1878,11 +1779,7 @@ db.auctions.insertMany([
     },
     {
         title: "Ibanez SR505 Bass Guitar",
-        description:
-            "5-string bass guitar with a slim neck and versatile active pickups.",
-        images: [
-            "https://www.ohguitar.com/wp-content/uploads/2020/07/ibanez-sr505-bm-5.jpg",
-        ],
+        description: "5-string bass guitar with a slim neck and versatile active pickups.",
         category: db.categories.findOne({ name: "Music" })._id,
         startingPrice: 700,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1893,9 +1790,7 @@ db.auctions.insertMany([
     },
     {
         title: "Ludwig Supraphonic Snare Drum",
-        description:
-            "Legendary snare drum delivering a bright, crisp tone for any music style.",
-        images: ["ludwig_supraphonic_snare.jpg"],
+        description: "Legendary snare drum delivering a bright, crisp tone for any music style.",
         category: db.categories.findOne({ name: "Music" })._id,
         startingPrice: 600,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -1949,11 +1844,7 @@ db.auctions.insertMany([
     },
     {
         title: "AKG C214 Microphone",
-        description:
-            "Large-diaphragm condenser microphone ideal for vocals and acoustic instruments.",
-        images: [
-            "AKG C214 Microphonehttps://shop.plastic.es/wp-content/uploads/2023/02/Auriculares-profesionales-Audio-Technica-ATH-M50X-BT2-1.webp",
-        ],
+        description: "Large-diaphragm condenser microphone ideal for vocals and acoustic instruments.",
         category: db.categories.findOne({ name: "Music" })._id,
         startingPrice: 350,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1979,9 +1870,7 @@ db.auctions.insertMany([
     },
     {
         title: "Moog Subsequent 37 Synthesizer",
-        description:
-            "Powerful analog synthesizer featuring classic Moog sound with modern enhancements.",
-        images: ["moog_subsequent_37.jpg"],
+        description: "Powerful analog synthesizer featuring classic Moog sound with modern enhancements.",
         category: db.categories.findOne({ name: "Music" })._id,
         startingPrice: 1500,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -1992,9 +1881,7 @@ db.auctions.insertMany([
     },
     {
         title: "Behringer X32 Compact Mixer",
-        description:
-            "Digital mixing console with 40 input channels, integrated effects, and motorized faders.",
-        images: ["behringer_x32_compact.jpg"],
+        description: "Digital mixing console with 40 input channels, integrated effects, and motorized faders.",
         category: db.categories.findOne({ name: "Music" })._id,
         startingPrice: 2300,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2064,9 +1951,6 @@ db.auctions.insertMany([
     {
         title: "Criterion Collection: Parasite",
         description: "Special edition of the Academy Award-winning film.",
-        images: [
-            "https://ih1.redbubble.net/image.1760247108.6743/sn,x1000-pad,750x1000,f8f8f8.jpg",
-        ],
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 40,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2148,9 +2032,7 @@ db.auctions.insertMany([
     },
     {
         title: "Pirates of the Caribbean 5-Movie Collection",
-        description:
-            "All five swashbuckling adventures of Captain Jack Sparrow on Blu-ray.",
-        images: ["pirates_caribbean_collection.jpg"],
+        description: "All five swashbuckling adventures of Captain Jack Sparrow on Blu-ray.",
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -2191,9 +2073,7 @@ db.auctions.insertMany([
     },
     {
         title: "Jurassic Park 5-Movie Collection",
-        description:
-            "All the dinosaur adventures in one set, from the original Jurassic Park to Jurassic World: Fallen Kingdom.",
-        images: ["jurassic_park_5movie.jpg"],
+        description: "All the dinosaur adventures in one set, from the original Jurassic Park to Jurassic World: Fallen Kingdom.",
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 55,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -2204,9 +2084,7 @@ db.auctions.insertMany([
     },
     {
         title: "https://i.ebayimg.com/images/g/FSoAAOSwCtxkzVAi/s-l1200.jpg",
-        description:
-            "Four classic sci-fi horror films featuring Ellen Ripley against the terrifying Xenomorph.",
-        images: ["alien_quadrilogy.jpg"],
+        description: "Four classic sci-fi horror films featuring Ellen Ripley against the terrifying Xenomorph.",
         category: db.categories.findOne({ name: "Movies" })._id,
         startingPrice: 50,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2249,11 +2127,7 @@ db.auctions.insertMany([
     },
     {
         title: "God of War: Ragnarök",
-        description:
-            "Epic action-adventure game continuing Kratos and Atreus's saga.",
-        images: [
-            "https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/aqZdSwWyy9JcQ66BxHDKrky6.jpg",
-        ],
+        description: "Epic action-adventure game continuing Kratos and Atreus's saga.",
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -2277,9 +2151,7 @@ db.auctions.insertMany([
     },
     {
         title: "Final Fantasy XVI",
-        description:
-            "Latest installment in the legendary JRPG series, featuring a new world and characters.",
-        images: ["https://win.gg/wp-content/uploads/2023/05/ff-xvi.webp"],
+        description: "Latest installment in the legendary JRPG series, featuring a new world and characters.",
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 70,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -2305,9 +2177,7 @@ db.auctions.insertMany([
     },
     {
         title: "Animal Crossing: New Horizons",
-        description:
-            "Relaxing life simulation game where you build and decorate your own island getaway.",
-        images: ["animal_crossing_new_horizons.jpg"],
+        description: "Relaxing life simulation game where you build and decorate your own island getaway.",
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2318,9 +2188,7 @@ db.auctions.insertMany([
     },
     {
         title: "Pokémon Scarlet",
-        description:
-            "New generation of Pokémon with an open-world design and fresh creatures to discover.",
-        images: ["pokemon_scarlet.jpg"],
+        description: "New generation of Pokémon with an open-world design and fresh creatures to discover.",
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 60,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -2331,9 +2199,7 @@ db.auctions.insertMany([
     },
     {
         title: "Red Dead Redemption 2",
-        description:
-            "Western-themed open-world game from Rockstar, featuring an immersive storyline.",
-        images: ["red_dead_redemption_2.jpg"],
+        description: "Western-themed open-world game from Rockstar, featuring an immersive storyline.",
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 40,
         sellerId: db.users.findOne({ email: "dave@example.com" })._id,
@@ -2344,9 +2210,7 @@ db.auctions.insertMany([
     },
     {
         title: "Cyberpunk 2077",
-        description:
-            "Futuristic open-world RPG set in Night City, with deep character customization.",
-        images: ["cyberpunk_2077.jpg"],
+        description: "Futuristic open-world RPG set in Night City, with deep character customization.",
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 50,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -2357,9 +2221,7 @@ db.auctions.insertMany([
     },
     {
         title: "The Witcher 3: Wild Hunt",
-        description:
-            "Critically acclaimed action RPG featuring Geralt of Rivia in a vast fantasy world.",
-        images: ["the_witcher_3_wild_hunt.jpg"],
+        description: "Critically acclaimed action RPG featuring Geralt of Rivia in a vast fantasy world.",
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 30,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -2370,9 +2232,7 @@ db.auctions.insertMany([
     },
     {
         title: "FIFA 23",
-        description:
-            "Latest entry in the FIFA series with updated teams, realistic graphics, and new features.",
-        images: ["fifa_23.jpg"],
+        description: "Latest entry in the FIFA series with updated teams, realistic graphics, and new features.",
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 50,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,

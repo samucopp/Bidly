@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./ActiveAuctionsSection.css";
 import { getAuctions } from "../../api/auction";
 import ImageWithFallback from "../fallback-image/ImageWithFallback";
+import ImageCarousel from "../../components/carrousel/Carrousel";
 
 const ActiveAuctionsSection = () => {
     const [auctions, setAuctions] = useState([]);
@@ -13,7 +14,7 @@ const ActiveAuctionsSection = () => {
         const fetchActiveAuctions = async () => {
             try {
                 const data = await getAuctions(true);
-                setAuctions(data.auctions.slice(0, 4)); // Solo mostramos 4 subastas
+                setAuctions(data.auctions.slice(0, 6)); // Solo mostramos 4 subastas
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -40,147 +41,79 @@ const ActiveAuctionsSection = () => {
         );
     }
 
-    return (
-        <>
-            <section className="active-auctions-section">
-                <div className="active-auctions-container">
-                    <div className="active-auctions-header">
-                        <h2 className="active-auctions-title">
-                            Active Auctions
-                        </h2>
-                        <Link
-                            to="/catalog?status=active"
-                            className="see-all-link"
-                        >
-                            Go to catalog →
-                        </Link>
-                    </div>
+    const formatDate = (date) => {
+        const options = { weekday: "long" };
+        const weekday = new Intl.DateTimeFormat("en-US", options).format(date);
 
-                    <div className="auctions-grid">
-                        {auctions.length > 0 ? (
-                            auctions.map((auction) => (
-                                <div key={auction._id} className="auction-card">
-                                    <img
-                                        src={
-                                            auction.images?.[0] ||
-                                            "/api/placeholder/400/300"
-                                        }
-                                        alt={auction.title}
-                                        className="auction-image"
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear().toString().slice(-2);
+
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+
+        return `${weekday}, ${month}/${day}/${year} - ${hours}:${minutes}`;
+    };
+
+    return (
+        <section className="active-auctions-section">
+            <div className="active-auctions-container">
+                <div className="active-auctions-header">
+                    <h2 className="active-auctions-title">
+                        Active Auctions
+                    </h2>
+                    <Link
+                        to="/catalog"
+                        className="see-all-link"
+                    >
+                        Go to catalog →
+                    </Link>
+                </div>
+
+                <div className="auctions-grid">
+                    {auctions.length > 0 ? (
+                        auctions.map((auction) => (
+                            <div key={auction._id} className="active-auction-card">
+                                <div className="active-auction-carousel">
+                                    <ImageCarousel
+                                        images={auction.images}
+                                        defaultImage={"logo_bidly.png"}
                                     />
-                                    <div className="auction-content">
-                                        <h3 className="auction-title">
-                                            {auction.title}
-                                        </h3>
-                                        <p className="auction-category">
-                                            Category: {auction.category?.name}
+                                </div>
+                                <div className="active-auction-content">
+                                    <h3 className="auction-title">
+                                        {auction.title}
+                                    </h3>
+                                    <p className="active-auction-category">
+                                        Category: {auction.category?.name}
+                                    </p>
+                                    <p className="active-auction-price">
+                                        $
+                                        {auction.currentPrice ||
+                                            auction.startingPrice}
+                                    </p>
+                                    <div className="active-auction-footer">
+                                        <p className="active-auction-end-time">
+                                            <strong>End Date:</strong> {formatDate(new Date(auction.endTime))}
                                         </p>
-                                        <p className="auction-price">
-                                            $
-                                            {auction.currentPrice ||
-                                                auction.startingPrice}
-                                        </p>
-                                        <div className="auction-footer">
-                                            <span className="auction-end-time">
-                                                Finish:{" "}
-                                                {new Date(
-                                                    auction.endTime
-                                                ).toLocaleDateString()}
-                                            </span>
-                                            <Link
-                                                to={`/auction/${auction._id}`}
-                                                className="view-button"
-                                            >
-                                                BID
-                                            </Link>
-                                        </div>
+                                        <Link
+                                            to={`/auction/${auction._id}`}
+                                            className="view-button"
+                                        >
+                                            BID
+                                        </Link>
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            <div className="no-auctions-message">
-                                No hay subastas activas en este momento
                             </div>
-                        )}
-                    </div>
+                        ))
+                    ) : (
+                        <div className="no-auctions-message">
+                            No hay subastas activas en este momento
+                        </div>
+                    )}
                 </div>
-            </section>
-            
-        </>
-    );
-    return (
-        <>
-            <section className="active-auctions-section">
-                <div className="active-auctions-container">
-                    <div className="active-auctions-header">
-                        <h2 className="active-auctions-title">
-                            Active Auctions
-                        </h2>
-                        <Link
-                            to="/catalog?status=active"
-                            className="see-all-link"
-                        >
-                            Go to catalog →
-                        </Link>
-                    </div>
-
-                    <div className="auctions-grid">
-                        {auctions.length > 0 ? (
-                            auctions.map((auction) => (
-                                <div key={auction._id} className="auction-card">
-                                    <ImageWithFallback
-                                        src={auction.images?.[0]}
-                                        alt={auction.title}
-                                        className="auction-image"
-                                        fallbackSrc="/favicon.png"
-                                    />
-                                    <div className="auction-content">
-                                        <h3 className="auction-title">
-                                            {auction.title}
-                                        </h3>
-                                        <p className="auction-category">
-                                            Category: {auction.category?.name}
-                                        </p>
-                                        <p className="auction-price">
-                                            $
-                                            {auction.currentPrice ||
-                                                auction.startingPrice}
-                                        </p>
-                                        <div className="auction-footer">
-                                            <span className="auction-end-time">
-                                                Finish:{" "}
-                                                {new Date(
-                                                    auction.endTime
-                                                ).toLocaleDateString()}
-                                            </span>
-                                            <Link
-                                                to={`/auction/${auction._id}`}
-                                                className="view-button"
-                                            >
-                                                BID
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="no-auctions-message">
-                                No hay subastas activas en este momento
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </section>
-            <section className="upcoming-auctions-section">
-                <div className="upcoming-auctions-container">
-                    <div className="upcoming-auctions-header">
-                        <h2 className="upcoming-auctions-title">
-                            Upcoming auctions
-                        </h2>
-                    </div>
-                </div>
-            </section>
-        </>
+            </div>
+        </section>
     );
 };
 
