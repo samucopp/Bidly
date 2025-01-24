@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import AuctionCarrusel from '../../components/carrusels/AuctionCarrusel';
 import GenericModal from '../../components/modals/GenericModal';
 import ImageWithFallback from '../../components/fallback-image/ImageWithFallback';
-import { getActiveFollowedAuctions, getAuctionsByOwner } from '../../api/auction.js';
+import { getActiveFollowedAuctions, getAuctionsByOwner, deleteAuction } from '../../api/auction.js';
 import { getUser } from '../../api/user.js';
 import Cookies from "js-cookie";
+import CreateAuctionContent from '../../components/user-profile/CreateAuctionContent';
 import './UserProfile.css';
 
-
+import { uploadProfileAvatar } from '../../api/uploadFiles.js';
 const UserProfile = ({ }) => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCreateAuctionModalOpen, setIsCreateAuctionModalOpen] = useState(false);
-    const [selectedAuctionId, setSelectedAuctionId] = useState(null);
+    const [selectedAuction, setSelectedAuction] = useState(null);
     const [activeBids, setActiveBids] = useState({ auctions: [] });
     const [upcomingBids, setUpcomingBids] = useState({ auctions: [] });
     const [auctionsHistory, setAuctionsHistory] = useState({ auctions: [] });
@@ -22,6 +23,10 @@ const UserProfile = ({ }) => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    ;
+
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,11 +49,12 @@ const UserProfile = ({ }) => {
                     setActiveBids(activeAuctions);
                 }
                 // Fetch user's auctions
-                const userAuctions = await getAuctionsByOwner(userId);
+                const userAuctions = await getAuctionsByOwner(userId, false, 1, 300);
+                console.log("myauctions:",userAuctions)
                 if (userAuctions?.success) {
                     setMyAuctions(userAuctions);
                 }
-                
+
                 const auctionsHistory = await getAuctionsByOwner(userId, false, 1, 300);
                 if (auctionsHistory?.success) {
                     setAuctionsHistory(auctionsHistory);
@@ -94,14 +100,23 @@ const UserProfile = ({ }) => {
         setIsSettingsOpen(false);
     };
 
-    const handleDeleteAuction = (auctionId) => {
-        setSelectedAuctionId(auctionId);
-        setIsDeleteModalOpen(true);
-    };
-
     const handleCreateNewAuction = () => {
         setIsCreateAuctionModalOpen(true);
     };
+
+
+    const handleDeleteAuction = async (auctionId) => {
+
+        const removedAuction = await deleteAuction(auctionId);
+        if (removedAuction?.success) {
+            const userId = Cookies.get('userId');
+            const userAuctions = await getAuctionsByOwner(userId);
+                if (userAuctions?.success) {
+
+                    setMyAuctions(userAuctions);
+                }
+        }
+    }
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -123,13 +138,18 @@ const UserProfile = ({ }) => {
             }
         };
 
-        const handleSave = () => {
+        const handleSave = async () => {
             if (selectedFile) {
+                const formdata = new FormData();
+                formdata.append('file', selectedFile);
+                const updatedAvatar = await uploadProfileAvatar(userData._id,formdata);
+                console.log("updatedAvatar", updatedAvatar);
                 // lógica guardar en su sesion con el id de usuario 
                 setUserData(prev => ({
                     ...prev,
                     avatar: previewImage
                 }));
+
             }
             closeModal();
         };
@@ -215,59 +235,57 @@ const UserProfile = ({ }) => {
         );
     };
 
-    const DeleteAuctionContent = () => (
-        <div className="modal-content">
-            <h2>Delete Auction</h2>
-            <p>Are you sure you want to delete this auction?</p>
-            <div className="modal-actions">
-                <button
-                    className="cancel-button"
-                    onClick={() => setIsDeleteModalOpen(false)}
-                >
-                    Cancel
-                </button>
-                <button
-                    className="delete-button"
-                    onClick={() => {
-                        console.log('Deleting auction:', selectedAuctionId);
-                        setIsDeleteModalOpen(false);
-                    }}
-                >
-                    Delete
-                </button>
-            </div>
-        </div>
-    );
 
-    const CreateAuctionContent = () => (
-        <div className="modal-content">
-            <h2>Create New Auction</h2>
-            <form className="auction-form">
-                <input type="text" placeholder="Title" />
-                <textarea placeholder="Description" />
-                <input type="number" placeholder="Starting Price" />
-                <input type="file" accept="image/*" multiple />
-                <select>
-                    <option value="">Select Category</option>
-                    <option value="electronics">Electronics</option>
-                </select>
-                <div className="date-inputs">
-                    <input type="datetime-local" placeholder="Start Date" />
-                    <input type="datetime-local" placeholder="End Date" />
+    const DeleteAuctionContent = ({ onClose, auctionId, updateAuctions }) => {
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState('');
+
+        const handleConfirmDelete = async () => {
+            setLoading(true);
+            try {
+                const response = await deleteAuction(auctionId);
+                if (response && (response.success || response.succes)) {
+                    const userId = Cookies.get('userId');
+                    const userAuctions = await getAuctionsByOwner(userId);
+                    if (userAuctions?.success) {
+                        updateAuctions(userAuctions);
+                    }
+                    onClose();
+                } else {
+                    throw new Error(response?.message || 'Error al eliminar la subasta');
+                }
+            } catch (error) {
+                setError(error.message || 'Error al eliminar la subasta');
+                console.error('Error al eliminar la subasta:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        return (
+            <div className="modal-content">
+                <h2>Delete Auction</h2>
+                {error && <div className="error-message">{error}</div>}
+                <p>Are you sure you want to delete this auction?</p>
+                <div className="modal-actions">
+                    <button
+                        className="cancel-button"
+                        onClick={onClose}
+                        disabled={loading}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="delete-button"
+                        onClick={handleConfirmDelete}
+                        disabled={loading}
+                    >
+                        {loading ? 'Deleting...' : 'DELETE'}
+                    </button>
                 </div>
-                <button
-                    type="submit"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setIsCreateAuctionModalOpen(false);
-                    }}
-                >
-                    Create Auction
-                </button>
-            </form>
-        </div>
-    );
-
+            </div>
+        );
+    };
     return (
         <div className="profile-container">
             <div className="profile-header">
@@ -292,59 +310,52 @@ const UserProfile = ({ }) => {
             </div>
 
             <section className="auctions-section">
-                <h2>Following Auctions</h2> {/*getauctivefollowedauctions*/}
+                <h2>Following Auctions</h2>
 
                 <div className="auction-category">
-                    <h3>Active Auctions</h3>
-                    <div className="auction-grid">
-                        {activeBids.auctions.slice(0, 3).map((auction) => (
-                            <div key={auction._id} className="auction-card">
-                                <button className="favorite-button">♥</button>
-                                <ImageWithFallback
-                                    src={auction.images[0]}
-                                    alt={auction.title}
-                                    fallback="/logo_bidly.png"
-                                    className="auction-image"
 
-                                />
-                                <h4>{auction.title}</h4>
-                                <p>${auction.startingPrice}</p>
+
+                    {activeBids.auctions.slice(0, 100).map((auction) => (
+                        <div key={auction._id} className="auction-card">
+
+                            <ImageWithFallback
+                                src={auction.images[0]}
+                                alt={auction.title}
+                                fallback="/logo_bidly.png"
+                                className="auction-image"
+                            />
+
+                            <h4>{auction.title}</h4>
+                            <p>${auction.startingPrice}</p>
+
+                            <div className="my-profile-carousel-item-status">
+                                <span className={`status-badge ${auction.status}`}>
+                                    {auction.status}
+                                </span>   {/*Meter otra info en vez del status, son todas finalizadas*/}
                             </div>
-                        ))}
-                    </div>
-                </div>
 
-                <div className="auction-category">
-                    <h3>Upcoming Auctions</h3>
-                    <div className="auction-grid">
-                        {upcomingBids.auctions.slice(0, 3).map((auction) => (
-                            <div key={auction._id} className="auction-card">
-                                <button className="favorite-button">♥</button>
-                                <ImageWithFallback
-                                    src={auction.images[0]}
-                                    alt={auction.title}
-                                    fallback="/logo_bidly.png"
-                                    className="auction-image"
 
-                                />
-                                <h4>{auction.title}</h4>
-                                <p className="upcoming-start-price">${auction.startingPrice}</p>
-                                <p className="upcoming-start-date">Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
-                                <p className="upcoming-end-date">End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
-                            </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
+
                 </div>
             </section>
 
             <section className="my-auctions">
-                <h2>My Auctions</h2> {/*getauctionsbyOwner*/}
+                <h2>My Auctions</h2>
+                <button
+                    className="create-auction-button"
+                    onClick={handleCreateNewAuction}
+                >
+                    CREATE AUCTION
+                </button>
+
                 <div className="auctions-list">
                     {myAuctions.auctions.map((auction) => (
                         <div key={auction._id} className="auction-detail">
                             <div className="auction-image-container">
                                 <img
-                                    src="/favicon.png"
+                                    src={auction.images[0]}
                                     alt={auction.title}
                                     className="img-my-auctions"
                                 />
@@ -359,21 +370,13 @@ const UserProfile = ({ }) => {
                                 <span className="price">{auction.startingPrice} €</span>
                                 <div className="auction-dates">
                                     <p>Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
-                                    <p>End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
+                                    <p>End Date: {new Date(auction.endTime).toLocaleDateString()}$</p>
                                 </div>
-                            </div>
-                            <div className="auction-actions">
                                 <button
                                     className="delete-button"
                                     onClick={() => handleDeleteAuction(auction._id)}
                                 >
                                     DELETE
-                                </button>
-                                <button
-                                    className="create-auction-button"
-                                    onClick={handleCreateNewAuction}
-                                >
-                                    CREATE NEW BID
                                 </button>
                             </div>
                         </div>
@@ -392,6 +395,7 @@ const UserProfile = ({ }) => {
             >
                 {modalContent === 'avatar' && <AvatarContent />}
                 {modalContent === 'myData' && <MyDataContent />}
+                {modalContent === 'delete' && <DeleteAuctionContent />}
             </GenericModal>
 
             <GenericModal
@@ -399,7 +403,13 @@ const UserProfile = ({ }) => {
                 onClose={() => setIsDeleteModalOpen(false)}
                 className="delete-modal"
             >
-                <DeleteAuctionContent />
+                {selectedAuction && (
+                    <DeleteAuctionContent
+                        onClose={() => setIsDeleteModalOpen(false)}
+                        auctionId={selectedAuction}
+                        updateAuctions={setMyAuctions}
+                    />
+                )}
             </GenericModal>
 
             <GenericModal
@@ -407,7 +417,10 @@ const UserProfile = ({ }) => {
                 onClose={() => setIsCreateAuctionModalOpen(false)}
                 className="create-auction-modal"
             >
-                <CreateAuctionContent />
+                <CreateAuctionContent
+                    onClose={() => setIsCreateAuctionModalOpen(false)}
+                    updateAuctions={setMyAuctions}
+                />
             </GenericModal>
         </div>
     );
