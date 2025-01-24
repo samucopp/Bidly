@@ -6,6 +6,7 @@ import { getActiveFollowedAuctions, getAuctionsByOwner } from '../../api/auction
 import { getUser } from '../../api/user.js';
 import Cookies from "js-cookie";
 import CreateAuctionContent from '../../components/user-profile/CreateAuctionContent';
+import Tarjeta from '../../components/auction-card/Tarjeta';
 import './UserProfile.css';
 
 
@@ -215,7 +216,7 @@ const UserProfile = ({ }) => {
     const DeleteAuctionContent = ({ onClose, auctionId, updateAuctions }) => {
         const [loading, setLoading] = useState(false);
         const [error, setError] = useState('');
-    
+
         const handleConfirmDelete = async () => {
             setLoading(true);
             try {
@@ -237,7 +238,7 @@ const UserProfile = ({ }) => {
                 setLoading(false);
             }
         };
-    
+
         return (
             <div className="modal-content">
                 <h2>Delete Auction</h2>
@@ -286,48 +287,34 @@ const UserProfile = ({ }) => {
             </div>
 
             <section className="auctions-section">
-                <h2>Following Auctions</h2> {/*getauctivefollowedauctions*/}
+                <h2>Following Auctions</h2> 
 
                 <div className="auction-category">
-                    <h3>Active Auctions</h3>
-                    <div className="auction-grid">
+                    
+              
                         {activeBids.auctions.slice(0, 3).map((auction) => (
                             <div key={auction._id} className="auction-card">
-                                <button className="favorite-button">♥</button>
+
                                 <ImageWithFallback
                                     src={auction.images[0]}
                                     alt={auction.title}
                                     fallback="/logo_bidly.png"
                                     className="auction-image"
-
                                 />
+
                                 <h4>{auction.title}</h4>
                                 <p>${auction.startingPrice}</p>
+
+                  <div className="my-profile-carousel-item-status">
+                    <span className={`status-badge ${auction.status}`}>
+                      {auction.status}
+                    </span>   {/*Meter otra info en vez del status, son todas finalizadas*/}
+                  </div>
+             
+                                
                             </div>
                         ))}
-                    </div>
-                </div>
-
-                <div className="auction-category">
-                    <h3>Upcoming Auctions</h3>
-                    <div className="auction-grid">
-                        {upcomingBids.auctions.slice(0, 3).map((auction) => (
-                            <div key={auction._id} className="auction-card">
-                                <button className="favorite-button">♥</button>
-                                <ImageWithFallback
-                                    src={auction.images[0]}
-                                    alt={auction.title}
-                                    fallback="/logo_bidly.png"
-                                    className="auction-image"
-
-                                />
-                                <h4>{auction.title}</h4>
-                                <p className="upcoming-start-price">${auction.startingPrice}</p>
-                                <p className="upcoming-start-date">Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
-                                <p className="upcoming-end-date">End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
-                            </div>
-                        ))}
-                    </div>
+                   
                 </div>
             </section>
 
@@ -360,7 +347,7 @@ const UserProfile = ({ }) => {
                                 <span className="price">{auction.startingPrice} €</span>
                                 <div className="auction-dates">
                                     <p>Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
-                                    <p>End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
+                                    <p>End Date: {new Date(auction.endTime).toLocaleDateString()}$</p>
                                 </div>
                                 <button
                                     className="delete-button"
@@ -387,19 +374,19 @@ const UserProfile = ({ }) => {
                 {modalContent === 'myData' && <MyDataContent />}
             </GenericModal>
 
-         <GenericModal
-    isOpen={isDeleteModalOpen}
-    onClose={() => setIsDeleteModalOpen(false)}
-    className="delete-modal"
->
-    {selectedAuction && (
-        <DeleteAuctionContent
-            onClose={() => setIsDeleteModalOpen(false)}
-            auctionId={selectedAuction}
-            updateAuctions={setMyAuctions}
-        />
-    )}
-</GenericModal>
+            <GenericModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                className="delete-modal"
+            >
+                {selectedAuction && (
+                    <DeleteAuctionContent
+                        onClose={() => setIsDeleteModalOpen(false)}
+                        auctionId={selectedAuction}
+                        updateAuctions={setMyAuctions}
+                    />
+                )}
+            </GenericModal>
 
             <GenericModal
                 isOpen={isCreateAuctionModalOpen}
