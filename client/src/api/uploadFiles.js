@@ -1,8 +1,8 @@
-import { apiRequest } from './apiRequest';
+import { apiRequest, apiRequestForm } from './apiRequest';
 
 async function uploadAuctionImages(auctionId, files) {
     try {
-        const response = await apiRequest(`/upload/auctionImages/${auctionId}`, 'POST', files);
+        const response = await apiRequestForm(`/upload/auctionImages/${auctionId}`, 'POST', files);
         console.log("response", response);
         return response;
     } catch (error) {
@@ -13,7 +13,7 @@ async function uploadAuctionImages(auctionId, files) {
 
 async function deleteAuctionImage(auctionId, imageUrl) {
     try {
-        const response = await apiRequest(`/upload/auctionImages/${auctionId}`, 'DELETE', imageUrl);
+        const response = await apiRequestForm(`/upload/auctionImages/${auctionId}`, 'DELETE', imageUrl);
         console.log("response", response);
         return response;
     } catch (error) {
@@ -24,7 +24,7 @@ async function deleteAuctionImage(auctionId, imageUrl) {
 
 async function uploadProfileAvatar(userId, file) {
     try {
-        const response = await apiRequest(`/upload/profileAvatar/${userId}`, 'POST', file);
+        const response = await apiRequestForm(`/upload/profileAvatar/${userId}`, 'POST', file);
         console.log("response", response);
         return response;
     } catch (error) {
