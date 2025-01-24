@@ -97,9 +97,7 @@ const CreateAuctionContent = ({ onClose, updateAuctions }) => {
         setLoading(true);
         try {
             const formData = new FormData();
-            selectedImages.forEach(image => {
-                formData.append('images', image);
-            });
+            formData.append('file', selectedImages[0]);
             const uploadResponse = await uploadAuctionImages(createdAuctionId, formData);
             console.log('Upload response:', uploadResponse);
             if (uploadResponse && (uploadResponse.success || uploadResponse.succes)) {
