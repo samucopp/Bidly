@@ -131,3 +131,11 @@ body {
   font-size: 14px;
   color: #555;
 }
+
+@media (max-width: 768px) {
+  .live-auction-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    height: auto;
+  }
+}
