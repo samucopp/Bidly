@@ -1,7 +1,9 @@
 .catalogo-auction-card {
     position: relative;
+    height: 100%;
     display:flex;
     flex-direction: column;
+    justify-content: flex-start;
     background: #f5f5f5;
     padding: 1rem;
     border-radius: 5px;
@@ -15,13 +17,27 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+.catalogo-auction-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
 
+.catalogo-auction-content-divider {
+    padding-top: 2rem;
+    min-height: 50px; /* Ajusta el mínimo para mantener altura consistente */
+}
+
+.catalogo-auction-time,
+.catalogo-auction-price {
+    margin: 0;
+}
 
 .catalogo-auction-title {
     font-size: 1.25rem;
     font-weight: 600;
     color: #1a202c;
-    padding-top: 2rem;
     margin-bottom: 0.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -31,18 +47,27 @@
 .catalogo-auction-description {
     color: #4b5563;
     font-size: 0.875rem;
-    margin-bottom: 2rem;
+}
+
+.catalogo-auction-price {
+    padding-bottom: 0.5rem;
 }
 
 .catalogo-auction-buttons {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
+    align-items: flex-end;
+    padding-top: 1rem;
 }
 
-.catalogo-info-button {
+.catalogo-bid-placeholder {
+    display: inline-block;
+    width:100%;
+}
+
+.catalogo-bid-button {
     background-color: #807e7e;
+    font-size: 1rem;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 4px;
@@ -54,7 +79,7 @@
     outline: none;
 }
 
-.catalogo-info-button:hover {
+.catalogo-bid-button:hover {
     background-color: #a6a6a6;
 }
 
