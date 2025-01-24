@@ -6,6 +6,7 @@ import {
     handleAuctionFinished,
     handleAuctionWon,
 } from "../helpers/automaticNotification.js";
+import { getIO } from "../config/socket.js";
 
 const createAuction = async (req, res) => {
     try {
@@ -22,7 +23,10 @@ const createAuction = async (req, res) => {
         } = req.body;
 
         const startingPriceRounded = Math.ceil(startingPrice);
-        const minIncrementRounded = Math.min(100, Math.max(Math.ceil(minIncrement), 1));
+        const minIncrementRounded = Math.min(
+            100,
+            Math.max(Math.ceil(minIncrement), 1)
+        );
 
         const newAuction = new Auction({
             title,
@@ -53,21 +57,48 @@ const searchAuctions = async (req, res) => {
         const skip = (page - 1) * resultsPerPage;
 
         if (!query || query.trim() === "") {
-            return res.status(400).json({ success: false, message: "Por favor, ingrese una consulta de búsqueda válida" });
+            return res.status(400).json({
+                success: false,
+                message: "Por favor, ingrese una consulta de búsqueda válida",
+            });
         }
-        const auctions = await Auction.find((active && active == "true") ? { title: { $regex: query, $options: 'i' }, status: "active" } : { title: { $regex: query, $options: 'i' }, status: {$ne: "closed"} })
+        const auctions = await Auction.find(
+            active && active == "true"
+                ? { title: { $regex: query, $options: "i" }, status: "active" }
+                : {
+                      title: { $regex: query, $options: "i" },
+                      status: { $ne: "closed" },
+                  }
+        )
             .populate("category", "name")
             .populate("sellerId", "name")
             .skip(skip)
             .limit(resultsPerPage);
 
-        const total = await Auction.countDocuments((active && active == "true") ? { title: { $regex: query, $options: 'i' }, status: "active" } : { title: { $regex: query, $options: 'i' }, status: {$ne: "closed"} });
+        const total = await Auction.countDocuments(
+            active && active == "true"
+                ? { title: { $regex: query, $options: "i" }, status: "active" }
+                : {
+                      title: { $regex: query, $options: "i" },
+                      status: { $ne: "closed" },
+                  }
+        );
 
         if (auctions.length === 0) {
-            return res.status(404).json({ success: false, message: "No se encontraron subastas que coincidan con la consulta de búsqueda" });
+            return res.status(404).json({
+                success: false,
+                message:
+                    "No se encontraron subastas que coincidan con la consulta de búsqueda",
+            });
         }
 
-        res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+        res.status(200).json({
+            success: true,
+            total,
+            page: parseInt(page),
+            totalPages: Math.ceil(total / resultsPerPage),
+            auctions,
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -83,15 +114,29 @@ const getAuctions = async (req, res) => {
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
-        const auctions = await Auction.find((active && active == "true") ? { status: "active" } : {status: {$ne: "closed"}})
+        const auctions = await Auction.find(
+            active && active == "true"
+                ? { status: "active" }
+                : { status: { $ne: "closed" } }
+        )
             .populate("category", "name")
             .populate("sellerId", "name")
             .skip(skip)
             .limit(resultsPerPage);
 
-        const total = await Auction.countDocuments((active && active == "true") ? { status: "active" } : {status: {$ne: "closed"}});
+        const total = await Auction.countDocuments(
+            active && active == "true"
+                ? { status: "active" }
+                : { status: { $ne: "closed" } }
+        );
 
-        res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+        res.status(200).json({
+            success: true,
+            total,
+            page: parseInt(page),
+            totalPages: Math.ceil(total / resultsPerPage),
+            auctions,
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -108,15 +153,29 @@ const getAuctionsByCategory = async (req, res) => {
         const resultsPerPage = parseInt(limit) || 10;
         const skip = (page - 1) * resultsPerPage;
 
-        const auctions = await Auction.find((active && active == "true") ? { category: categoryId, status: "active" } : { category: categoryId, status: {$ne: "closed"} })
+        const auctions = await Auction.find(
+            active && active == "true"
+                ? { category: categoryId, status: "active" }
+                : { category: categoryId, status: { $ne: "closed" } }
+        )
             .populate("category", "name")
             .populate("sellerId", "name")
             .skip(skip)
             .limit(resultsPerPage);
 
-        const total = await Auction.countDocuments((active && active == "true") ? { category: categoryId, status: "active" } : { category: categoryId, status: {$ne: "closed"} });
+        const total = await Auction.countDocuments(
+            active && active == "true"
+                ? { category: categoryId, status: "active" }
+                : { category: categoryId, status: { $ne: "closed" } }
+        );
 
-        res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+        res.status(200).json({
+            success: true,
+            total,
+            page: parseInt(page),
+            totalPages: Math.ceil(total / resultsPerPage),
+            auctions,
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -146,7 +205,13 @@ const getActiveAuctions = async (req, res) => {
             endTime: { $gt: new Date() },
         });
 
-        res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+        res.status(200).json({
+            success: true,
+            total,
+            page: parseInt(page),
+            totalPages: Math.ceil(total / resultsPerPage),
+            auctions,
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -161,7 +226,8 @@ const getAuctionById = async (req, res) => {
         const { auctionId } = req.params;
         const auction = await Auction.findById(auctionId)
             .populate("category", "name")
-            .populate("sellerId", "name");
+            .populate("sellerId", "name")
+            .populate("winnerId", "name");
         if (!auction) {
             return res
                 .status(404)
@@ -205,9 +271,13 @@ const updateAuction = async (req, res) => {
             });
         }
 
-        const updatedAuction = await Auction.findByIdAndUpdate(auctionId, updates, {
-            new: true,
-        });
+        const updatedAuction = await Auction.findByIdAndUpdate(
+            auctionId,
+            updates,
+            {
+                new: true,
+            }
+        );
         res.status(200).json({ success: true, updatedAuction });
     } catch (error) {
         res.status(500).json({
@@ -259,8 +329,24 @@ const handleActivateAuctions = async () => {
             startTime: { $lte: now },
         });
         for (const auction of auctionsToActivate) {
+            console.log(auction.startTime);
             auction.status = "active";
             await auction.save();
+            const auctionId = auction._id.toString(); // Convertir ID a string
+            const rooms = Array.from(getIO().sockets.adapter.rooms.keys()); // Obtener todas las salas activas
+
+            // Verificar si la sala con el ID de la subasta existe
+            if (rooms.includes(auctionId)) {
+                console.log(`La sala ${auctionId} existe. Emitiendo evento.`);
+                // Emitir evento `start-auction` a la sala correspondiente
+                getIO()
+                    .to(auctionId)
+                    .emit("start-auction", {
+                        auctionId,
+                        message: `La subasta ${auctionId} ha comenzado.`,
+                        startTime: new Date().toISOString(),
+                    });
+            }
             await handleAuctionStarted(auction);
         }
         console.log(`${auctionsToActivate.length} subasta(s) activada(s)`);
@@ -300,6 +386,23 @@ const handleCloseAuctions = async () => {
 
             if (winnerId) {
                 await handleAuctionWon(winnerId, auction);
+            }
+            const winner = await User.findById(winnerId);
+            const auctionId = auction._id.toString();
+            const rooms = Array.from(getIO().sockets.adapter.rooms.keys()); // Obtener todas las salas activas
+
+            // Verificar si la sala con el ID de la subasta existe
+            if (rooms.includes(auctionId)) {
+                console.log(`La sala ${auctionId} existe. Emitiendo evento.`);
+                // Emitir evento `start-auction` a la sala correspondiente
+                getIO()
+                    .to(auctionId)
+                    .emit("end-auction", {
+                        auctionId,
+                        winnerName: winner.name,
+                        message: `La subasta ${auctionId} ha finalizado.`,
+                        startTime: new Date().toISOString(),
+                    });
             }
             await handleAuctionFinished(auction.sellerId, auction);
         }
@@ -356,9 +459,17 @@ const getAuctionsWhereBidDone = async (req, res) => {
                 .skip(skip)
                 .limit(resultsPerPage);
 
-            const total = await Auction.countDocuments({ _id: { $in: auctionIds } });
+            const total = await Auction.countDocuments({
+                _id: { $in: auctionIds },
+            });
 
-            return res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+            return res.status(200).json({
+                success: true,
+                total,
+                page: parseInt(page),
+                totalPages: Math.ceil(total / resultsPerPage),
+                auctions,
+            });
         } else {
             return res.status(404).json({
                 success: true,
@@ -389,7 +500,13 @@ const getAuctionsByOwner = async (req, res) => {
 
         const total = await Auction.countDocuments({ sellerId: userId });
 
-        res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+        res.status(200).json({
+            success: true,
+            total,
+            page: parseInt(page),
+            totalPages: Math.ceil(total / resultsPerPage),
+            auctions,
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -428,7 +545,13 @@ const getActiveFollowedAuctions = async (req, res) => {
             status: "active",
         });
 
-        res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+        res.status(200).json({
+            success: true,
+            total,
+            page: parseInt(page),
+            totalPages: Math.ceil(total / resultsPerPage),
+            auctions,
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -467,7 +590,13 @@ const getUpcomingFollowedAuctions = async (req, res) => {
             status: "inactive",
         });
 
-        res.status(200).json({ success: true, total, page: parseInt(page), totalPages: Math.ceil(total / resultsPerPage), auctions });
+        res.status(200).json({
+            success: true,
+            total,
+            page: parseInt(page),
+            totalPages: Math.ceil(total / resultsPerPage),
+            auctions,
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -491,5 +620,5 @@ export default {
     getAuctionsWhereBidDone,
     getAuctionsByOwner,
     getActiveFollowedAuctions,
-    getUpcomingFollowedAuctions
+    getUpcomingFollowedAuctions,
 };

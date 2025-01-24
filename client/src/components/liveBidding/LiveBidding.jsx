@@ -16,7 +16,7 @@ const LiveBidding = ({ bids }) => {
                                 </p>
                                 <p className="bid-amount">{bid.amount} €</p>
                                 <p className="datetime">
-                                    {new Date(bid.createdAt).toLocaleString()}
+                                    {new Date(bid.time).toLocaleString()}
                                 </p>
                             </div>
                         ))}
