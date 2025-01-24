@@ -5,9 +5,9 @@ import { addAuctionToFavorites, removeAuctionFromFavorites } from "../../api/use
 import "./Tarjeta.css";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 
-const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
+const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon, isDefaultFavorite }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(isDefaultFavorite);
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
@@ -100,10 +100,11 @@ const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
                                     </button>
                                 </Link>
                             ) : (
-                                <div style={{ visibility: "hidden", width: "100%" }}>
-                                    {/* Esto asegura que el espacio del botón Bid se mantenga */}
-                                    <button className="catalogo-bid-button">BID</button>
-                                </div>
+                                <Link to={"/auction/" + datosPuja._id}>
+                                    <button className="catalogo-bid-button">
+                                        + INFO
+                                    </button>
+                                </Link>
                             )}
                         </div>
                     </div>

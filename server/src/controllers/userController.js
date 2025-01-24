@@ -156,8 +156,8 @@ async function removeAuctionFromFavorites(req, res) {
                 .status(404)
                 .json({ success: false, message: "Subasta no encontrada" });
         }
-
-        if (user.favoriteAuctions.includes(auctionId)) {
+        console.log("asdad", user.favoriteAuctions, auctionId);
+        if (user.favoriteAuctions.find((a) => a.toString() === auctionId)) {
             user.favoriteAuctions.pull(auctionId);
             await user.save();
         } else {

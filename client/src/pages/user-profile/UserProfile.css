@@ -99,6 +99,13 @@
     margin-bottom: 20px;
 }
 
+.auction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
 .auction-category h3 {
     font-size: 18px;
     margin-top: 30px;
@@ -106,12 +113,17 @@
     color: #969394;
 }
 
+.following-favorite-button {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    border: none;
+    background-color: transparent;
+}
 
 .auction-card {
     object-fit: contain;
     background-color: white;
-    height: 50%;
-    width: 50%;
     padding-top: 20px;
     display: flex;
     flex-direction: column;
@@ -120,6 +132,7 @@
     position: relative;
     padding-bottom: 1rem; 
     flex-direction: column;
+    cursor: pointer;
 }
 
 .auction-card:hover {
@@ -505,6 +518,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
+    width: 80%;
+}
+
+.date-inputs input {
+    width:80%;
 }
 
 .auction-form button {
