@@ -5,6 +5,7 @@ import ImageWithFallback from '../../components/fallback-image/ImageWithFallback
 import { getActiveFollowedAuctions, getAuctionsByOwner } from '../../api/auction.js';
 import { getUser } from '../../api/user.js';
 import Cookies from "js-cookie";
+import CreateAuctionContent from '../../components/user-profile/CreateAuctionContent';
 import './UserProfile.css';
 
 
@@ -22,6 +23,7 @@ const UserProfile = ({ }) => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    ;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,7 +50,7 @@ const UserProfile = ({ }) => {
                 if (userAuctions?.success) {
                     setMyAuctions(userAuctions);
                 }
-                
+
                 const auctionsHistory = await getAuctionsByOwner(userId, false, 1, 300);
                 if (auctionsHistory?.success) {
                     setAuctionsHistory(auctionsHistory);
@@ -239,34 +241,6 @@ const UserProfile = ({ }) => {
         </div>
     );
 
-    const CreateAuctionContent = () => (
-        <div className="modal-content">
-            <h2>Create New Auction</h2>
-            <form className="auction-form">
-                <input type="text" placeholder="Title" />
-                <textarea placeholder="Description" />
-                <input type="number" placeholder="Starting Price" />
-                <input type="file" accept="image/*" multiple />
-                <select>
-                    <option value="">Select Category</option>
-                    <option value="electronics">Electronics</option>
-                </select>
-                <div className="date-inputs">
-                    <input type="datetime-local" placeholder="Start Date" />
-                    <input type="datetime-local" placeholder="End Date" />
-                </div>
-                <button
-                    type="submit"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setIsCreateAuctionModalOpen(false);
-                    }}
-                >
-                    Create Auction
-                </button>
-            </form>
-        </div>
-    );
 
     return (
         <div className="profile-container">
@@ -338,7 +312,14 @@ const UserProfile = ({ }) => {
             </section>
 
             <section className="my-auctions">
-                <h2>My Auctions</h2> {/*getauctionsbyOwner*/}
+                <h2>My Auctions</h2>
+                <button
+                    className="create-auction-button"
+                    onClick={handleCreateNewAuction}
+                >
+                    CREATE AUCTION
+                </button>
+
                 <div className="auctions-list">
                     {myAuctions.auctions.map((auction) => (
                         <div key={auction._id} className="auction-detail">
@@ -361,19 +342,11 @@ const UserProfile = ({ }) => {
                                     <p>Start Date: {new Date(auction.startTime).toLocaleDateString()}</p>
                                     <p>End Date: {new Date(auction.endTime).toLocaleDateString()} 8:30 pm</p>
                                 </div>
-                            </div>
-                            <div className="auction-actions">
                                 <button
                                     className="delete-button"
                                     onClick={() => handleDeleteAuction(auction._id)}
                                 >
                                     DELETE
-                                </button>
-                                <button
-                                    className="create-auction-button"
-                                    onClick={handleCreateNewAuction}
-                                >
-                                    CREATE AUCTION
                                 </button>
                             </div>
                         </div>
@@ -407,7 +380,10 @@ const UserProfile = ({ }) => {
                 onClose={() => setIsCreateAuctionModalOpen(false)}
                 className="create-auction-modal"
             >
-                <CreateAuctionContent />
+                <CreateAuctionContent
+                    onClose={() => setIsCreateAuctionModalOpen(false)}
+                    updateAuctions={setMyAuctions}
+                />
             </GenericModal>
         </div>
     );

@@ -1,0 +1,110 @@
+.modal-content h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #000;
+}
+
+.auction-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.auction-form input,
+.auction-form textarea,
+.auction-form select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
+
+.auction-form input:focus,
+.auction-form textarea:focus,
+.auction-form select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.auction-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.auction-form input[type="file"] {
+    padding: 6px;
+}
+
+.date-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.date-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.date-input-container label {
+    font-size: 14px;
+    color: #374151;
+}
+
+.auction-form button {
+    background-color: #000;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.auction-form button:hover {
+    background-color: #1f2937;
+}
+.upload-section {
+    padding: 20px;
+    text-align: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.primary-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.secondary-button {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.selected-files {
+    margin: 10px 0;
+    color: #666;
+}
+
+.file-input {
+    margin: 20px 0;
+}
