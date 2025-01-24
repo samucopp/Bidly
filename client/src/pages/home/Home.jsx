@@ -10,7 +10,7 @@ const Home = () => {
     const image = [
         '/image/portada_tres.jpg',
         '/image/portada_ok.jpg',
-        '/image/portada_dos.jpg',
+        '/image/portadauno.jpg',
         '/image/portada_cinco.jpg',
     ];
     return (

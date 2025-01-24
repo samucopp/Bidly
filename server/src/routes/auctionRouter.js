@@ -13,7 +13,7 @@ router.get("/:auctionId", auctionController.getAuctionById);
 router.put("/update/:auctionId", checkAuthorization, checkAuctionOwnership, auctionController.updateAuction);
 router.put("/activate", auctionController.activateAuctions);
 router.put("/close", auctionController.closeAuctions);
-router.delete("/delete/:auctionId", checkAuthorization, checkAuctionOwnership, auctionController.deleteAuction);
+router.delete("/delete/:auctionId", checkAuthorization, auctionController.deleteAuction);
 router.get("/user/:userId/participated", checkAuthorization, auctionController.getAuctionsWhereBidDone);
 router.get("/user/:userId/owner", checkAuthorization, auctionController.getAuctionsByOwner);
 router.get("/user/:userId/following", checkAuthorization, auctionController.getActiveFollowedAuctions);
