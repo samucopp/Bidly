@@ -5,13 +5,16 @@ import { Outlet } from "react-router-dom";
 import AuctionList from "../../components/auction/AuctionList";
 import Categorias from "../../components/categorias/CategoriasCatalogo";
 import { getAllCategories } from "../../api/category";
-import { getAuctions, getAuctionsByCategory, searchAuctions } from "../../api/auction";
+import { getAuctions, getAuctionsByCategory, searchAuctions, getActiveFollowedAuctions } from "../../api/auction";
+import User from "../../../../server/src/models/userModel";
+import Cookies from "js-cookie";
 
 const Catalogo = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
     const [query, setQuery] = useState('');
     const [categories, setCategories] = useState([]);
+    const [favorites, setFavorites] = useState({ auctions: [] });
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [showActiveBidsOnly, setShowActiveBidsOnly] = useState(false);
@@ -33,10 +36,12 @@ const Catalogo = () => {
         const fetchData = async () => {
             try {
                 const categoriesData = await getAllCategories();
+                const favoritesData = await getActiveFollowedAuctions(Cookies.get("userId"));
                 const auctionsData = await getAuctions(showActiveBidsOnly, 1);
                 const shuffledAuctions = auctionsData.auctions.sort(() => Math.random() - 0.5);
                 setProducts(shuffledAuctions);
                 setCategories(categoriesData);
+                setFavorites(favoritesData);
             } catch (err) {
                 setError(err.message);
             }
@@ -57,7 +62,6 @@ const Catalogo = () => {
         }
 
     }, [location.state]);
-
 
     // Manejar el cambio de categoría
     const handleCategoryChange = async (categoryId) => {
@@ -185,7 +189,10 @@ const Catalogo = () => {
                 {error ? (
                     <div className="error">{error}</div>
                 ) : (
-                    <AuctionList auctions={products} />
+                    <AuctionList
+                        auctions={products}
+                        favorites={favorites}
+                    />
                 )}
                 <Outlet />
             </main>

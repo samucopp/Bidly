@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import AuctionCarrusel from '../../components/carrusels/AuctionCarrusel';
 import GenericModal from '../../components/modals/GenericModal';
-import ImageWithFallback from '../../components/fallback-image/ImageWithFallback';
+import ImageCarousel from "../../components/carrousel/Carrousel.jsx"
 import { getActiveFollowedAuctions, getAuctionsByOwner } from '../../api/auction.js';
 import { getUser } from '../../api/user.js';
+import { addAuctionToFavorites, removeAuctionFromFavorites } from "../../api/user";
 import Cookies from "js-cookie";
 import CreateAuctionContent from '../../components/user-profile/CreateAuctionContent';
 import Tarjeta from '../../components/auction-card/Tarjeta';
@@ -13,6 +14,7 @@ import './UserProfile.css';
 const UserProfile = ({ }) => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);
+    const [isFavorite, setIsFavorite] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCreateAuctionModalOpen, setIsCreateAuctionModalOpen] = useState(false);
@@ -79,6 +81,23 @@ const UserProfile = ({ }) => {
     if (!userData) {
         return <div>No user data available</div>;
     }
+
+    const favoriteIcon = "/fav-icons/heart-full.png"
+    const notFavoriteIcon = "/fav-icons/heart-empty.png"
+    const handleFavoriteClick = async (sellerId, auctionId) => {
+        try {
+            if (isFavorite) {
+                console.log(sellerId, auctionId);
+                await removeAuctionFromFavorites(sellerId, auctionId);
+                setIsFavorite(false);
+            } else {
+                await addAuctionToFavorites(sellerId, auctionId);
+                setIsFavorite(true);
+            }
+        } catch (error) {
+            console.error("Error gestionando favoritos:", error);
+        }
+    };
 
 
     const handleSettingsClick = () => {
@@ -287,34 +306,44 @@ const UserProfile = ({ }) => {
             </div>
 
             <section className="auctions-section">
-                <h2>Following Auctions</h2> 
+                <h2>Following Auctions</h2>
 
                 <div className="auction-category">
-                    
-              
-                        {activeBids.auctions.slice(0, 3).map((auction) => (
-                            <div key={auction._id} className="auction-card">
 
-                                <ImageWithFallback
-                                    src={auction.images[0]}
-                                    alt={auction.title}
-                                    fallback="/logo_bidly.png"
-                                    className="auction-image"
+
+                    {activeBids.auctions.slice(0, 100).map((auction) => (
+                        <div key={auction._id} className="auction-card">
+                            <button
+                                className="catalogo-favorite-button"
+                                onClick={() => handleFavoriteClick(auction.sellerId._id, auction._id)}
+                            >
+                                <img
+                                    src={isFavorite ? favoriteIcon : notFavoriteIcon}
+                                    alt={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+                                    style={{ width: "36px", height: "36px" }}
                                 />
+                            </button>
 
-                                <h4>{auction.title}</h4>
-                                <p>${auction.startingPrice}</p>
-
-                  <div className="my-profile-carousel-item-status">
-                    <span className={`status-badge ${auction.status}`}>
-                      {auction.status}
-                    </span>   {/*Meter otra info en vez del status, son todas finalizadas*/}
-                  </div>
-             
-                                
+                            <div className="following-auction-carousel">
+                                <ImageCarousel
+                                    images={auction.images}
+                                    defaultImage={"logo_bidly.png"}
+                                />
                             </div>
-                        ))}
-                   
+
+                            <h4>{auction.title}</h4>
+                            <p>${auction.startingPrice}</p>
+
+                            <div className="my-profile-carousel-item-status">
+                                <span className={`status-badge ${auction.status}`}>
+                                    {auction.status}
+                                </span>   {/*Meter otra info en vez del status, son todas finalizadas*/}
+                            </div>
+
+
+                        </div>
+                    ))}
+
                 </div>
             </section>
 

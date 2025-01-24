@@ -5,9 +5,9 @@ import { addAuctionToFavorites, removeAuctionFromFavorites } from "../../api/use
 import "./Tarjeta.css";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 
-const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
+const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon, isDefaultFavorite }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(isDefaultFavorite);
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
