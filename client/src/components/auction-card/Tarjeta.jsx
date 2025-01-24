@@ -8,9 +8,14 @@ import {
 import "./Tarjeta.css";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 
-const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
+const Tarjeta = ({
+    datosPuja,
+    favoriteIcon,
+    notFavoriteIcon,
+    isDefaultFavorite,
+}) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(isDefaultFavorite);
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
@@ -108,13 +113,19 @@ const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
                     </button>
                     <div className="catalogo-auction-buttons">
                         <div className="catalogo-bid-placeholder">
-                            <Link to={"/auction/" + datosPuja._id}>
-                                <button className="catalogo-bid-button">
-                                    {datosPuja.status === "active"
-                                        ? "BID"
-                                        : "MORE INFO"}
-                                </button>
-                            </Link>
+                            {datosPuja.status === "active" ? (
+                                <Link to={"/auction/" + datosPuja._id}>
+                                    <button className="catalogo-bid-button">
+                                        BID
+                                    </button>
+                                </Link>
+                            ) : (
+                                <Link to={"/auction/" + datosPuja._id}>
+                                    <button className="catalogo-bid-button">
+                                        + INFO
+                                    </button>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
