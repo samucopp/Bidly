@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import Cookies from "js-cookie"; // Añadimos esta importación
+import Cookies from "js-cookie";
 import LoginModal from "../modals/LoginModal";
 import { logout } from "../../api/user";
 import "./Navbar.css";
+import SearchBar from '../search-bar/SearchBar';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -105,52 +106,34 @@ const Navbar = () => {
 
                         {/* Main Navigation */}
                         <div className="navbar-links">
-                            <Link to="/about-us" className="menu-item">
+                            <Link
+                                to="/about-us"
+                                className={`menu-item ${location.pathname === '/about-us' ? 'active' : ''}`}
+                            >
                                 ABOUT US
                             </Link>
-                            <Link to="/catalog" className="menu-item">
+
+                            <Link
+                                to="/catalog"
+                                className={`menu-item ${location.pathname === '/catalog' ? 'active' : ''}`}
+                            >
                                 CATALOG
                             </Link>
-                            <Link to="/contact" className="menu-item">
+                            <Link
+                                to="/contact"
+                                className={`menu-item ${location.pathname === '/contact' ? 'active' : ''}`}
+                            >
                                 CONTACT
                             </Link>
+
                         </div>
 
                         {/* Right side - Search and Auth */}
                         <div className="navbar-right">
                             {/* Search Bar */}
                             <div className="search-container">
-                                <input
-                                    type="text"
-                                    placeholder="Search product..."
-                                    value={searchQuery}
-                                    onChange={(e) =>
-                                        setSearchQuery(e.target.value)
-                                    }
-                                />
-                                <button className="search-button">
-                                    <svg
-                                        fill="none"
-                                        viewBox="0 0 20 20"
-                                        width="20"
-                                        height="20"
-                                    >
-                                        <path
-                                            d="M11.856 11.856l4.3 4.3"
-                                            stroke="#222"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                        <path
-                                            d="M12.693 8.155a4.538 4.538 0 11-9.077 0 4.538 4.538 0 019.077 0z"
-                                            stroke="#222"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                </button>
+                                <SearchBar />
                             </div>
-
                             {/* Auth Links */}
                             <div className="auth-links">
                                 {isAuth ? (
@@ -161,9 +144,8 @@ const Navbar = () => {
                                         >
                                             <img
                                                 src={getAvatarUrl()}
-                                                alt={`${
-                                                    userData?.name || "User"
-                                                }'s avatar`}
+                                                alt={`${userData?.name || "User"
+                                                    }'s avatar`}
                                                 className="avatar-img"
                                             />
                                         </Link>
@@ -203,27 +185,26 @@ const Navbar = () => {
 
                 {/* Mobile Menu */}
                 <div
-                    className={`mobile-menu ${
-                        isMobileMenuOpen ? "active" : ""
-                    }`}
+                    className={`mobile-menu ${isMobileMenuOpen ? "active" : ""
+                        }`}
                 >
                     <Link
                         to="/about-us"
-                        className="menu-item"
+                        className={`menu-item ${location.pathname === '/about-us' ? 'active' : ''}`}
                         onClick={toggleMenu}
                     >
                         ABOUT US
                     </Link>
                     <Link
                         to="/catalog"
-                        className="menu-item"
+                        className={`menu-item ${location.pathname === '/catalog' ? 'active' : ''}`}
                         onClick={toggleMenu}
                     >
                         CATALOG
                     </Link>
                     <Link
                         to="/contact"
-                        className="menu-item"
+                        className={`menu-item ${location.pathname === '/contact' ? 'active' : ''}`}
                         onClick={toggleMenu}
                     >
                         CONTACT
@@ -234,9 +215,8 @@ const Navbar = () => {
                                 <Link to="/my-profile" className="user-avatar">
                                     <img
                                         src={getAvatarUrl()}
-                                        alt={`${
-                                            userData?.name || "User"
-                                        }'s avatar`}
+                                        alt={`${userData?.name || "User"
+                                            }'s avatar`}
                                         className="avatar-img"
                                     />
                                 </Link>

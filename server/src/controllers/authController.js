@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 async function register(req, res) {
     try {
-        const { name, email, password, passwordRepeat, address } = req.body;
+        const { name, email, password, passwordRepeat, address, avatar } = req.body;
         if (password !== passwordRepeat) {
             return res.status(400).json({
                 message: "Las contraseñas no coinciden",
@@ -20,6 +20,7 @@ async function register(req, res) {
             email,
             password,
             address,
+            avatar
         });
         return res.status(201).json(user);
     } catch (error) {
@@ -70,6 +71,7 @@ async function login(req, res) {
                 userId: user._id,
                 userName: user.name,
                 userEmail: user.email,
+                userAvatar: user.avatar,
             },
         });
     } catch (error) {

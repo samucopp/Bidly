@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getAuctionById } from "../../api/auction.js";
+import "./ModalTarjeta.css";
 
 const Modal = ({ visible }) => {
     const { auctionId } = useParams(); // Obtén el parámetro auctionId de la ruta
@@ -23,12 +24,12 @@ const Modal = ({ visible }) => {
 
     if (error) {
         return (
-            <div style={modalStyles.overlay}>
-                <div style={modalStyles.modal}>
+            <div className="overlay">
+                <div className="modal">
                     <h2>Error</h2>
                     <p>{error}</p>
                     <Link to="/catalog">
-                        <button style={buttonStyles.close}>Cerrar</button>
+                        <button className="button-close">Cerrar</button>
                     </Link>
                 </div>
             </div>
@@ -37,8 +38,8 @@ const Modal = ({ visible }) => {
 
     if (!auction) {
         return (
-            <div style={modalStyles.overlay}>
-                <div style={modalStyles.modal}>
+            <div className="overlay">
+                <div className="modal">
                     <h2>Cargando...</h2>
                 </div>
             </div>
@@ -46,79 +47,28 @@ const Modal = ({ visible }) => {
     }
 
     return (
-        <div style={modalStyles.overlay}>
-            {/*  <div style={modalStyles.modal}>
-                <h2>{auction.title}</h2>
-                <p><strong>Descripción:</strong> {auction.description}</p>
-                <img 
-                    src={`${BASE_URL}/images/${auction.images[0]}`} 
-                    alt={auction.title} 
-                    style={{ maxWidth: "100%", height: "auto", marginBottom: "16px" }} 
-                /> */}
-            <p>
-                <strong>Precio Inicial:</strong> {auction.startingPrice} €
-            </p>
-            <p>
-                <strong>Hora de Inicio:</strong>{" "}
-                {new Date(auction.startTime).toLocaleString()}
-            </p>
-            <p>
-                <strong>Estado:</strong> {auction.status}
-            </p>
-            <Link to={`/auction/${auctionId}`}>
-                <button style={buttonStyles.bid}>Pujar</button>
-            </Link>
-            <Link to="/catalog">
-                <button style={buttonStyles.close}>Cerrar</button>
-            </Link>
-            {/* </div> */}
+        <div className="overlay">
+
+            <div className="modal">
+                <p>
+                    <strong>Precio Inicial:</strong> {auction.startingPrice} €
+                </p>
+                <p>
+                    <strong>Hora de Inicio:</strong>{" "}
+                    {new Date(auction.startTime).toLocaleString()}
+                </p>
+                <p>
+                    <strong>Estado:</strong> {auction.status}
+                </p>
+                <Link to={`/auction/${auctionId}`}>
+                    <button className="button-bid">Pujar</button>
+                </Link>
+                <Link to="/catalog">
+                    <button className="button-close">Cerrar</button>
+                </Link>
+            </div>
         </div>
     );
-};
-
-const modalStyles = {
-    overlay: {
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 1000,
-    },
-    modal: {
-        background: "#fff",
-        padding: "24px",
-        borderRadius: "8px",
-        maxWidth: "400px",
-        width: "100%",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-        textAlign: "center",
-    },
-};
-
-const buttonStyles = {
-    bid: {
-        marginTop: "16px",
-        padding: "10px 16px",
-        backgroundColor: "#007BFF",
-        color: "#fff",
-        border: "none",
-        borderRadius: "4px",
-        cursor: "pointer",
-    },
-    close: {
-        marginTop: "8px",
-        padding: "10px 16px",
-        backgroundColor: "#DC3545",
-        color: "#fff",
-        border: "none",
-        borderRadius: "4px",
-        cursor: "pointer",
-    },
 };
 
 export default Modal;

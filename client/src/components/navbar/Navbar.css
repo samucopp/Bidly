@@ -65,29 +65,6 @@
   gap: 1rem;
 }
 
-.search-container {
-  position: relative;
-}
-
-.search-container input {
-  width: 180px;
-  padding: 0.5rem 2rem 0.5rem 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.875rem;
-}
-
-.search-button {
-  position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #666;
-  cursor: pointer;
-}
-
 .auth-links a {
   color: #4a4a4a;
   text-decoration: none;
@@ -142,15 +119,15 @@
   flex-direction: column;
   background-color: white;
   padding: 1rem;
-  position: fixed;
+  position: absolute; /* Cambiado para evitar que el menú quede fijo */
   width: 100%;
   box-sizing: border-box;
   top: 64px;
   left: 0;
   z-index: 999;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-height: calc(100vh - 64px);
-  overflow-y: auto;
+  max-height: none; /* Permitir que el menú crezca según el contenido */
+  overflow-y: auto; /* Opcional, mantiene el scroll interno si es necesario */
 }
 
 .mobile-menu.active {
@@ -162,6 +139,15 @@
 .menu-item-logout {
   font-weight: bold;
 }
+.menu-item:hover {
+  color:#a6a6a6;
+  
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
 
 .mobile-menu a {
   color: #4a4a4a;

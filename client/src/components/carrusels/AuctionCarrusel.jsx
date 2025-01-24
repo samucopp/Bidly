@@ -2,50 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ImageWithFallback from '../../components/fallback-image/ImageWithFallback';
 import './AuctionCarrusel.css';
 
-const AuctionCarrusel = () => {
-  const auctions = [
-    {
-      _id: "678fd5c621f2309c37fe4951",
-      title: "Apple iPhone 14",
-      description: "Latest model of the Apple iPhone with 128GB storage.",
-      startingPrice: 1000,
-      status: "active",
-      images: ['https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80']
-    },
-    {
-      _id: "678fd5c621f2309c37fe4952",
-      title: "Apple iPhone 14 Max",
-      description: "Latest model of the Apple iPhone with 128GB storage.",
-      startingPrice: 1000,
-      status: "closed",
-      images: ['https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80']
-     
-    },
-    {
-      _id: "678fd5c621f2309c37fe4953",
-      title: "Samsung Galaxy S23",
-      description: "High-performance smartphone with 256GB storage.",
-      startingPrice: 900,
-      status: "active",
-      images: ['https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80']
-    },
-    {
-      _id: "678fd5c621f2309c37fe4954",
-      title: "Sony WH-1000XM5",
-      description: "Premium noise-canceling wireless headphones.",
-      startingPrice: 400,
-      status: "active",
-      images: ['https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80']
-    },
-    {
-      _id: "678fd5c621f2309c37fe4955",
-      title: "Dell XPS 13",
-      description: "Ultra-slim laptop with Intel i7 processor.",
-      startingPrice: 1200,
-      status: "active",
-      images: ['https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80', 'https://images.unsplash.com/photo-1531297482000-800dd1fa2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80']
-    }
-  ];
+const AuctionCarrusel = ({auctions}) => {
+ 
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(4);

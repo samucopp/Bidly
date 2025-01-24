@@ -44,8 +44,12 @@ const RegisterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Mantenemos las mismas validaciones
+        
+        if (!formData.avatar) {
+            showError('Avatar selection required');
+            return;
+        }
+    
         if (!formData.name?.trim()) {
             showError('Name required');
             return;
@@ -66,34 +70,21 @@ const RegisterForm = () => {
             showError('Address required');
             return;
         }
-
-
+    
         try {
-            const response = await fetch(`${BASE_URL}/user/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    password: formData.password,
-                    passwordRepeat: formData.passwordRepeat,
-                    address: formData.address,
-                    avatar: formData.avatar
-                })
+            await register({
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+                passwordRepeat: formData.passwordRepeat,
+                address: formData.address,
+                avatar: formData.avatar
             });
-
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message);
-            }
+    
             navigate('/', {
                 state: { openLoginModal: true }
             });
-
+    
         } catch (error) {
             if (error.message === 'El correo ya esta registrado') {
                 showError('User already exists');
@@ -129,6 +120,7 @@ const RegisterForm = () => {
                                         src={avatar.path}
                                         alt={avatar.alt}
                                         className="avatar-image"
+                            
                                     />
                                 </div>
                             </div>
