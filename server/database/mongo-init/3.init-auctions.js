@@ -148,7 +148,9 @@ db.auctions.insertMany([
         title: "WD My Passport 2TB External SSD",
         description:
             "Portable high-speed external solid state drive with durable design and password protection.",
-        images: ["wd_my_passport_2tb_ssd.jpg"],
+        images: [
+            "https://thumb.pccomponentes.com/w-530-530/articles/34/347878/1534-wd-my-passport-2tb-usb-30-negro.jpg",
+        ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 200,
         sellerId: db.users.findOne({ email: "irene@example.com" })._id,
@@ -161,7 +163,9 @@ db.auctions.insertMany([
         title: "Philips Hue Starter Kit",
         description:
             "Smart lighting system including bulbs and a Hue Bridge for voice and remote control.",
-        images: ["philips_hue_starter_kit.jpg"],
+        images: [
+            "https://www.assets.signify.com/is/image/Signify/8719514291492-929002468810-Philips-Hue_WCA-9W-A60-E27-2set-EU-RTP",
+        ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 120,
         sellerId: db.users.findOne({ email: "jack@example.com" })._id,
@@ -174,7 +178,9 @@ db.auctions.insertMany([
         title: "Apple TV 4K (3rd Generation)",
         description:
             "Streaming device that delivers 4K HDR content with Dolby Vision, Siri Remote, and Apple Arcade support.",
-        images: ["apple_tv_4k_3rd_gen.jpg"],
+        images: [
+            "https://cdsassets.apple.com/live/SZLF0YNV/images/sp/111839_apple-tv-4k-3gen.png",
+        ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 170,
         sellerId: db.users.findOne({ email: "jack@example.com" })._id,
@@ -187,7 +193,9 @@ db.auctions.insertMany([
         title: "Amazon Echo Show 10",
         description:
             "Smart display with a rotating screen, Alexa voice assistant, and built-in camera for video calls.",
-        images: ["amazon_echo_show_10.jpg"],
+        images: [
+            "https://m.media-amazon.com/images/I/51fSgqA-IlL._AC_UF894,1000_QL80_.jpg",
+        ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 250,
         sellerId: db.users.findOne({ email: "jack@example.com" })._id,
@@ -200,7 +208,7 @@ db.auctions.insertMany([
         title: "Xiaomi 12 Pro",
         description:
             "Flagship smartphone with a powerful processor, triple camera setup, and fast charging technology.",
-        images: ["xiaomi_12_pro.jpg"],
+        images: ["https://m.media-amazon.com/images/I/518EgITWz-L.jpg"],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 800,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -213,7 +221,9 @@ db.auctions.insertMany([
         title: "Apple iPad Air (5th Generation, M1)",
         description:
             "Lightweight tablet featuring the Apple M1 chip, a 10.9-inch Liquid Retina display, and Touch ID.",
-        images: ["ipad_air_5th_gen.jpg"],
+        images: [
+            "https://www.aiho.es/26486-superlarge_default/ipad-air-5-2022-wifi-64gb-gris.jpg",
+        ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 600,
         sellerId: db.users.findOne({ email: "alice@example.com" })._id,
@@ -226,7 +236,9 @@ db.auctions.insertMany([
         title: "LG C2 65-inch OLED TV",
         description:
             "4K OLED TV offering deep blacks and vibrant colors with AI-powered picture processing.",
-        images: ["lg_c2_65_oled_tv.jpg"],
+        images: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5-RjeUCxRfkH11-_ohLzUP8A7CW_1Ph-1pQ&s",
+        ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 1800,
         sellerId: db.users.findOne({ email: "grace@example.com" })._id,
@@ -239,7 +251,9 @@ db.auctions.insertMany([
         title: "Garmin Fenix 7",
         description:
             "Premium multisport GPS smartwatch with advanced health and fitness features.",
-        images: ["garmin_fenix_7.jpg"],
+        images: [
+            "https://images.snowleader.com/cdn-cgi/image/f=auto,fit=scale-down,q=85/https://images.snowleader.com/media/catalog/product/cache/1/image/0dc2d03fe217f8c83829496872af24a0/f/e/fenix_7_silver_graphite_band-simple--gmin00245_1.jpg",
+        ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 600,
         sellerId: db.users.findOne({ email: "grace@example.com" })._id,
@@ -252,7 +266,7 @@ db.auctions.insertMany([
         title: "Fitbit Charge 5",
         description:
             "Advanced fitness tracker with built-in GPS, ECG app, and stress management tools.",
-        images: ["fitbit_charge_5.jpg"],
+        images: ["https://m.media-amazon.com/images/I/51YjNQZ0RDL.jpg"],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 150,
         sellerId: db.users.findOne({ email: "grace@example.com" })._id,
