@@ -59,7 +59,11 @@ db.auctions.insertMany([
     {
         title: "Sony WH-1000XM5",
         description: "Premium noise-canceling wireless headphones with up to 30 hours of battery life.",
-        images: ["https://m.media-amazon.com/images/I/212TgZSbiYL._AC_US40_.jpg", "https://www.sony.com/is/image/gwtprod/b9ce64ada78bc521b683032558ff5a02?fmt=png-alpha&wid=515&hei=515&trf=trim", "https://assets.entrepreneur.com/content/3x2/2000/1717744762-Sonyheadphonescolors.jpg", "https://www.sony.com/is/image/gwtprod/1beacece4ee012f9b1e78b7f6bc8ef39?fmt=png-alpha&wid=515&hei=515&trf=trim"],
+        images: ["https://store.sony.com.au/dw/image/v2/ABBC_PRD/on/demandware.static/-/Sites-sony-master-catalog/default/dwee3d734b/images/WH1000XM5P/WH1000XM5P.png?sw=442&sh=442&sm=fit", 
+        "https://www.sony.com/is/image/gwtprod/b9ce64ada78bc521b683032558ff5a02?fmt=png-alpha&wid=515&hei=515&trf=trim", 
+        "https://assets.entrepreneur.com/content/3x2/2000/1717744762-Sonyheadphonescolors.jpg", 
+        "https://www.sony.com/is/image/gwtprod/1beacece4ee012f9b1e78b7f6bc8ef39?fmt=png-alpha&wid=515&hei=515&trf=trim"
+        ],
         category: db.categories.findOne({ name: "Electronics" })._id,
         startingPrice: 400,
         sellerId: db.users.findOne({ email: "carol@example.com" })._id,
@@ -106,9 +110,12 @@ db.auctions.insertMany([
     },
     {
         title: "Nintendo Switch OLED Model",
-        description:
-            "New version of Nintendo’s hybrid console with a 7-inch OLED display.",
-        images: ["https://m.media-amazon.com/images/I/61nqNujSF2L.jpg"],
+        description: "New version of Nintendo’s hybrid console with a 7-inch OLED display.",
+        images: [
+            "https://media2.allzone.es/3757488-large_default/consola-nintendo-switch-oled-blanco-mario-kart-8-12-meses-nso.jpg",
+            "https://media3.allzone.es/3757490-large_default/consola-nintendo-switch-oled-blanco-mario-kart-8-12-meses-nso.jpg",
+            "https://media3.allzone.es/3757489-large_default/consola-nintendo-switch-oled-blanco-mario-kart-8-12-meses-nso.jpg"
+        ],
         category: db.categories.findOne({ name: "Games" })._id,
         startingPrice: 350,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1381,9 +1388,6 @@ db.auctions.insertMany([
     {
         title: "Levi's 501 Jeans",
         description: "Iconic denim jeans with a timeless fit.",
-        images: [
-            "https://media.sivasdescalzo.com/media/catalog/product/9/0/90501-0019_sivasdescalzo-Levi_s_Vintage-1890_XX501_JEANS_Z7827_LVC_TWI-1674566498-1.jpg",
-        ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 80,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1396,7 +1400,8 @@ db.auctions.insertMany([
         title: "Gucci GG Marmont Belt",
         description: "Luxury belt with signature GG logo.",
         images: [
-            "https://media.gucci.com/style/DarkGray_Center_0_0_490x490/1634145319/659416_92TIC_9769_001_100_0000_Light.jpg",
+            "https://media.gucci.com/style/DarkGray_Center_0_0_1200x1200/1634145319/659416_92TIC_9769_001_100_0000_Light-Cinturn-GG-Marmont-reversible.jpg",
+            "https://media.gucci.com/style/DarkGray_Center_0_0_2400x2400_40/1678147218/659416_92TIC_9769_003_100_0000_Light-Cinturn-GG-Marmont-reversible.jpg"
         ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 400,
@@ -1410,7 +1415,9 @@ db.auctions.insertMany([
         title: "The North Face Puffer Jacket",
         description: "Warm and stylish puffer jacket for winter.",
         images: [
-            "https://media.footdistrict.com/width/840/src/catalog/product/1/4/141_196573615762/--/chaquetas-abrigos-the-north-face-himalayan-womens-puffer-jacket-nf0a4r2wlgo1.jpg",
+            "https://assets.thenorthface.eu/images/t_img/f_auto,h_462,w_462/e_sharpen:60/dpr_2.0/v1720635083/NF0A3C8D4G3-ALT12/Mens-1996-Retro-Nuptse-Jacket.png",
+            "https://assets.thenorthface.eu/images/t_img/f_auto,h_462,w_462/e_sharpen:60/dpr_2.0/v1720635082/NF0A3C8D4G3-ALT13/Mens-1996-Retro-Nuptse-Jacket.png",
+            "https://assets.thenorthface.eu/images/t_img/f_auto,h_462,w_462/e_sharpen:60/dpr_2.0/v1720635082/NF0A3C8D4G3-ALT11/Mens-1996-Retro-Nuptse-Jacket.png"
         ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 250,
@@ -1423,9 +1430,6 @@ db.auctions.insertMany([
     {
         title: "Adidas Originals Hoodie",
         description: "Comfortable hoodie with the Adidas Originals logo.",
-        images: [
-            "https://media.footdistrict.com/width/840/src/catalog/product/4/3/43_4067903725467/--/sudaderas-adidas-originals-x-korn-mens-hoodie-jg1337-5.jpg",
-        ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 90,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -1439,7 +1443,10 @@ db.auctions.insertMany([
         description:
             "Iconic LV tote with a monogram pattern and spacious interior.",
         images: [
-            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-damier-eb%C3%A8ne-bolsos--N40598_PM2_Front%20view.jpg",
+            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-monogram-bolsos--M46987_PM2_Front%20view.png?wid=1440&hei=1440",
+            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-monogram-bolsos--M46987_PM1_Interior%20view.png?wid=1440&hei=1440",
+            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-monogram-bolsos--M46987_PM1_Detail%20view.png?wid=1440&hei=1440",
+            "https://es.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-bolso-neverfull-mm-lona-monogram-bolsos--M46987_PM1_Back%20view.png?wid=1440&hei=1440"
         ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1500,
@@ -1454,7 +1461,9 @@ db.auctions.insertMany([
         description:
             "Timeless quilted flap bag with the signature CC turn-lock and gold-tone hardware.",
         images: [
-            "https://cdn-images.farfetch-contents.com/18/90/80/43/18908043_41281877_600.jpg",
+            "https://www.chanel.com/images///f_auto,q_auto:good,dpr_1.1/w_1600/-9547701288990.jpg",
+            "https://www.chanel.com/images///f_auto,q_auto:good,dpr_1.1/w_1600/-9547701190686.jpg",
+            "https://www.chanel.com/images///f_auto,q_auto:good,dpr_1.1/w_1600/-9547701223454.jpg"
         ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 5000,
@@ -1481,6 +1490,11 @@ db.auctions.insertMany([
     },
     {
         title: "Dior J'Adior Slingback Pumps",
+        images: [
+            "https://assets.christiandior.com/is/image/diorprod/KCC201VNRS900_E03?$default_GHC$&crop=321,429,1167,1113&bfc=on&qlt=85",
+            "https://assets.christiandior.com/is/image/diorprod/KCC201VNRS900_E05-1?$default_GHC$&crop=310,410,1099,1123&bfc=on&qlt=85",
+            "https://assets.christiandior.com/is/image/diorprod/KCC201VNRS900_E06?$default_GHC$&crop=279,149,1173,1488&bfc=on&qlt=85"
+        ],
         description: "Elegant slingback heels with the J'Adior ribbon detail.",
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 950,
@@ -1493,6 +1507,11 @@ db.auctions.insertMany([
     {
         title: "Prada Re-Edition 2005 Nylon Bag",
         description: "Modern re-edition of Prada's iconic nylon bag with metal logo plaque.",
+        images: [
+            "https://www.prada.com/content/dam/pradabkg_products/1/1BH/1BH204/R064F0002/1BH204_R064_F0002_V_V9L_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.2000.2000.jpg",
+            "https://www.prada.com/content/dam/pradabkg_products/1/1BH/1BH204/R064F0002/1BH204_R064_F0002_V_V9L_SLR.jpg/_jcr_content/renditions/cq5dam.web.hebebed.2000.2000.jpg",
+            "https://www.prada.com/content/dam/pradabkg_products/1/1BH/1BH204/R064F0002/1BH204_R064_F0002_V_V9L_SLD.jpg/_jcr_content/renditions/cq5dam.web.hebebed.2000.2000.jpg"
+        ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1200,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
@@ -1515,6 +1534,10 @@ db.auctions.insertMany([
     {
         title: "Burberry Trench Coat",
         description: "Classic Burberry trench with the iconic check lining and belted silhouette.",
+        images: [
+            "https://www.net-a-porter.com/variants/images/1647597325109270/in/w920_q60.jpg",
+            "https://www.net-a-porter.com/variants/images/1647597325109270/cu/w920_q60.jpg"
+            ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1300,
         sellerId: db.users.findOne({ email: "bob@example.com" })._id,
@@ -1548,6 +1571,10 @@ db.auctions.insertMany([
     {
         title: "Balmain Double-Breasted Blazer",
         description: "Fitted blazer with padded shoulders and gold-tone embossed buttons.",
+        images: [
+            "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSaYkGdw0pnOLgp_E4NnWZcCl7n974qUt93l7Xd43VfhnAADg6JjeikylAX_s9SIz3Qu5DdL_nd8ndPrO_N8HgOflfzORaulGA6wi-YG3ytWAiArToG6AlS",
+            "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR2XxaqcUVs-04OzzVGNyA0tRYIDEXDsK8mcyjHXz5FOqMlBiMd9lrOZ5o1UZardnLSBw0HXgALP_DqRTU8ZOp0UUAtRbWoIThbXKHWWaQDTC28a46jX3sz2Q"
+        ],
         category: db.categories.findOne({ name: "Clothing" })._id,
         startingPrice: 1800,
         sellerId: db.users.findOne({ email: "eve@example.com" })._id,
