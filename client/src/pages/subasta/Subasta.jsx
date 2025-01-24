@@ -18,18 +18,16 @@ const Subasta = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Simula si el usuario está logueado
     const [currentUserId, setCurrentUserId] = useState(null); // Simula el ID del usuario logueado
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Estado para el modal de login
-
+    const fetchAuction = async () => {
+        try {
+            const auctionData = await getAuctionById(auctionId);
+            setAuction(auctionData.auction);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
     // Fetch para obtener la subasta
     useEffect(() => {
-        const fetchAuction = async () => {
-            try {
-                const auctionData = await getAuctionById(auctionId);
-                setAuction(auctionData.auction);
-            } catch (err) {
-                setError(err.message);
-            }
-        };
-
         fetchAuction();
     }, [auctionId]);
 
@@ -42,7 +40,7 @@ const Subasta = () => {
                     _id: bid._id,
                     name: bid.userId.name,
                     amount: bid.amount,
-                    time: bid.cretedAt,
+                    time: bid.createdAt,
                 }));
 
                 setBids({
@@ -53,15 +51,11 @@ const Subasta = () => {
                 setError(err.message);
             }
         };
-        function getCookie(name) {
-            const cookies = document.cookie.split("; ");
-            const cookie = cookies.find((c) => c.startsWith(`${name}=`));
-            return cookie ? cookie.split("=")[1] : null;
-        }
-        const userId = Cookies.get("token");
-        if (getCookie("userId")) {
+        const userId = Cookies.get("userId");
+        if (userId) {
             fetchBids();
             setIsLoggedIn(true);
+            setCurrentUserId(userId);
         } else {
             setIsLoggedIn(false);
         }
@@ -93,20 +87,30 @@ const Subasta = () => {
             setBids((prevBids) => ({
                 ...prevBids, // Copia el estado actual
                 bids: [
-                    ...prevBids.bids,
                     {
                         _id: bid.bidId,
-                        name: bid.name,
+                        name: bid.userName,
                         amount: bid.bidAmount,
                         time: new Date(), // Asume que quieres usar la fecha actual para el tiempo
                     },
+                    ...prevBids.bids,
                 ],
                 minAllowed: bid.minAllowed, // Añade la nueva puja al array bids
             }));
         });
 
+        socket.on("start-auction", (data) => {
+            console.log(`Subasta iniciada: ${data.auctionId}`);
+            fetchAuction();
+        });
+        socket.on("end-auction", (data) => {
+            console.log(`Subasta terminada: ${data.auctionId}`);
+            fetchAuction();
+        });
         return () => {
             socket.off("new-bid");
+            socket.off("start-auction");
+            socket.off("end-auction");
         };
     }, []);
 
@@ -194,14 +198,17 @@ const Subasta = () => {
                         <LiveBidding bids={bidsData.bids} />
 
                         {/* Condiciones bajo las cuales se visualizan (o no) componentes */}
-                        {!isSeller && (
-                            <ActiveBids
-                                auctionId={auctionId}
-                                userId={currentUserId}
-                                endTime={auction.endTime}
-                                minBid={bidsData.minAllowed}
-                            />
-                        )}
+
+                        <ActiveBids
+                            auctionId={auctionId}
+                            userId={currentUserId}
+                            startTime={auction.startTime}
+                            endTime={auction.endTime}
+                            minBid={bidsData.minAllowed || 0}
+                            enabled={!isSeller && auction.status == "active"}
+                            winnerName={auction.winnerId?.name}
+                            finalPrice={auction.finalPrice}
+                        />
                     </section>
                 )}
 

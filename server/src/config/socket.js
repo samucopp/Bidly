@@ -2,8 +2,9 @@ import { Server as socketIo } from "socket.io";
 import Auction from "../models/auctionModel.js";
 import bidController from "../controllers/bidController.js";
 import userController from "../controllers/userController.js";
+let io;
 export function startSocket(server) {
-    const io = new socketIo(server, {
+    io = new socketIo(server, {
         cors: {
             origin: "*",
             methods: ["GET", "POST"],
@@ -26,7 +27,7 @@ export function startSocket(server) {
             console.log(
                 `Usuario ${socket.id} se unió a la subasta ${auctionId}`
             );
-            socket.join(auctionId);
+            socket.join(auctionId.toString());
         });
 
         // Salir de una sala específica de la subasta
@@ -34,9 +35,8 @@ export function startSocket(server) {
             console.log(
                 `Usuario ${socket.id} salió de la subasta ${auctionId}`
             );
-            socket.leave(auctionId); // Dejar la sala
+            socket.leave(auctionId.toString()); // Dejar la sala
         });
-
         // Manejar una nueva puja
         socket.on("place-bid", async ({ auctionId, userId, bidAmount }) => {
             try {
@@ -51,7 +51,7 @@ export function startSocket(server) {
                 );
                 const { name } = await userController.getUserData(userId);
                 // Emitir el evento a todos los usuarios en la sala de la subasta
-                io.to(auctionId).emit("new-bid", {
+                io.to(auctionId.toString()).emit("new-bid", {
                     userId,
                     userName: name,
                     bidId: savedBid._id,
@@ -95,4 +95,10 @@ export function startSocket(server) {
     return { io, emitToUser };
 }
 
+export function getIO() {
+    if (!io) {
+        throw new Error("Socket.io no está inicializado");
+    }
+    return io;
+}
 export default startSocket;
