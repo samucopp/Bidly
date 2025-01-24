@@ -66,7 +66,7 @@ const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
                 <div className="catalogo-auction-content-divider">
                     <p className="catalogo-auction-price">
                         <strong>Starting Price: </strong>
-                        {datosPuja.currentPrice ? datosPuja.currentPrice : datosPuja.startingPrice} $
+                        ${datosPuja.currentPrice ? datosPuja.currentPrice : datosPuja.startingPrice}
                     </p>
                     <p className="catalogo-auction-time">
                         {datosPuja.status === "active" ? (
