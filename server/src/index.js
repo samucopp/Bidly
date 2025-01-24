@@ -33,12 +33,12 @@ app.use((req, res, next) => {
     req.emitToUser = emitToUser;
     next();
 });
-cron.schedule("* * * * *", async () => {
+cron.schedule("* * * * * *", async () => {
     console.log("Comprobando subastas para activar");
     await auctionController.activateAuctions({});
 });
 
-cron.schedule("* * * * *", async () => {
+cron.schedule("* * * * * *", async () => {
     console.log("Comprobando subastas para cerrar");
     await auctionController.closeAuctions({});
 });

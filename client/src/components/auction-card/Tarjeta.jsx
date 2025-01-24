@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import { addAuctionToFavorites, removeAuctionFromFavorites } from "../../api/user";
+import {
+    addAuctionToFavorites,
+    removeAuctionFromFavorites,
+} from "../../api/user";
 import "./Tarjeta.css";
 import ImageCarousel from "../../components/carrousel/Carrousel";
 
@@ -60,22 +63,30 @@ const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
             </div>
             <div className="catalogo-auction-content">
                 <div className="catalogo-auction-content-divider">
-                    <h3 className="catalogo-auction-title">{datosPuja.title}</h3>
-                    <p className="catalogo-auction-description">{datosPuja.description}</p>
+                    <h3 className="catalogo-auction-title">
+                        {datosPuja.title}
+                    </h3>
+                    <p className="catalogo-auction-description">
+                        {datosPuja.description}
+                    </p>
                 </div>
                 <div className="catalogo-auction-content-divider">
                     <p className="catalogo-auction-price">
-                        <strong>Starting Price: </strong>
-                        ${datosPuja.currentPrice ? datosPuja.currentPrice : datosPuja.startingPrice}
+                        <strong>Starting Price: </strong>$
+                        {datosPuja.currentPrice
+                            ? datosPuja.currentPrice
+                            : datosPuja.startingPrice}
                     </p>
                     <p className="catalogo-auction-time">
                         {datosPuja.status === "active" ? (
                             <>
-                                <strong>End Date:</strong> {formatDate(new Date(datosPuja.endTime))}
+                                <strong>End Date:</strong>{" "}
+                                {formatDate(new Date(datosPuja.endTime))}
                             </>
                         ) : (
                             <>
-                                <strong>Start Date:</strong> {formatDate(new Date(datosPuja.startTime))}
+                                <strong>Start Date:</strong>{" "}
+                                {formatDate(new Date(datosPuja.startTime))}
                             </>
                         )}
                     </p>
@@ -87,24 +98,23 @@ const Tarjeta = ({ datosPuja, favoriteIcon, notFavoriteIcon }) => {
                     >
                         <img
                             src={isFavorite ? favoriteIcon : notFavoriteIcon}
-                            alt={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+                            alt={
+                                isFavorite
+                                    ? "Quitar de favoritos"
+                                    : "Agregar a favoritos"
+                            }
                             style={{ width: "36px", height: "36px" }}
                         />
                     </button>
                     <div className="catalogo-auction-buttons">
                         <div className="catalogo-bid-placeholder">
-                            {datosPuja.status === "active" ? (
-                                <Link to={"/auction/" + datosPuja._id}>
-                                    <button className="catalogo-bid-button">
-                                        BID
-                                    </button>
-                                </Link>
-                            ) : (
-                                <div style={{ visibility: "hidden", width: "100%" }}>
-                                    {/* Esto asegura que el espacio del botón Bid se mantenga */}
-                                    <button className="catalogo-bid-button">BID</button>
-                                </div>
-                            )}
+                            <Link to={"/auction/" + datosPuja._id}>
+                                <button className="catalogo-bid-button">
+                                    {datosPuja.status === "active"
+                                        ? "BID"
+                                        : "MORE INFO"}
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
